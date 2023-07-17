@@ -18,4 +18,14 @@ class JenisTransaksi extends Model
     {
         return $this->hasMany(SimpananWajib::class, 'jenis_transaksi_id');
     }
+
+    public function pinjaman()
+    {
+        return $this->hasMany(Pinjaman::class, 'jenis_transaksi_id');
+    }
+
+    public function angsuranPinjaman()
+    {
+        return $this->hasMany(AngsuranPinjaman::class, 'jenis_transaksi_id');
+    }
 }
