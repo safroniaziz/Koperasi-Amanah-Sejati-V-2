@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\JenisTransaksiController;
+use App\Http\Controllers\SimpananWajibController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,15 +26,40 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::middleware('auth')->group(function(){
+// Route::middleware('auth')->group(function(){
     Route::get('/home', [DashboardController::class, 'dashboard'])->name('home');
 
-    Route::controller(JabatanController::class)->prefix('jabatan/')->group(function () {
+    Route::controller(JabatanController::class)->prefix('jabatan')->group(function () {
         Route::get('/', 'index')->name('jabatan');
-        Route::get('/create', 'create')->name('jabatan.create');
         Route::post('/', 'store')->name('jabatan.store');
         Route::get('/{jabatan}/edit', 'edit')->name('jabatan.edit');
-        Route::patch('//update', 'update')->name('jabatan.update');
+        Route::patch('/update', 'update')->name('jabatan.update');
         Route::delete('/{jabatan}/delete', 'delete')->name('jabatan.delete');
     });
-});
+
+    Route::controller(JenisTransaksiController::class)->prefix('jenis_transaksi')->group(function () {
+        Route::get('/', 'index')->name('jenisTransaksi');
+        Route::post('/', 'store')->name('jenisTransaksi.store');
+        Route::get('/{jenisTransaksi}/edit', 'edit')->name('jenisTransaksi.edit');
+        Route::patch('/update', 'update')->name('jenisTransaksi.update');
+        Route::delete('/{jenisTransaksi}/delete', 'delete')->name('jenisTransaksi.delete');
+    });
+
+    Route::controller(SimpananWajibController::class)->prefix('simpanan_wajib')->group(function () {
+        Route::get('/', 'index')->name('simpananWajib');
+        Route::get('/create', 'create')->name('simpananWajib.create');
+        Route::post('/', 'store')->name('simpananWajib.store');
+        Route::get('/{simpananWajib}/edit', 'edit')->name('simpananWajib.edit');
+        Route::patch('/update', 'update')->name('simpananWajib.update');
+        Route::delete('/{simpananWajib}/delete', 'delete')->name('simpananWajib.delete');
+    });
+
+    Route::controller(AnggotaController::class)->prefix('anggota')->group(function () {
+        Route::get('/', 'index')->name('anggota');
+        Route::get('/create', 'create')->name('anggota.create');
+        Route::post('/', 'store')->name('anggota.store');
+        Route::get('/{anggota}/edit', 'edit')->name('anggota.edit');
+        Route::patch('/update', 'update')->name('anggota.update');
+        Route::delete('/{anggota}/delete', 'delete')->name('anggota.delete');
+    });
+// });

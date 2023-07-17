@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SIPEDE MAS | @yield('subTitle')</title>
-    <link rel="icon" href="{{ asset('assets/img/logo.svg') }}">
+    <title>KOPERASI AMANAH SEJATI | @yield('subTitle')</title>
+    <link rel="icon" href="{{ asset('assets/img/logo.png') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     @include('layouts.partials.assets.css')

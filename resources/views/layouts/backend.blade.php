@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SIPEDE MAS | @yield('subTitle')</title>
-    <link rel="icon" href="{{ asset('assets/img/logo.svg') }}">
+    <title>KOPERASI AMANAH SEJATI | @yield('subTitle')</title>
+    <link rel="icon" href="{{ asset('assets/img/logo.png') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     @include('layouts.partials.assets.css')
@@ -23,7 +23,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><i class="fa fa-home"></i></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg" style="font-size:16px;"><b>SIPEDEMAS</b> </span>
+          <span class="logo-lg" style="font-size:14px;"><b>KOPERASI AMANAH SEJATI</b> </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -48,9 +48,9 @@
           <!-- Sidebar user panel -->
           <div class="user-panel" style="padding: 14px 10px !important;">
             <div class="pull-left image">
-              <img src="{{ asset('assets/img/logo.svg') }}" alt="User Image">
+              <img src="{{ asset('assets/img/logo.png') }}" alt="User Image">
             </div>
-            <div class="pull-left info" style="padding: 7px 5px 5px 15px;">
+            <div class="pull-left info" style="padding: 4px 5px 5px 15px;">
               <p>Selamat Datang,</p>
               <a href="#" style="text-transform: capitalize; font-size:13px !important;"><i class="fa fa-user"></i> @yield('user-login')</a>
             </div>
@@ -75,7 +75,7 @@
             <small>Kabupaten Kepahiang</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-home"></i>SIPEDE MAS</a></li>
+            <li><a href="#"><i class="fa fa-home"></i>KOPERASI AMANAH SEJATI</a></li>
             <li><a href="#">@yield('page')</a></li>
             <li class="active">@yield('subPage')</li>
           </ol>
@@ -91,9 +91,9 @@
 
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>SIPEDEMAS DPRD Kepahiang</b>
+          <b>KOPERASI AMANAH SEJATI DPRD Kepahiang</b>
         </div>
-        <strong>Copyright &copy; 2023 <a href="https://sipedemas.kepahiang.go.id/">SIPEDEMAS</a>.</strong> DPRD Kepahiang
+        <strong>Copyright &copy; 2023 <a href="https://KOPERASI AMANAH SEJATI.kepahiang.go.id/">KOPERASI AMANAH SEJATI</a>.</strong> DPRD Kepahiang
         reserved.
       </footer>
 
