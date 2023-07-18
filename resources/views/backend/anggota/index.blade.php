@@ -28,12 +28,10 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Anggota</th>
+                                <th>Email</th>
                                 <th>Jabatan</th>
                                 <th>NIK</th>
-                                <th>Alamat</th>
-                                <th>Tahun Keanggotaan</th>
                                 <th>Simpanan Pokok</th>
-                                <th>Email</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -44,8 +42,11 @@
                             @forelse ($anggotas as $index => $anggota)
                                 <tr>
                                     <td>{{ $index+1 }}</td>
-                                    <td>{{ $anggota->nama_jenis_transaksi }}</td>
-                                    <td>{{ $anggota->kategori_transaksi }}</td>
+                                    <td>{{ $anggota->nama_lengkap }}</td>
+                                    <td>{{ $anggota->email }}</td>
+                                    <td>{{ $anggota->jabatan->nama_jabatan }}</td>
+                                    <td>{{ $anggota->tahun_keanggotaan }}</td>
+                                    <td>Rp. {{ number_format($anggota->simpanan_pokok,0) }},-</td>
                                     <td>
                                         <table>
                                             <tr>

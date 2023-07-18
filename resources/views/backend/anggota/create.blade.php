@@ -13,9 +13,10 @@
                     <h3 class="box-title"><i class="fa fa-calendar"></i>&nbsp;Tambah Data Anggota</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                    <div class="row">
-                        <form action="" method="POST" id="form-create">
+                <form action="{{ route('anggota.store') }}" method="POST" id="form-create" enctype="multipart/form-data">
+                    {{ csrf_field() }} {{ method_field('POST') }}
+                    <div class="box-body">
+                        <div class="row">
                             {{ csrf_field() }} {{ method_field('POST') }}
                             <div class="form-group col-md-6">
                                 <label for="">Pilih Jabatan</label>
@@ -58,17 +59,33 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="">Foto</label>
-                                <input type="file" name="image_path" class="form-control">
+                                <label for="">Password</label>
+                                <input type="password" name="password" class="form-control">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="">Password</label>
-                                <input type="password" name="password" class="form-control">
+                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
                             </div>
-                        </form>
+
+                            <div class="form-group col-md-6">
+                                <label for="">Foto</label>
+                                <input type="file" name="image_path" onchange="previewFoto2()" class="form-control">
+                            </div>
+
+                            <div class="col-md-12">
+                                <img class="foto-baru2" id="preview-foto2" src="" height="100" width="100" alt="" style="font-size:12px;">
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="box-footer">
+                        <div class="col-md-12 text-center">
+                            <a href="{{ route('anggota') }}" class="btn btn-warning btn-sm btn-flat"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+                            <button type="reset" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i>&nbsp; Ulangi</button>
+                            <button type="submit" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-check-circle"></i>&nbsp; Simpan Data</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -76,6 +93,22 @@
 
 @push('scripts')
     <script>
+        function previewFoto2() {
+            var preview = document.querySelector('#preview-foto2');
+            var file    = document.querySelector('input[type=file]').files[0];
+            var reader  = new FileReader();
+
+            reader.onloadend = function () {
+            preview.src = reader.result;
+            }
+
+            if (file) {
+            reader.readAsDataURL(file);
+            } else {
+            preview.src = "";
+            }
+        }
+
         $(document).on('submit','#form-create',function (event){
             event.preventDefault();
             $.ajax({
