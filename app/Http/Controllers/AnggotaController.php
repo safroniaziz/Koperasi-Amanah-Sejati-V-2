@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Jabatan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AnggotaController extends Controller
@@ -91,27 +93,76 @@ class AnggotaController extends Controller
     }
 
     public function edit(User $anggota){
-        return $anggota;
+        $jabatans = Jabatan::all();
+        return view('backend.anggota.edit',[
+            'anggota'   =>  $anggota,
+            'jabatans'  =>  $jabatans,
+        ]);
     }
 
     public function update(Request $request){
+        $anggota = User::findOrFail($request->anggota_id_edit);
         $validator = Validator::make($request->all(), [
-            'nama_jenis_transaksi' => 'required|string',
-            'kategori_transaksi'    =>  'required',
+            'jabatan_id' => 'required',
+            'nama_lengkap' => 'required',
+            'nik' => [
+                'required',
+                'numeric',
+                Rule::unique('users', 'nik')->ignore($anggota->id),
+            ],
+            'tahun_keanggotaan' => 'required|digits:4|numeric|min:1000|max:9999',
+            'alamat' => 'required',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($anggota->id),
+            ],
+            'image_path' => 'image|mimes:png,jpg,jpeg|max:1000',
         ], [
-            'nama_jenis_transaksi.required' => 'Kolom Jenis Transaksi Harus Diisi.',
-            'kategori_transaksi.required' => 'Kolom Kategori Transaksi Harus Diisi.',
+            'jabatan_id.required'           => 'Kolom Jabatan harus diisi.',
+            'nama_lengkap.required'         => 'Kolom Nama Lengkap harus diisi.',
+            'nik.required'                  => 'Kolom NIK harus diisi.',
+            'nik.numeric'                   => 'Kolom NIK harus berupa angka.',
+            'nik.unique'                    => 'NIK sudah digunakan.',
+            'tahun_keanggotaan.required'    => 'Kolom Tahun Keanggotaan harus diisi.',
+            'tahun_keanggotaan.digits'      => 'Kolom Tahun Keanggotaan harus berisi 4 digit.',
+            'tahun_keanggotaan.numeric'     => 'Kolom Tahun Keanggotaan harus berupa angka.',
+            'tahun_keanggotaan.min'         => 'Kolom Tahun Keanggotaan minimal 4 digit.',
+            'tahun_keanggotaan.max'         => 'Kolom Tahun Keanggotaan maksimal 4 digit.',
+            'alamat.required'               => 'Kolom Alamat harus diisi.',
+            'email.required'                => 'Kolom Email harus diisi.',
+            'email.email'                   => 'Format Email tidak valid.',
+            'email.unique'                  => 'Email sudah digunakan.',
+            'image_path.image'              => 'File yang diunggah harus berupa gambar.',
+            'image_path.mimes'              => 'Format file gambar harus PNG, JPG, atau JPEG.',
+            'image_path.max'                => 'Ukuran file gambar maksimal 1000 KB (1 MB).',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => 0, 'text' => $validator->errors()->first()], 422);
         }
 
-        $anggota = User::findOrFail($request->anggota_id);
+        $uniqueName = null;
+        $file = $request->file('image_path');
+        if ($file) {
+            // Menghapus file gambar lama jika ada
+            if ($oldFilePath = $anggota->image_path) {
+                Storage::delete('public/foto_anggota/' . $oldFilePath);
+            }
+
+            $uniqueName = $request->nik . '-' . Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/foto_anggota/', $uniqueName);
+        }
 
         $update = $anggota->update([
-            'nama_jenis_transaksi'  =>  $request->nama_jenis_transaksi,
-            'kategori_transaksi'  =>  $request->kategori_transaksi,
+            'jabatan_id'            =>  $request->jabatan_id,
+            'nama_lengkap'          =>  $request->nama_lengkap,
+            'nik'                   =>  $request->nik,
+            'alamat'                =>  $request->alamat,
+            'tahun_keanggotaan'     =>  $request->tahun_keanggotaan,
+            'simpanan_pokok'        =>  500000,
+            'email'                 =>  $request->email,
+            'image_path'            =>  $uniqueName,
         ]);
 
         if ($update) {
@@ -121,6 +172,27 @@ class AnggotaController extends Controller
             ]);
         }else {
             return response()->json(['text' =>  'Oopps, data anggota gagal diubah']);
+        }
+    }
+
+    public function delete(User $anggota){
+        $file = $anggota->image_path;
+        if ($file) {
+            // Menghapus file gambar lama jika ada
+            if ($oldFilePath = $anggota->image_path) {
+                Storage::delete('public/foto_anggota/' . $oldFilePath);
+            }
+        }
+
+        $delete = $anggota->delete();
+
+        if ($delete) {
+            return response()->json([
+                'text'  =>  'Yeay, data anggota berhasil dihapus',
+                'url'   =>  url('/anggota/'),
+            ]);
+        }else {
+            return response()->json(['text' =>  'Oopps, data anggota gagal dihapus']);
         }
     }
 }

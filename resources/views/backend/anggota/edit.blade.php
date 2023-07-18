@@ -10,41 +10,42 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-calendar"></i>&nbsp;Tambah Data Anggota</h3>
+                    <h3 class="box-title"><i class="fa fa-calendar"></i>&nbsp;Edit Data Anggota</h3>
                 </div>
                 <!-- /.box-header -->
-                <form action="{{ route('anggota.store') }}" method="POST" id="form-create" enctype="multipart/form-data">
-                    {{ csrf_field() }} {{ method_field('POST') }}
+                <form action="{{ route('anggota.update') }}" method="POST" id="form-edit" enctype="multipart/form-data">
+                    {{ csrf_field() }} {{ method_field('PATCH') }}
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="">Pilih Jabatan</label>
+                                <input type="hidden" name="anggota_id_edit" value="{{ $anggota->id }}">
                                 <select name="jabatan_id" class="form-control" id="">
                                     <option disabled selected>-- pilih jabatan --</option>
                                     @foreach ($jabatans as $jabatan)
-                                        <option value="{{ $jabatan->id }}">{{ $jabatan->nama_jabatan }}</option>
+                                        <option {{ $anggota->jabatan_id == $jabatan->id ? 'selected' : '' }} value="{{ $jabatan->id }}">{{ $jabatan->nama_jabatan }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="">Nama Anggota</label>
-                                <input type="text" name="nama_lengkap" class="form-control">
+                                <input type="text" name="nama_lengkap" value="{{ $anggota->nama_lengkap }}" class="form-control">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="">Nomor Induk Kependudukan (NIK)</label>
-                                <input type="text" name="nik" class="form-control">
+                                <input type="text" name="nik" value="{{ $anggota->nik }}" class="form-control">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="">Tahun Keanggotaan</label>
-                                <input type="text" name="tahun_keanggotaan" class="form-control">
+                                <input type="text" name="tahun_keanggotaan" value="{{ $anggota->tahun_keanggotaan }}" class="form-control">
                             </div>
 
                             <div class="form-group col-md-12">
                                 <label for="">Alamat</label>
-                                <textarea name="alamat" class="form-control" id="" cols="30" rows="3"></textarea>
+                                <textarea name="alamat" class="form-control" id="" cols="30" rows="3">{{ $anggota->alamat }}</textarea>
                             </div>
 
                             <div class="form-group col-md-6">
@@ -54,22 +55,13 @@
 
                             <div class="form-group col-md-6">
                                 <label for="">Email</label>
-                                <input type="text" name="email" class="form-control">
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="">Password</label>
-                                <input type="password" name="password" class="form-control">
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="">Password</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                                <input type="text" name="email" value="{{ $anggota->email }}" class="form-control">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="">Foto</label>
                                 <input type="file" name="image_path" onchange="previewFoto2()" class="form-control">
+                                <small class="label label-danger">File Lama : {{ $anggota->image_path }}</small>
                             </div>
 
                             <div class="col-md-12">
@@ -108,7 +100,7 @@
             }
         }
 
-        $(document).on('submit','#form-create',function (event){
+        $(document).on('submit','#form-edit',function (event){
             event.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
