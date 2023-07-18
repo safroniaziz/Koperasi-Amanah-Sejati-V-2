@@ -71,8 +71,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Pengaduan dan Aspirasi Masyarakat
-            <small>Kabupaten Kepahiang</small>
+            Koperasi Amanah Sejati
+            <small>Kota Bengkulu</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-home"></i>KOPERASI AMANAH SEJATI</a></li>
@@ -91,9 +91,9 @@
 
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>KOPERASI AMANAH SEJATI DPRD Kepahiang</b>
+          <b>KOPERASI AMANAH SEJATI</b>
         </div>
-        <strong>Copyright &copy; 2023 <a href="https://KOPERASI AMANAH SEJATI.kepahiang.go.id/">KOPERASI AMANAH SEJATI</a>.</strong> DPRD Kepahiang
+        <strong>Copyright &copy; 2023 <a href="">KOPERASI AMANAH SEJATI</a>.</strong> Kota Bengkulu
         reserved.
       </footer>
 

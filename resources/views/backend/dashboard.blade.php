@@ -13,7 +13,7 @@
                 </header>
                 <div class="panel-body" style="border-top: 1px solid #eee; padding:15px; background:white;">
                     <div class="row" style="margin-right:-15px; margin-left:-15px;">
-                        <div class="col-md-12" style="text-transform: capitalize;">Selamat datang <strong>  </strong> di halaman Dashboard <b> Sistem Informasi Pengaduan Dan Aspirasi Masyarakat</b></div>
+                        <div class="col-md-12" style="text-transform: capitalize;">Selamat datang <strong>  </strong> di halaman Dashboard <b> Sistem Informasi Koperasi Amanah Sejati Kota Bengkulu</b></div>
                     </div>
                 </div>
             </section>
