@@ -2,76 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisTransaksi;
-use App\Models\SimpananWajib;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\SimpananWajib;
+use App\Models\JenisTransaksi;
 use Illuminate\Support\Facades\Validator;
 
 class SimpananWajibController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $simpananWajibs = SimpananWajib::all();
-        return view('backend/simpananWajib.index',[
+        return view('backend/simpananWajib.index', [
             'simpananWajibs'  =>  $simpananWajibs,
         ]);
     }
 
-    public function create(){
-        $jenisTransaksis = JenisTransaksi::all();
-        return view('backend/simpananWajib.create',[
-            'jenisTransaksis'   =>  $jenisTransaksis,
+    public function create()
+    {
+        $anggotas = User::all();
+        return view('backend/simpananWajib.create', [
+            'anggotas'   =>  $anggotas,
         ]);
     }
-    
-    public function store(Request $request){
+
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'jabatan_id'            =>  'required',
-            'nama_lengkap'          =>  'required',
-            'nik'                   =>  'required',
-            'tahun_keanggotaan'     =>  'required',
-            'alamat'                =>  'required',
-            'email'                 =>  'required|email|unique:users,email',
-            'foto'                  =>  'required|image|mimes:png,jpg,jpeg|max:1000',
-            'passowrd'              =>  'required',
+            'anggota_id'            => 'required',
+            'tanggal_transaksi'     => 'required|numeric',
+            'bulan_transaksi'       => 'required|numeric|digits:2',
+            'tahun_transaksi'       => 'required|numeric|digits:4|min:1000|max:9999',
         ], [
-            'jabatan_id.required'           => 'Kolom Jabatan harus diisi.',
-            'nama_lengkap.required'         => 'Kolom Nama Lengkap harus diisi.',
-            'nik.required'                  => 'Kolom NIK harus diisi.',
-            'tahun_keanggotaan.required'    => 'Kolom Tahun Keanggotaan harus diisi.',
-            'alamat.required'               => 'Kolom Alamat harus diisi.',
-            'email.required'                => 'Kolom Email harus diisi.',
-            'email.email'                   => 'Format Email tidak valid.',
-            'email.unique'                  => 'Email sudah digunakan.',
-            'foto.required'                 => 'Kolom Foto harus diisi.',
-            'foto.image'                    => 'File yang diunggah harus berupa gambar.',
-            'foto.mimes'                    => 'Format file gambar harus PNG, JPG, atau JPEG.',
-            'foto.max'                      => 'Ukuran file gambar maksimal 1000 KB (1 MB).',
-            'password.required'             => 'Kolom Password harus diisi.',
+            'anggota_id.required'   => 'Kolom Anggota harus diisi.',
+            'tanggal_transaksi.required' => 'Kolom Tanggal Transaksi harus diisi.',
+            'tanggal_transaksi.numeric' => 'Kolom Tanggal Transaksi harus berupa angka.',
+            'bulan_transaksi.required' => 'Kolom Bulan Transaksi harus diisi.',
+            'bulan_transaksi.numeric' => 'Kolom Bulan Transaksi harus berupa angka.',
+            'bulan_transaksi.digits' => 'Kolom Bulan Transaksi harus terdiri dari 2 digit angka.',
+            'tahun_transaksi.required' => 'Kolom Tahun Transaksi harus diisi.',
+            'tahun_transaksi.numeric' => 'Kolom Tahun Transaksi harus berupa angka.',
+            'tahun_transaksi.digits' => 'Kolom Tahun Transaksi harus terdiri dari 4 digit angka.',
+            'tahun_transaksi.min' => 'Kolom Tahun Transaksi harus memiliki nilai minimal 1000.',
+            'tahun_transaksi.max' => 'Kolom Tahun Transaksi harus memiliki nilai maksimal 9999.',
         ]);
+
 
         if ($validator->fails()) {
             return response()->json(['error' => 0, 'text' => $validator->errors()->first()], 422);
         }
 
-        $file = $request->file('image_path');
-        $uniqueName = null;
-        if ($file) {
-            $uniqueName = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
-        }
-
-        $path = $file->storeAs('public/gambar_artikel', $uniqueName);
-
-
-        $simpan = User::create([
-            'jabatan_id'        =>  $request->jabatan_id,
-            'nama_lengkap'      =>  $request->nama_lengkap,
-            'nik'               =>  $request->nik,
-            'tahun_keanggotaan' =>  $request->tahun_keanggotaan,
-            'alamat'            =>  $request->alamat,
-            'email'             =>  $request->email,
-            'image_path'        =>  $request->image_path,
-            'passowrd'          =>  $request->passowrd,
+        $simpan = SimpananWajib::create([
+            'jenis_transaksi_id'    =>  1,
+            'anggota_id'            =>  $request->anggota_id,
+            'tanggal_transaksi' =>  $request->tanggal_transaksi,
+            'bulan_transaksi'   =>  $request->bulan_transaksi,
+            'tahun_transaksi'   =>  $request->tahun_transaksi,
         ]);
 
         if ($simpan) {
@@ -79,16 +66,18 @@ class SimpananWajibController extends Controller
                 'text'  =>  'Yeay, simpanan wajib baru berhasil disimpan',
                 'url'   =>  url('/simpanan_wajib/'),
             ]);
-        }else {
+        } else {
             return response()->json(['text' =>  'Oopps, simpanan wajib gagal disimpan']);
         }
     }
 
-    public function edit(SimpananWajib $simpananWajib){
+    public function edit(SimpananWajib $simpananWajib)
+    {
         return $simpananWajib;
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'nama_jenis_transaksi' => 'required|string',
             'kategori_transaksi'    =>  'required',
@@ -113,7 +102,7 @@ class SimpananWajibController extends Controller
                 'text'  =>  'Yeay, simpanan wajib berhasil diubah',
                 'url'   =>  url('/simpanan_wajib/'),
             ]);
-        }else {
+        } else {
             return response()->json(['text' =>  'Oopps, simpanan wajib gagal diubah']);
         }
     }

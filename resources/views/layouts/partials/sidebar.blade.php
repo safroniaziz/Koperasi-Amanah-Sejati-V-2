@@ -26,6 +26,13 @@
     </a>
 </li>
 
+<li class="{{ set_active('pinjaman') }}">
+    <a href="{{ route('pinjaman') }}">
+        <i class="fa fa-coins"></i>
+        <span>Pinjaman</span>
+    </a>
+</li>
+
 <li class="{{ set_active('anggota') }}">
     <a href="{{ route('anggota') }}">
         <i class="fa fa-users"></i>
