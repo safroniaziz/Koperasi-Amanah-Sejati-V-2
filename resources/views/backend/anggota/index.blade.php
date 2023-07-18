@@ -23,7 +23,7 @@
                             <i class="fa fa-success-circle"></i><strong>Berhasil :</strong> {{ $message }}
                         </div>
                     @endif
-                    <table class="table table-bordered table-hover" id="table">
+                    <table class="table table-bordered table-hover" id="table" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>No</th>
