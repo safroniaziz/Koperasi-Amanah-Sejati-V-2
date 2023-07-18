@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TransaksiKoperasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnggotaController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SimpananWajibController;
 use App\Http\Controllers\JenisTransaksiController;
+use App\Http\Controllers\TransaksiKoperasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +64,15 @@ Route::controller(PinjamanController::class)->prefix('pinjaman')->group(function
     Route::get('/{pinjaman}/edit', 'edit')->name('pinjaman.edit');
     Route::patch('/update', 'update')->name('pinjaman.update');
     Route::delete('/{pinjaman}/delete', 'delete')->name('pinjaman.delete');
+});
+
+Route::controller(TransaksiKoperasiController::class)->prefix('transaksiKoperasi')->group(function () {
+    Route::get('/', 'index')->name('transaksiKoperasi');
+    Route::get('/create', 'create')->name('transaksiKoperasi.create');
+    Route::post('/', 'store')->name('transaksiKoperasi.store');
+    Route::get('/{transaksiKoperasi}/edit', 'edit')->name('transaksiKoperasi.edit');
+    Route::patch('/update', 'update')->name('transaksiKoperasi.update');
+    Route::delete('/{transaksiKoperasi}/delete', 'delete')->name('transaksiKoperasi.delete');
 });
 
 Route::controller(AnggotaController::class)->prefix('anggota')->group(function () {

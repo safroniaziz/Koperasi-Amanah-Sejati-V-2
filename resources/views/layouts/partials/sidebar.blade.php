@@ -33,6 +33,13 @@
     </a>
 </li>
 
+<li class="{{ set_active('transaksiKoperasi') }}">
+    <a href="{{ route('transaksiKoperasi') }}">
+        <i class="fa fa-coins"></i>
+        <span>Transaksi Koperasi</span>
+    </a>
+</li>
+
 <li class="{{ set_active('anggota') }}">
     <a href="{{ route('anggota') }}">
         <i class="fa fa-users"></i>
