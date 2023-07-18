@@ -51,10 +51,10 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <a onclick="editJenisTransaksi({{ $anggota->id }})" class="btn btn-success btn-sm btn-flat"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                                    <a href="{{ route('anggota.edit',[$anggota->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-edit"></i>&nbsp; Edit</a>
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('jenisTransaksi.delete',[$anggota->id]) }}" method="POST" id="form-hapus">
+                                                    <form action="{{ route('anggota.delete',[$anggota->id]) }}" method="POST" id="form-hapus">
                                                         {{ csrf_field() }} {{ method_field('DELETE') }}
                                                         <button type="submit" class="btn btn-danger btn-sm btn-flat show_confirm"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
                                                     </form>
@@ -66,7 +66,7 @@
                             @empty
                                 <tr>
                                     <td colspan="9" class="text-center" style="font-style:italic;">
-                                        <a class="text-danger">data jenis transaksi masih kosong</a>
+                                        <a class="text-danger">data anggota masih kosong</a>
                                     </td>
                                 </tr>
                             @endforelse
@@ -86,29 +86,6 @@
                 responsive : true,
             });
         } );
-
-        function editJenisTransaksi(id){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            url = "{{ url('jenis_transaksi').'/' }}"+id+'/edit';
-            $.ajax({
-                url : url,
-                type : 'GET',
-                success : function(data){
-                    $('#modalEdit').modal('show');
-                    $('#jenis_transaksi_id_edit').val(data.id);
-                    $('#nama_jenis_transaksi_edit').val(data.nama_jenis_transaksi);
-                    $('#kategori_transaksi_edit').val(data.kategori_transaksi);
-                },
-                error:function(){
-                    $('#gagal').show(100);
-                }
-            });
-            return false;
-        }
 
         $('.show_confirm').click(function(event) {
             var form =  $(this).closest("form");
