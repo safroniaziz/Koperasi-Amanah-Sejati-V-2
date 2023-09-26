@@ -3,7 +3,7 @@
 @section('page','Data Jenis Transaksi')
 @section('subPage','Semua Data')
 @section('user-login')
-    {{-- {{ Auth::user()->nama_lengkap }} --}}
+    {{ Auth::user()->nama_lengkap }}
 @endsection
 @section('content')
     <div class="row">
@@ -18,14 +18,14 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body table-responsive">
+                <div class="box-body">
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                             <i class="fa fa-success-circle"></i><strong>Berhasil :</strong> {{ $message }}
                         </div>
                     @endif
-                    <table class="table table-bordered table-hover" id="table">
+                    <table class="table table-bordered table-hover table-striped" id="table" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -42,7 +42,13 @@
                                 <tr>
                                     <td>{{ $index+1 }}</td>
                                     <td>{{ $jenisTransaksi->nama_jenis_transaksi }}</td>
-                                    <td>{{ $jenisTransaksi->kategori_transaksi }}</td>
+                                    <td>
+                                        @if ($jenisTransaksi->kategori_transaksi == "masuk")
+                                            <small class="label label-primary"><i class="fa fa-arrow-circle-left">&nbsp;</i>Masuk</small>
+                                        @else
+                                            <small class="label label-danger"><i class="fa fa-arrow-circle-right">&nbsp;</i>Keluar</small>
+                                        @endif
+                                    </td>
                                     <td>
                                         <table>
                                             <tr>

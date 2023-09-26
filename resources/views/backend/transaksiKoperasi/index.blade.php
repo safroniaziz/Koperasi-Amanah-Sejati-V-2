@@ -3,7 +3,7 @@
 @section('page', 'Data Transaksi Koperasi')
 @section('subPage', 'Semua Data')
 @section('user-login')
-    {{-- {{ Auth::user()->nama_lengkap }} --}}
+    {{ Auth::user()->nama_lengkap }}
 @endsection
 @section('content')
     <div class="row">
@@ -17,14 +17,14 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body table-responsive">
+                <div class="box-body">
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block">
                             <button type="button" class="close" data-dismiss="alert">×</button>
                             <i class="fa fa-success-circle"></i><strong>Berhasil :</strong> {{ $message }}
                         </div>
                     @endif
-                    <table class="table table-bordered table-hover" id="table" style="width: 100%">
+                    <table class="table table-bordered table-hover table-striped" id="table" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -32,47 +32,34 @@
                                 <th>Nama Anggota</th>
                                 <th>Jumlah Transaksi</th>
                                 <th>Tanggal Transaksi</th>
-                                <th>Bulan Transaksi</th>
-                                <th>Tahun Transaksi</th>
-                                <th>Angsuran Ke</th>
+                                <th>Kategori Transaksi</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                $no = 1;
+                                $startIndex = ($transaksiKoperasis->currentPage() - 1) * $transaksiKoperasis->perPage();
                             @endphp
                             @forelse ($transaksiKoperasis as $index => $transaksiKoperasi)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td> {{ $startIndex + $index + 1 }} </td>
                                     <td>{{ $transaksiKoperasi->jenisTransaksi->nama_jenis_transaksi }}</td>
                                     <td>{{ $transaksiKoperasi->anggota->nama_lengkap }}</td>
-                                    <td>{{ $transaksiKoperasi->jumlah_transaksi }}</td>
-                                    <td>{{ $transaksiKoperasi->tanggal_transaksi }}</td>
-
-                                    @php
-                                        $bulan = $transaksiKoperasi->bulan_transaksi;
-                                        $bulanTransaksi = \Carbon\Carbon::parse('2023-' . $bulan . '-01')->format('F');
-                                    @endphp
-                                    <td>{{ $bulanTransaksi }}</td>
-
-                                    <td>{{ $transaksiKoperasi->tahun_transaksi }}</td>
-                                    <td>{{ $transaksiKoperasi->angsuran_ke }}</td>
+                                    <td>Rp.{{ number_format($transaksiKoperasi->jumlah_transaksi) }},-</td>
+                                    <td>{{ $transaksiKoperasi->tanggal_transaksi->isoFormat('dddd, DD MMMM YYYY') }}</td>
+                                    <td>{{ $transaksiKoperasi->jenisTransaksi->kategori_transaksi }}</td>
+                                    <td>{{ $transaksiKoperasi->keterangan }}</td>
                                     <td>
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <a onclick="editJenisTransaksi({{ $transaksiKoperasi->id }})"
-                                                        class="btn btn-success btn-sm btn-flat"><i
-                                                            class="fa fa-edit"></i>&nbsp; Edit</a>
+                                                    <a href="{{ route('transaksiKoperasi.edit',[$transaksiKoperasi->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-edit"></i>&nbsp; Edit</a>
                                                 </td>
                                                 <td>
-                                                    <form
-                                                        action="{{ route('jenisTransaksi.delete', [$transaksiKoperasi->id]) }}"
-                                                        method="POST" id="form-hapus">
+                                                    <form action="{{ route('transaksiKoperasi.delete',[$transaksiKoperasi->id]) }}" method="POST" class="form">
                                                         {{ csrf_field() }} {{ method_field('DELETE') }}
-                                                        <button type="submit"
-                                                            class="btn btn-danger btn-sm btn-flat show_confirm"><i
-                                                                class="fa fa-trash"></i>&nbsp;Hapus</button>
+                                                        <button type="submit" class="btn btn-danger show_confirm btn-sm btn-flat"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -88,6 +75,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{$transaksiKoperasis->links("pagination::bootstrap-4") }}
                 </div>
             </div>
         </div>
@@ -97,10 +85,26 @@
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
-                responsive: true,
-            });
+        $(document).on('submit', '.form', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                typeData: "JSON",
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    $("#btnSubmit").attr("disabled", true);
+                    toastr.success(res.text, 'Yeay, Berhasil');
+                    setTimeout(function() {
+                        window.location.href = res.url;
+                    }, 100);
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON.text, 'Ooopps, Ada Kesalahan');
+                }
+            })
         });
 
         $('.show_confirm').click(function(event) {

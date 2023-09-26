@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pinjamen', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('jenis_transaksi_id');
             $table->unsignedBigInteger('anggota_id');
             $table->integer('jumlah_transaksi');
             $table->integer('presentase_jasa');
@@ -24,11 +23,10 @@ return new class extends Migration
             $table->string('tahun_mulai_angsuran');
             $table->string('bulan_selesai_angsuran');
             $table->string('tahun_selesai_angsuran');
-            $table->string('pinjaman_ke');
+            $table->string('pinjaman_ke')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('jenis_transaksi_id')->references('id')->on('jenis_transaksis');
             $table->foreign('anggota_id')->references('id')->on('users');
         });
     }

@@ -3,7 +3,7 @@
 @section('page', 'Data Simpanan Wajib')
 @section('subPage', 'Semua Data')
 @section('user-login')
-    {{-- {{ Auth::user()->nama_lengkap }} --}}
+    {{ Auth::user()->nama_lengkap }}
 @endsection
 @section('content')
     <div class="row">
@@ -11,111 +11,59 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title"><i class="fa fa-calendar"></i>&nbsp;Manajemen Data Simpanan Wajib</h3>
-                    <div class="box-tools pull-right">
-                        <a href="{{ route('simpananWajib.create') }}" class="btn btn-primary btn-sm btn-flat"><i
-                                class="fa fa-plus"></i>&nbsp; Tambah Data</a>
-                    </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body table-responsive">
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success alert-block">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <i class="fa fa-success-circle"></i><strong>Berhasil :</strong> {{ $message }}
-                        </div>
-                    @endif
-                    <table class="table table-bordered table-hover" id="table" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Jenis Transaksi</th>
-                                <th>Nama Anggota</th>
-                                <th>Tanggal Transaksi</th>
-                                <th>Bulan Transaksi</th>
-                                <th>Tahun Transaksi</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @forelse ($simpananWajibs as $index => $simpananWajib)
+                <div class="box-body">
+                    <div class="row">
+                        <form method="GET">
+                            <div class="form-group col-md-12" style="margin-bottom: 5px !important;">
+                                <label for="nama" class="col-form-label">Cari Nama Investor</label>
+                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama/Email Anggota..." value="{{$nama}}">
+                            </div>
+                            <div class="col-md-12" style="margin-bottom:10px !important;">
+                                <button type="submit" class="btn btn-success btn-sm btn-flat mb-2"><i class="fa fa-search"></i>&nbsp;Cari Data</button>
+                            </div>
+                        </form>
+                    </div>
+                    <small class="label label-default">Total Data : {{ $anggotas->total() }} Data</small>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped" id="table" style="width: 100%">
+                            <thead>
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $simpananWajib->jenisTransaksi->nama_jenis_transaksi }}</td>
-                                    <td>{{ $simpananWajib->anggota->nama_lengkap }}</td>
-                                    <td>{{ $simpananWajib->tanggal_transaksi }}</td>
-
-                                    @php
-                                        $bulan = $simpananWajib->bulan_transaksi;
-                                        $namaBulan = \Carbon\Carbon::parse('2023-' . $bulan . '-01')->format('F');
-                                    @endphp
-                                    <td>{{ $namaBulan }}</td>
-
-                                    <td>{{ $simpananWajib->tahun_transaksi }}</td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <a onclick="editJenisTransaksi({{ $simpananWajib->id }})"
-                                                        class="btn btn-success btn-sm btn-flat"><i
-                                                            class="fa fa-edit"></i>&nbsp; Edit</a>
-                                                </td>
-                                                <td>
-                                                    <form
-                                                        action="{{ route('jenisTransaksi.delete', [$simpananWajib->id]) }}"
-                                                        method="POST" id="form-hapus">
-                                                        {{ csrf_field() }} {{ method_field('DELETE') }}
-                                                        <button type="submit"
-                                                            class="btn btn-danger btn-sm btn-flat show_confirm"><i
-                                                                class="fa fa-trash"></i>&nbsp;Hapus</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
+                                    <th>No</th>
+                                    <th>Nama Anggota</th>
+                                    <th>Total Bertransaksi</th>
+                                    <th>Jumlah Keseluruhan</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center" style="font-style:italic;">
-                                        <a class="text-danger">data jenis transaksi masih kosong</a>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $startIndex = ($anggotas->currentPage() - 1) * $anggotas->perPage();
+                                @endphp
+                                @forelse ($anggotas as $index => $anggota)
+                                    <tr>
+                                        <td> {{ $startIndex + $index + 1 }} </td>
+                                        <td>{{ $anggota->nama_lengkap }}</td>
+                                        <td>{{ $anggota->totalSimpananWajib() }} Kali</td>
+                                        <td>Rp.{{ number_format($anggota->jumlahSimpananWajib()) }},-</td>
+                                        <td>
+                                            <a href="{{ route('simpananWajib.detail',[$anggota->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp;Detail</a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center" style="font-style:italic;">
+                                            <a class="text-danger">data masih kosong</a>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        {{$anggotas->links("pagination::bootstrap-4") }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
-                responsive: true,
-            });
-        });
-
-        $('.show_confirm').click(function(event) {
-            var form = $(this).closest("form");
-            var name = $(this).data("name");
-            event.preventDefault();
-            swal({
-                    title: `Apakah Anda Yakin?`,
-                    text: "Harap untuk memeriksa kembali sebelum menghapus data.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        form.submit();
-                    }
-                });
-        });
-    </script>
-@endpush

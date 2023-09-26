@@ -4,14 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SimpananWajib extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'transaksi_id',
         'jenis_transaksi_id',
         'anggota_id',
+        'operator_id',
+        'jumlah_transaksi',
         'tanggal_transaksi',
         'bulan_transaksi',
         'tahun_transaksi',

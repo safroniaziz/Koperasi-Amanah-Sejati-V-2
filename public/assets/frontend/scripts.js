@@ -34,25 +34,39 @@ let translationSwitcher = function () {
     return {
         selected: localStorage.getItem('language-storage'),
         footer_fh: {
+            en: "Faculty of Law",
             id: "Fakultas Hukum",
+            de: "Rechtswissenschaftliche Fakultät",
         },
         footer_feb: {
+            en: "Faculty of Economics and Business",
             id: "Fakultas Ekonomi dan Bisnis",
+            de: "Wirtschaftswissenschaftliche Fakultät",
         },
         footer_isip: {
+            en: "Faculty Ilmu Social dan Politics",
             id: "Fakultas Ilmu Sosial dan Politik",
+            de: "Fakultät für Sozial- und Politikwissenschaften",
         },
         footer_fp: {
+            en: "Faculty of Agriculture",
             id: "Fakultas Pertanian",
+            de: "Fakultät der Landwirtschaft",
         },
         footer_ft: {
+            en: "Faculty of Engineering",
             id: "Fakultas Teknik",
+            de: "Fakultät für Ingenieurwissenschaften",
         },
         footer_fk: {
+            en: "Faculty of Medicine",
             id: "Fakultas Kedokteran",
+            de: "Medizinische Fakultät",
         },
         nav_unib: {
+            en: "University of Bengkulu",
             id: "Universitas Bengkulu",
+            de: "Universität Bengkulu",
         },
 
         countries: [{
@@ -60,7 +74,17 @@ let translationSwitcher = function () {
                 lang: "id",
                 flag: "id",
             },
+            {
+                label: "English",
+                lang: "en",
+                flag: "gb",
+            },
 
+            {
+                label: "German",
+                lang: "de",
+                flag: "de",
+            },
         ],
         menuToggle: false,
     };

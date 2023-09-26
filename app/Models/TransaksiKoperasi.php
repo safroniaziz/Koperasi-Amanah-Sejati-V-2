@@ -12,11 +12,12 @@ class TransaksiKoperasi extends Model
     protected $fillable = [
         'jenis_transaksi_id',
         'anggota_id',
+        'operator_id',
+        'kategori_transaksi',
         'jumlah_transaksi',
         'tanggal_transaksi',
         'bulan_transaksi',
         'tahun_transaksi',
-        'angsuran_ke',
     ];
 
     public function jenisTransaksi()

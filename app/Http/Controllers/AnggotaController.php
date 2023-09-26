@@ -12,15 +12,26 @@ use Illuminate\Support\Facades\Validator;
 
 class AnggotaController extends Controller
 {
-    public function index(){
-        $anggotas = User::orderBy('created_at','desc')->get();
+    public function index(Request $request){
+        $nama = $request->query('nama');
+        if (!empty($nama)) {
+            $anggotas = User::anggota()
+                            ->where('nama_lengkap','LIKE','%'.$nama.'%')
+                            ->orWhere('email','LIKE','%'.$nama.'%')
+                            ->orderBy('created_at','asc')->paginate(10);
+        }else {
+            $anggotas = User::anggota()
+                            ->orderBy('created_at','asc')->paginate(10);
+        }
+
         return view('backend/anggota.index',[
             'anggotas'  =>  $anggotas,
+            'nama'  =>  $nama,
         ]);
     }
 
     public function create(){
-        $jabatans = Jabatan::all();
+        $jabatans = Jabatan::where('nama_jabatan','!=','Operator')->get();
         return view('backend/anggota.create',[
             'jabatans'   =>  $jabatans,
         ]);
@@ -30,7 +41,7 @@ class AnggotaController extends Controller
         $validator = Validator::make($request->all(), [
             'jabatan_id'            => 'required',
             'nama_lengkap'          => 'required',
-            'nik'                   => 'required|numeric|unique:users,nik',
+            'nik'                   => 'required|numeric',
             'tahun_keanggotaan'     => 'required|digits:4|numeric|min:1000|max:9999',
             'alamat'                => 'required',
             'email'                 => 'required|email|unique:users,email',
@@ -108,7 +119,6 @@ class AnggotaController extends Controller
             'nik' => [
                 'required',
                 'numeric',
-                Rule::unique('users', 'nik')->ignore($anggota->id),
             ],
             'tahun_keanggotaan' => 'required|digits:4|numeric|min:1000|max:9999',
             'alamat' => 'required',
@@ -123,7 +133,6 @@ class AnggotaController extends Controller
             'nama_lengkap.required'         => 'Kolom Nama Lengkap harus diisi.',
             'nik.required'                  => 'Kolom NIK harus diisi.',
             'nik.numeric'                   => 'Kolom NIK harus berupa angka.',
-            'nik.unique'                    => 'NIK sudah digunakan.',
             'tahun_keanggotaan.required'    => 'Kolom Tahun Keanggotaan harus diisi.',
             'tahun_keanggotaan.digits'      => 'Kolom Tahun Keanggotaan harus berisi 4 digit.',
             'tahun_keanggotaan.numeric'     => 'Kolom Tahun Keanggotaan harus berupa angka.',

@@ -3,7 +3,7 @@
 @section('page','Data Jabatan')
 @section('subPage','Semua Data')
 @section('user-login')
-    {{-- {{ Auth::user()->nama_lengkap }} --}}
+    {{ Auth::user()->nama_lengkap }}
 @endsection
 @section('content')
     <div class="row">
@@ -18,14 +18,14 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body table-responsive">
+                <div class="box-body">
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                             <i class="fa fa-success-circle"></i><strong>Berhasil :</strong> {{ $message }}
                         </div>
                     @endif
-                    <table class="table table-bordered table-hover" id="table">
+                    <table class="table table-bordered table-hover table-striped" id="table">
                         <thead>
                             <tr>
                                 <th>No</th>

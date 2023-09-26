@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('angsuran_pinjamen', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('jenis_transaksi_id');
+            $table->unsignedBigInteger('transaksi_id');
             $table->unsignedBigInteger('pinjaman_id');
             $table->unsignedBigInteger('anggota_id');
             $table->integer('angsuran_pokok');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('tanggal_transaksi');
             $table->integer('bulan_transaksi');
             $table->string('tahun_transaksi');
-            $table->string('angsuran_ke');
+            $table->integer('angsuran_ke');
             $table->timestamps();
             $table->softDeletes();
 

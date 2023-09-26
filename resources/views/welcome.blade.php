@@ -1,140 +1,1201 @@
+
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
+
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Koperasi Amanah Sejati</title>
+        <link rel="shortcut icon" href="/src/logo.png">
 
-        <title>Laravel</title>
+        <!-- stylesheets tailwind -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="{{ asset('assets/frontend/output.css') }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <!-- alpine js -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
+        <!-- tailwindcss flag-icon  -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.6/css/flag-icon.min.css" rel="stylesheet">
 
-        <!-- Styles -->
-        <style>
-            /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Figtree, sans-serif;font-feature-settings:normal}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::-webkit-backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.relative{position:relative}.mx-auto{margin-left:auto;margin-right:auto}.mx-6{margin-left:1.5rem;margin-right:1.5rem}.ml-4{margin-left:1rem}.mt-16{margin-top:4rem}.mt-6{margin-top:1.5rem}.mt-4{margin-top:1rem}.-mt-px{margin-top:-1px}.mr-1{margin-right:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.h-16{height:4rem}.h-7{height:1.75rem}.h-6{height:1.5rem}.h-5{height:1.25rem}.min-h-screen{min-height:100vh}.w-auto{width:auto}.w-16{width:4rem}.w-7{width:1.75rem}.w-6{width:1.5rem}.w-5{width:1.25rem}.max-w-7xl{max-width:80rem}.shrink-0{flex-shrink:0}.scale-100{--tw-scale-x:1;--tw-scale-y:1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.items-center{align-items:center}.justify-center{justify-content:center}.gap-6{gap:1.5rem}.gap-4{gap:1rem}.self-center{align-self:center}.rounded-lg{border-radius:0.5rem}.rounded-full{border-radius:9999px}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity))}.bg-dots-darker{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E")}.from-gray-700\/50{--tw-gradient-from:rgb(55 65 81 / 0.5);--tw-gradient-to:rgb(55 65 81 / 0);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0);--tw-gradient-stops:var(--tw-gradient-from), transparent, var(--tw-gradient-to)}.bg-center{background-position:center}.stroke-red-500{stroke:#ef4444}.stroke-gray-400{stroke:#9ca3af}.p-6{padding:1.5rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.text-center{text-align:center}.text-right{text-align:right}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-gray-500\/20{--tw-shadow-color:rgb(107 114 128 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-red-500 *::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.selection\:bg-red-500::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity))}.focus\:rounded-sm:focus{border-radius:0.125rem}.focus\:outline:focus{outline-style:solid}.focus\:outline-2:focus{outline-width:2px}.focus\:outline-red-500:focus{outline-color:#ef4444}.group:hover .group-hover\:stroke-gray-600{stroke:#4b5563}.z-10{z-index: 10}@media (prefers-reduced-motion: no-preference){.motion-safe\:hover\:scale-\[1\.01\]:hover{--tw-scale-x:1.01;--tw-scale-y:1.01;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}}@media (prefers-color-scheme: dark){.dark\:bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity))}.dark\:bg-gray-800\/50{background-color:rgb(31 41 55 / 0.5)}.dark\:bg-red-800\/20{background-color:rgb(153 27 27 / 0.2)}.dark\:bg-dots-lighter{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E")}.dark\:bg-gradient-to-bl{background-image:linear-gradient(to bottom left, var(--tw-gradient-stops))}.dark\:stroke-gray-600{stroke:#4b5563}.dark\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity))}.dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.dark\:ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.dark\:ring-inset{--tw-ring-inset:inset}.dark\:ring-white\/5{--tw-ring-color:rgb(255 255 255 / 0.05)}.dark\:hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.group:hover .dark\:group-hover\:stroke-gray-400{stroke:#9ca3af}}@media (min-width: 640px){.sm\:fixed{position:fixed}.sm\:top-0{top:0px}.sm\:right-0{right:0px}.sm\:ml-0{margin-left:0px}.sm\:flex{display:flex}.sm\:items-center{align-items:center}.sm\:justify-center{justify-content:center}.sm\:justify-between{justify-content:space-between}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:gap-8{gap:2rem}.lg\:p-8{padding:2rem}}
-        </style>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset('assets/frontend/style.css') }}">
+        <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;700;800;900&display=swap"
+        rel="stylesheet"> -->
+
     </head>
-    <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+    <body id="home" class="  antialiased leading-normal tracking-wide 2xl:text-xl font-nunito  bg-white   text-slate-900"
+        x-data="{ switcher: translationSwitcher() }">
+        <!-- navbar  -->
+        <nav x-data="{isOpen: false }" class="fixed top-0 z-50 w-full     ">
+            <div id="navbar" class="px-6 py-6 mx-auto duration-300 bg-white  shadow-md ">
+                <div class="lg:flex container mx-auto lg:items-center lg:justify-between">
+                    <div class="flex items-center justify-between">
+                        <!-- logo -->
+                        <a href="/view/home.html" class="flex items-center text-black   mx-4 md:ml-6">
+                            <img src="{{ asset('assets/img/logo.png') }}" class="md:w-14 md:h-14 w-12 h-12">
 
-            <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <div class="flex justify-center">
-                    <svg viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
-                        <path d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z" fill="#FF2D20"/>
-                    </svg>
-                </div>
-
-                <div class="mt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                        <a href="https://laravel.com/docs" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Documentation</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
-                                </p>
+                            <div class="ml-3 text-[#0b3960]   ">
+                                <strong
+                                    class=" text-2xl md:text-3xl font-extrabold  tracking-wider uppercase">KOPERASI</strong>
+                                <p class="text-[13px] md:text-[18px] text-[#0b3960] tracking-widest font-semibold  uppercase -mt-2
+                                    relative">
+                                    Amanah Sejati</p>
                             </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
                         </a>
-
-                        <a href="https://laracasts.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laracasts</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <a href="https://laravel-news.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laravel News</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </p>
-                            </div>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
-
-                        <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-                            <div>
-                                <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64" />
-                                    </svg>
-                                </div>
-
-                                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</h2>
-
-                                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Forge</a>, <a href="https://vapor.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Vapor</a>, <a href="https://nova.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Nova</a>, and <a href="https://envoyer.io" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Telescope</a>, and more.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
-                        <div class="flex items-center gap-4">
-                            <a href="https://github.com/sponsors/taylorotwell" class="group inline-flex items-center hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="-mt-px mr-1 w-5 h-5 stroke-gray-400 dark:stroke-gray-600 group-hover:stroke-gray-600 dark:group-hover:stroke-gray-400">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                        <!-- Mobile menu button -->
+                        <div class="flex lg:hidden">
+                            <button x-cloak @click="isOpen = !isOpen" type="button"
+                                class="text-gray-200 hover:text-gray-400 focus:outline-none focus:text-gray-100 "
+                                aria-label="toggle menu">
+                                <svg x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" />
                                 </svg>
-                                Sponsor
-                            </a>
+                                <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
+                    <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
+                    <div x-cloak :class="[isOpen ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white   md:bg-none menu-navbar text-white lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto
+                        lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center " id="list-menu">
+                        <div class="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8 text-[16px]">
+                            <a href="#home" class="px-3 py-2 mx-2 mt-2 text-gray-600 transition-colors active-menu duration-300 transform rounded-md
+                                lg:mt-0 hover:text-[#00a2ff] ">Home</a>
+                            <a href="#tentang" class="px-3 py-2 text-gray-600 mx-2 mt-2 transition-colors duration-300 transform rounded-md lg:mt-0
+                                hover:text-[#00a2ff]   ">Tentang</a>
+                            <a href="#anggota"
+                                class="px-3 py-2 mx-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-md lg:mt-0 hover:text-[#00a2ff]       ">Anggota</a>
+                            <a href="#galeri"
+                                class="px-3 py-2 mx-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-md lg:mt-0 hover:text-[#00a2ff]       ">Galeri</a>
+                            <a href="#berita"
+                                class="px-3 py-2 mx-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-md lg:mt-0 hover:text-[#00a2ff]       ">Berita</a>
+                            @if (auth()->check())
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out text-red-600"></i>
+                                <span class="text-red-600">
+                                    Logout
+                                </span>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="px-3 py-2 mx-2 mt-2 text-red-600 transition-colors duration-300 transform rounded-md lg:mt-0 hover:text-[#00a2ff]">
+                                @csrf
+                            </form>
+                            @else
+                                <a href="{{ route('login') }}" class="px-3 py-2 mx-2 mt-2 text-red-600 transition-colors duration-300 transform rounded-md lg:mt-0 hover:text-[#00a2ff]">Login</a>
+                            @endif
+                        </div>
 
-                    <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
                 </div>
             </div>
+
+        </nav>
+        <!-- end navbar -->
+
+        <!-- slider -->
+        <section id="home">
+
+            <div
+                class="relative text-center pt-20 pb-40 overflow-hidden  bg-gradient-to-tl from-blue-900  to-cyan-400      md:bg-transparent     ">
+                <svg id="visual" viewBox="0 0 900 450" class="w-full h-full absolute" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+                    <g>
+                        <g transform="translate(781 121)">
+                            <path d="M0 -102.1L88.4 -51L88.4 51L0 102.1L-88.4 51L-88.4 -51Z" stroke="#fff" fill="none"
+                                stroke-width="2"></path>
+                        </g>
+                        <g transform="translate(565 197)">
+                            <path d="M0 -16L13.9 -8L13.9 8L0 16L-13.9 8L-13.9 -8Z" stroke="#fff" fill="none"
+                                stroke-width="2"></path>
+                        </g>
+                        <g transform="translate(42 9)">
+                            <path d="M0 -55L47.6 -27.5L47.6 27.5L0 55L-47.6 27.5L-47.6 -27.5Z" stroke="#fff" fill="none"
+                                stroke-width="2"></path>
+                        </g>
+                        <g transform="translate(866 344)">
+                            <path d="M0 -21L18.2 -10.5L18.2 10.5L0 21L-18.2 10.5L-18.2 -10.5Z" stroke="#fff" fill="none"
+                                stroke-width="2"></path>
+                        </g>
+                        <g transform="translate(593 420)">
+                            <path d="M0 -87L75.3 -43.5L75.3 43.5L0 87L-75.3 43.5L-75.3 -43.5Z" stroke="#fff" fill="none"
+                                stroke-width="2"></path>
+                        </g>
+                    </g>
+                </svg>
+
+                <div class=" w-full m-0 pt-3    ">
+                    <div class="container   mx-auto flex flex-wrap flex-col md:flex-row items-center  ">
+                        <!--Left Col-->
+                        <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" class="  mt-16 w-full md:w-3/6 justify-center items-start md:px-5 text-center md:text-right
+                        px-4   z-30">
+                            <p class="mt-2 text-3xl text-sh lg:text-5xl font-bold text-yellow-300 text-center md:text-right
+                                ">
+                                Koperasi Amanah Sejati
+                            </p>
+                            <p class=" my-2 leading-7 text-[16px] mb-8 text-sh text-white
+                                text-center md:text-right ">
+                                Selamat Datang di <span class="text-yellow-200">Koperasi Amanah Sejati</span>.
+                                Software aplikasi untuk memudahkan pengelolaan
+                                Koperasi. untuk mendekatkan layanan kepada anggota yang memiliki lokasi sebaran jauh
+                                guna memberikan layanan yang lebih baik, lebih cepat dan lebih akurat.
+                            </p>
+                        </div>
+                        <div data-aos="zoom-in-left" class="mt-16 w-full md:w-3/6 justify-center items-start md:px-5 text-center md:text-right
+                        px-4   z-30">
+                            <img src="{{ asset('assets/img/logo.png') }}" class="w-1/2 h-1/2 mx-auto img-sh">
+
+                        </div>
+                    </div>
+                </div>
+                <div class=" ">
+                    <div class="custom-shape-divider-bottom-1691295679 bottom-0  ">
+                        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[210px]" viewBox="0 0 1200 120"
+                            preserveAspectRatio="none">
+                            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff4c]"></path>
+                        </svg>
+                    </div>
+                    <div class="custom-shape-divider-bottom-1691295679 bottom-0 ">
+                        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[140px]" viewBox="0 0 1200 120"
+                            preserveAspectRatio="none">
+                            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff84]"></path>
+                        </svg>
+                    </div>
+                    <div class="custom-shape-divider-bottom-1691295679 bottom-0">
+                        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[80px]" viewBox="0 0 1200 120"
+                            preserveAspectRatio="none">
+                            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffffc9]"></path>
+                        </svg>
+                    </div>
+                    <div class="custom-shape-divider-bottom-1691295679 bottom-0">
+                        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[50px]" viewBox="0 0 1200 120"
+                            preserveAspectRatio="none">
+                            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffffcf]"></path>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- end slider -->
+
+        <!-- tentang  -->
+        <section id="tentang">
+            <div class="container pt-32 mx-auto" x-data="{ tab: 'all' }">
+                <h1 data-aos="fade-down"
+                    class="mb-12 text-center font-sans text-4xl lg:text-5xl font-bold text-[#0b3960]   "
+                    style="text-shadow:5px 5px 5px #38383863;">
+                    Tentang Koperasi Amanah Sejati</h1>
+            </div>
+
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto mt-20 mb-32">
+                <div data-aos="fade-left" class="col-span-1">
+                    <img src="{{ asset('assets/img/struktur.svg') }}" alt=""
+                        class="w-full h-full object-fill shadow-[5px_5px_10px_0px_#777] rounded-xl  ">
+                </div>
+                <div data-aos="fade-right" class="col-span-1 text-[16px]">
+                    <a href="#">
+                        <h4 class="text-xl font-bold text-[#00ccff]">Profil Singkat</h4>
+                    </a>
+                    <p>
+                        Susunan kepengurusan koperasi Amanah Sejati Tahun 2021 adalah sebagai berikut :
+                    </p>
+                    <table class="table-struktur">
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td colspan="2">Pengurus Inti Koperasi</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Ketua</td>
+                                <td>Candra Kesuma. ZA</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Sekretaris</td>
+                                <td>Suharto, SP </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Bendahara</td>
+                                <td>Nurul Komaraiah, S.Si, M.Si </td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td colspan="2">Badan Pengawas</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Koordinator</td>
+                                <td>Untung Idaman, HSB</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Anggota</td>
+                                <td>Ampermi, SH</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Anggota</td>
+                                <td>Soeroso, SH </td>
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td colspan="2">Pembina</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Walikota Bengkulu</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="2">Kepala Dinas Koperasi dan UKM Kota Bengkulu</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="2">Ir. H. Syiful A. Yusuf</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="my-32">
+                <div data-aos="fade-down" class="bg-white max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto text-[16px] leading-7  "
+                    x-data="{selected:1}">
+                    <ul class="shadow-box">
+
+                        <li class="relative border-b border-gray-100">
+
+                            <button type="button"
+                                class="w-full   py-5 text-left border-b-[1px] text-lg font-bold hover:text-[#00ccff]  duration-300 transform border-gray-200"
+                                x-bind:style="selected == 1 ? ' color:#00ccff' : ''"
+                                @click="selected !== 1 ? selected = 1 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span>
+                                        Pendirian/Pembentukan Koperasi </span>
+                                    <span class="ico-plus"></span>
+                                </div>
+                            </button>
+
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700 bg-gray-100  "
+                                x-ref="container1"
+                                x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <p>Pendirian/pembentukan koperasi dilaksanakan pada tanggal 28 Maret 2015.</p>
+                                </div>
+                            </div>
+
+                        </li>
+
+
+                        <li class="relative border-b border-gray-100">
+
+                            <button type="button"
+                                class="w-full   py-5 text-left border-b-[1px] text-lg font-bold hover:text-[#00ccff]  duration-300 transform"
+                                x-bind:style="selected == 2 ? ' color:#00ccff' : ''"
+                                @click="selected !== 2 ? selected = 2 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span>
+                                        Akta Pendirian
+                                    </span>
+                                    <span class="ico-plus"></span>
+                                </div>
+                            </button>
+
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700 bg-gray-100  "
+                                x-ref="container2"
+                                x-bind:style="selected == 2 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <p>Akta Pendirian Koperasi Nomor: 01/KPAS/2015 pada tanggal 6 April 2015, dikukuhkan
+                                        dengan akta notaris Kuswari
+                                        Ahmad, SH, M.Kn No.20 tanggal 13 April 2015 dan selanjutnya disahkan oleh Kepala
+                                        Dinas Koperasi dan UKM Kota
+                                        Bengkulu Nomor: 09/IX.4/2015 tanggal 15 April 2015.</p>
+                                </div>
+                            </div>
+
+                        </li>
+
+
+                        <li class="relative border-b border-gray-100">
+
+                            <button type="button"
+                                class="w-full   py-5 text-left border-b-[1px] text-lg font-bold hover:text-[#00ccff]  duration-300 transform"
+                                x-bind:style="selected == 3 ? ' color:#00ccff' : ''"
+                                @click="selected !== 3 ? selected = 3 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span>
+                                        Latar Belakang Pendirian </span>
+                                    <span class="ico-plus"></span>
+                                </div>
+                            </button>
+
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700 bg-gray-100  "
+                                x-ref="container3"
+                                x-bind:style="selected == 3 ? 'max-height: ' + $refs.container3.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <p>Koperasi merupakan organisasi ekonomi kerakyatan yang berwatak sosial yang didirikan
+                                        oleh para anggota
+
+                                        dipimpin oleh para anggota dan dijalankan untuk meningkatkan kesejahteraan para
+                                        anggota. Bertitik tolak dari
+                                        pengertian “Dari, oleh dan untuk anggota”, maka suatu koperasi itu akan mencapai
+                                        suatu kemajuan dan
+                                        pengembangan yang wajar kalau koperasi tersebut benar-benar memperoleh dukungan
+                                        peran serta aktif dan nyata
+                                        dari para anggotanya, baik itu berupa peran serta didalam pemupukan modal sendiri
+                                        oleh koperasi maupun peran
+                                        serta anggota dalam mengambil keputusan-keputusan yang penting bagi kebahagiaan
+                                        koperasi.
+
+                                        Dengan demikian dapat disimpulkan bahwa anggota adalah pemilik sekaligus pelanggan
+                                        dan pada hakekatnya
+                                        pengolahan dan penanganan kegiatan haruslah berada ditangan para anggota sendiri
+                                        yang kemudian didalam
+                                        undang-undang No.12 tahun 1967 tentang Pokok-pokok Perkoperasian telah diatur
+                                        sedemikian rupa sehingga
+                                        mewujudkan bentuk mekanisme kerja dari pada alat-alat kelengkapan organisasi
+                                        koperasi (BAB VIII Undang-undang
+                                        No.12/1967)
+
+                                        Berpedoman dari peran dan fungsi koperasi dalam hal kebersamaan dalam pemupukan
+                                        modal usaha, maka kami dari
+                                        Ketua P2MKP (Pusat Pelatihan Mandiri Kelautan dan Perikanan) Surabaya Makmur bersama
+                                        para pembudidaya ikan dan
+                                        keluarganya dengan semangat kebersamaan untuk mencapai tujuan khususnya untuk
+                                        memperoleh modal usaha yang lebih
+                                        cepat, mudah dan murah maka kami sepakat untuk membentuk koperasi.
+
+                                        Berdasarkan musyawarah dalam pembentukan koperasi disepakati dari pihak anggota
+                                        sebanyak 3 (tiga) orang
+                                        bersedia meminjamkan uang untuk modal usaha koperasi sebesar Rp.100.000.000,-
+                                        (seratus juta rupiah) tanpa bunga
+                                        dan menghibahkan uang sebanyak Rp.5.000.000,- (lima juta rupiah) untuk biaya
+                                        operasional kepengurusan pendirian
+                                        koperasi, akte notaris, pembuatan papan nama, struktur organisasi, cap koperasi,
+                                        buku administrasi dan
+                                        keuangan, dll.
+
+                                        Dengan telah disepakatinya pembentukan koperasi tersebut, maka pada tanggal 28 Maret
+                                        2015 dilaksanakan
+                                        sosialisasi pembentukan koperasi oleh pejabat dari Dinas Koperasi dan UKM Kota
+                                        Bengkulu bertempat di
+                                        sekretariat koperasi Jl.Tutwuri No.59 RT.04 RW.02 Kelurahan Surabaya Kecamatan
+                                        Sungai Serut Kota Bengkulu
+                                        bergabung dengan sekretariat P2MKP Surabaya Makmur</p>
+                                </div>
+                            </div>
+
+                        </li>
+
+                        <li class="relative border-b border-gray-100">
+
+                            <button type="button"
+                                class="w-full   py-5 text-left border-b-[1px] text-lg font-bold hover:text-[#00ccff]  duration-300 transform"
+                                x-bind:style="selected == 4 ? ' color:#00ccff' : ''"
+                                @click="selected !== 4 ? selected = 4 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span>
+                                        Maksud dan Tujuan
+                                    </span>
+                                    <span class="ico-plus"></span>
+                                </div>
+                            </button>
+
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700 bg-gray-100  "
+                                x-ref="container2"
+                                x-bind:style="selected == 4 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    <ul class="list-disc ml-4">
+                                        <li>
+                                            <i class="fa fa-check text-success"></i> Mendirikan kelembagaan keuangan yang
+                                            mudah diakses,
+                                            murah bunga pinjaman, simpel dalam urusan administrasi dan terbuka dalam
+                                            manajemen keuangan.
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-check text-success"></i> Menumbuh kembangkan rasa kebersamaan,
+                                            rasa memiliki
+                                            dan bertanggung jawab dalam kemajuan organisasi.
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-check text-success"></i> Membangun organisasi yang solid untuk
+                                            kemajuan dan
+                                            kesejahteraan anggota
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-check text-success"></i> Membangun organisasi yang solid untuk
+                                            kemajuan dan
+                                            kesejahteraan anggota
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-check text-success"></i> Menumbuh kembangkan sinergitas antara
+                                            kelembagaan
+                                            Pusat Pelatihan Mandiri Kelautan dan Perikanan (P2MKP) Surabaya Makmur sebagai
+                                            sumber
+                                            pengetahuan dan ketrampilan dengan Koperasi Produksi Amanah Sejati sebagai
+                                            sumber
+                                            keuangan/modal usaha untuk meningkatkan produktivitas dibidang perikanan
+                                            budidaya.
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-check text-success"></i> Mendorong tumbuh kembangnya jiwa
+                                            kewirausahaan dan
+                                            kemandirian dalam usaha serta mendukung program pemerintah dengan mendekatkan
+                                            sumber usaha
+                                            serta sumber pengetahuan dan ketrampilan untuk menghasilkan produk yang optimal
+                                            dan
+                                            berkualitas.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            </div>
+
+
+            <div class="bg-white" x-data="{ tab: 'visi' }">
+                <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <section aria-labelledby="products-heading" class="pb-24 pt-6">
+
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-5">
+
+                            <div data-aos="fade-right" class="md:col-span-3">
+                                <div class=" flex flex-wrap items-center   mt-4 text-sm sm:text-base whitespace-nowrap
+                                cursor-base focus:outline-none border-b-2 border-gray-300 ">
+                                    <a href="#" @click.prevent="tab = 'visi'"
+                                        :class="{ 'bg-[#00ccff] text-white ' : tab === 'visi' }" class=" items-center py-2 bg-gray-100 rounded-tl-xl rounded-tr-xl   px-6
+                        text-sm     sm:text-base
+                        whitespace-nowrap cursor-base focus:outline-none ">
+                                        Visi
+                                    </a>
+
+                                    <a href="#" @click.prevent="tab = 'misi'"
+                                        :class="{ 'bg-[#00ccff] text-white ' : tab === 'misi' }"
+                                        class=" items-center py-2 bg-gray-100 rounded-tl-xl rounded-tr-xl px-6     text-sm     sm:text-base   whitespace-nowrap cursor-base focus:outline-none ">
+                                        Misi
+                                    </a>
+
+                                    <a href="#" @click.prevent="tab = 'tujuan'"
+                                        :class="{ 'bg-[#00ccff] text-white ' : tab === 'tujuan' }"
+                                        class=" items-center py-2 bg-gray-100 rounded-tl-xl rounded-tr-xl px-6     text-sm     sm:text-base   whitespace-nowrap cursor-base focus:outline-none ">
+                                        Tujuan
+                                    </a>
+
+                                    <a href="#" @click.prevent="tab = 'kerjasaman'"
+                                        :class="{ 'bg-[#00ccff] text-white ' : tab === 'kerjasaman' }"
+                                        class=" items-center py-2 bg-gray-100 rounded-tl-xl rounded-tr-xl px-6     text-sm     sm:text-base   whitespace-nowrap cursor-base focus:outline-none ">
+                                        Kerjasama
+                                    </a>
+
+                                </div>
+                                <div class="mx-auto ">
+                                    <article x-show="tab === 'visi'  " class="rounded-br-xl rounded-bl-xl bg-gray-100  duration-300 transform content-div
+                                        p-7 group shadow-lg hover:shadow-xl">
+                                        <h1 class="text-3xl font-bold text-[#0b3960]">VISI</h1>
+                                        <p class="text-[16px] leading-7 mt-4">Menjadi Koperasi Produksi yang mampu
+                                            memproduksi,
+                                            menampung dan mempromosikan produk anggota ke wilayah Provinsi Bengkulu maupun
+                                            ke Tingkat
+                                            Nasional untuk meningkatkan kesejahteraan anggota secara demokratis.</p>
+
+                                    </article>
+                                    <article x-show="tab === 'misi'  " class="rounded-br-xl rounded-bl-xl bg-gray-100  duration-300 transform content-div
+                                        p-7 group shadow-lg hover:shadow-xl">
+                                        <h1 class="text-3xl font-bold text-[#0b3960]">MISI</h1>
+                                        <ol class="list-decimal ml-4 text-[16px] leading-7 mt-4">
+                                            <li>Menghasilkan produk pertanian dan perikanan yang berkualitas dan mampu
+                                                bersaing di pasaran
+                                                dari hasil produksi koperasi dan/atau anggota koperasi.</li>
+                                            <li>Menyediakan peralatan dan bahan-bahan yang diperlukan/dibutuhkan oleh
+                                                anggota koperasi untuk
+                                                keperluan produksi.</li>
+                                            <li>Menampung hasil produksi, melakukan penyempurnaan dan mempromosikan produk
+                                                tersebut ke
+                                                pasaran Tingkat Provinsi Bengkulu maupun Tingkat Nasional.</li>
+                                            <li>Menampung hasil produksi, melakukan penyempurnaan dan mempromosikan produk
+                                                tersebut ke
+                                                pasaran Tingkat Provinsi Bengkulu maupun Tingkat Nasional.</li>
+                                        </ol>
+
+                                    </article>
+                                    <article x-show="tab === 'tujuan'  " class="rounded-br-xl rounded-bl-xl bg-gray-100  duration-300 transform content-div
+                                        p-7 group shadow-lg hover:shadow-xl">
+                                        <h1 class="text-3xl font-bold text-[#0b3960]">TUJUAN</h1>
+                                        <ol class="list-decimal text-[16px] leading-7 mt-4 ml-4">
+                                            <li>Memberikan pinjaman modal kerja dengan jasa yang serendah-rendahnya dengan
+                                                anggota agar
+                                                dapat mengembangkan usahanya secara berkesinambungan.</li>
+                                            <li>Memberikan alternatif produk konsumsi khususnya pertanian dan perikanan
+                                                kepada masyarakat.
+                                            </li>
+                                            <li>Meningkatkan kesejahteraan anggota Koperasi Produksi Amanah Sejati.</li>
+                                        </ol>
+
+                                    </article>
+                                    <article x-show="tab === 'kerjasaman'  " class="rounded-br-xl rounded-bl-xl bg-gray-100  duration-300 transform content-div
+                                        p-7 group shadow-lg hover:shadow-xl">
+                                        <h1 class="text-3xl font-bold text-[#0b3960]">KERJASAMA</h1>
+                                        <table class="table text-[16px] leading-7 mt-4">
+                                            <tbody>
+                                                <tr class="border-b-2 border-gray-200">
+                                                    <td>1.</td>
+                                                    <td>KERJASAMA DENGAN PT. TASPEN BENGKULU</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Kerjasama dalam bentuk pemberian pinjaman penguatan modal usaha
+                                                        koperasi yang
+                                                        tertuang dalam Surat Perjanjian Modal Kerja antara PT. Taspen
+                                                        (Perser) dengan Candra
+                                                        Kesuma, ZA (Ketua Koperasi) Nomor: 011/102/2019 tanggal 09
+                                                        September 2019.</td>
+                                                </tr>
+
+                                                <tr class="border-b-2 border-gray-200">
+                                                    <td>2.</td>
+                                                    <td>KERJASAMA DENGAN PEMERINTAH KOTA BENGKULUU</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        Kerjasama antara Pemerintah Kota Bengkulu melalui Dinas Koperasi
+                                                        dan UKM Kota
+                                                        Bengkulu dengan Koperasi Produksi Amanah Sejati dalam Program
+                                                        Penguatan Pinjman
+                                                        Modal Bergulir bagi Koperasi Berprestasi di Kota Bengkulu Tahun
+                                                        2020 yang tertuang
+                                                        dalam Surat Perjanjian Kerjasama Nomor: 518/289/D.KUKM/VIII/2020
+                                                        dan Nomor:
+                                                        40/KPAS/VIII/2020.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </article>
+                                </div>
+                            </div>
+                            <div data-aos="fade-left" class="  md:col-span-2 border-gray-200 py-6">
+                                <img src="{{ asset('assets/frontend/src/animate/undraw.svg') }}" class="mx-auto w-5/6 h-5/6">
+                                <!-- Filter section, show/hide based on section state. -->
+
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </section>
+        <!-- end tentang  -->
+
+        <!-- anggota-->
+        <section id="anggota"
+            class="relative  bg-gradient-to-tl from-blue-900 overflow-hidden  to-cyan-400   mt-12 pt-24 pb-32 text-center">
+            <div class=" ">
+
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[150px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff4c]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[100px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff84]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[40px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff4c]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[20px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#fffffff1]"></path>
+                    </svg>
+                </div>
+
+
+
+            </div>
+
+
+
+            <section class="container py-20 mx-auto" x-data="{ tab: 'all' }">
+                <h1 data-aos="fade-down" class="mb-12 text-center font-sans text-4xl lg:text-5xl font-bold text-white   "
+                    style="text-shadow:2px 2px 5px #000;">
+                    Anggota Koperasi</h1>
+                <div class="flex items-center justify-center     ">
+
+
+
+
+                    <div data-aos="fadeIn" class="flex flex-wrap mt-8">
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/suharto.jpg">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl font-bold ">
+                                        Suharto
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/surahman.jpg">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl font-bold ">
+                                        Surahman
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/nurul-komariah.JPG">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl font-bold ">
+                                        Nurul Komariah
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/rosbudiarty-s.jpg">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl text-[16px] font-bold ">
+                                        Rosbudiarty S
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/rosbudiarty-s.jpg">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl text-[16px] font-bold ">
+                                        Rosbudiarty S
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/rosbudiarty-s.jpg">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl text-[16px] font-bold ">
+                                        Rosbudiarty S
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/rosbudiarty-s.jpg">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl text-[16px] font-bold ">
+                                        Rosbudiarty S
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 lg:w-1/4 mb-6 px-6 sm:px-6 lg:px-4">
+                            <div class="flex flex-col">
+
+                                <a href="#" class="mx-auto">
+                                    <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 min-w-full h-[300px] shadow-[3px_3px_10px_0px_#000] object-cover "
+                                        src="https://koperasiamanahsejatikotabengkulu.co.id/upload/foto_anggota/rosbudiarty-s.jpg">
+                                </a>
+
+
+                                <div class="text-center mt-6">
+
+                                    <h1 class="text-white text-xl text-[16px] font-bold ">
+                                        Rosbudiarty S
+                                    </h1>
+
+
+                                    <div class="text-yellow-300 text-[14px] font-light mb-2">
+                                        Terdaftar Sejak 2 tahun yang lalu
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <div class=" ">
+                <div class="custom-shape-divider-bottom-1691295679 bottom-0  ">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[210px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff4c]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-bottom-1691295679 bottom-0 ">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[140px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff84]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-bottom-1691295679 bottom-0">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[80px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffffc9]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-bottom-1691295679 bottom-0">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[50px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffffcf]"></path>
+                    </svg>
+                </div>
+
+            </div>
+        </section>
+        <!-- end anggota -->
+
+        <!-- galeri  -->
+        <section id="galeri">
+            <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20  ">
+                <h1 data-aos="fade-down"
+                    class="mb-12 text-center font-sans text-4xl lg:text-5xl font-bold text-[#0b3960]   "
+                    style="text-shadow:5px 5px 5px #38383863;">
+                    Galeri</h1>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg" alt="">
+                    </div>
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg hover:brightness-50 duration-300 transform"
+                            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg" alt="">
+                    </div>
+                </div>
+
+            </section>
+
+        </section>
+
+        <section id="berita">
+            <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20  ">
+                <h1 data-aos="fade-down"
+                    class="mb-20 text-center font-sans text-4xl lg:text-5xl font-bold text-[#0b3960]   "
+                    style="text-shadow:5px 5px 5px #38383863;">
+                    Berita Dan Pengumuman</h1>
+                <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"> -->
+                <div class="flex flex-wrap -mx-4 ">
+                    <div class="w-full max-w-full mb-8 sm:w-1/2 px-4 lg:w-1/3 flex flex-col  group blg">
+                        <img src="https://source.unsplash.com/Lki74Jj7H-U/400x300" alt="Card img"
+                            class="object-cover object-center w-full h-48 rounded-tl-xl rounded-tr-xl
+                        shadow-[0px_0px_0px_1px_#00ccff] duration-300 transform group-hover:shadow-[0px_0px_0px_1px_#333]" />
+                        <div class="flex flex-grow">
+                            <div class="triangle"></div>
+                            <div class="flex flex-col justify-between px-4 py-6 bg-white border border-[#00ccff]
+                            duration-300 transform group-hover:border-[#333] rounded-bl-xl rounded-br-xl text">
+                                <div class="h-full flex items-start">
+                                    <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none">
+                                        <span class="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">Jul</span>
+                                        <span class="font-medium text-lg text-gray-800 title-font leading-none">18</span>
+                                    </div>
+                                    <div class="flex-grow pl-6">
+                                        <h2 class="tracking-widest text-xs title-font font-bold text-[#00ccff] mb-1 uppercase">
+                                            BERITA</h2>
+                                        <h1 class="title-font text-lg font-medium text-gray-900 mb-3 line-clamp-1">The 400
+                                            Blows Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident eum
+                                            tempora error reprehenderit consequuntur eveniet, asperiores et aliquid veniam.
+                                            Illum vitae tempore ipsam distinctio commodi. Numquam id quidem suscipit
+                                            consequuntur.</h1>
+                                        <p class="leading-relaxed mb-5 line-clamp-3 text-sm">Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Officia perspiciatis, fuga temporibus nesciunt
+                                            totam soluta tempore a quaerat vitae exercitationem aliquam repudiandae qui sint
+                                            est nostrum fugiat saepe quos. Inventore?.</p>
+                                        <a href="#" class="inline-block pb-1 mt-2 text-base font-black text-[#00ccff] uppercase border-b
+                                    border-transparent duration-300 transform  hover:text-[#0089fc]">Read
+                                            More</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full max-w-full mb-8 sm:w-1/2 px-4 lg:w-1/3 flex flex-col group blg">
+                        <img src="https://source.unsplash.com/Lki74Jj7H-U/400x300" alt="Card img"
+                            class="object-cover object-center w-full h-48 rounded-tl-xl rounded-tr-xl
+                        shadow-[0px_0px_0px_1px_#00ccff] duration-300 transform group-hover:shadow-[0px_0px_0px_1px_#333]" />
+                        <div class="flex flex-grow">
+                            <div class="triangle"></div>
+                            <div class="flex flex-col justify-between px-4 py-6 bg-white border border-[#00ccff]
+                            duration-300 transform group-hover:border-[#333] rounded-bl-xl rounded-br-xl text">
+                                <div class="h-full flex items-start">
+                                    <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none">
+                                        <span class="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">Jul</span>
+                                        <span class="font-medium text-lg text-gray-800 title-font leading-none">18</span>
+                                    </div>
+                                    <div class="flex-grow pl-6">
+                                        <h2 class="tracking-widest text-xs title-font font-bold text-[#00ccff] mb-1 uppercase">
+                                            PENGUMUMAN</h2>
+                                        <h1 class="title-font text-lg font-medium text-gray-900 mb-3 line-clamp-1">The 400
+                                            Blows Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident eum
+                                            tempora error reprehenderit consequuntur eveniet, asperiores et aliquid veniam.
+                                            Illum vitae tempore ipsam distinctio commodi. Numquam id quidem suscipit
+                                            consequuntur.</h1>
+                                        <p class="leading-relaxed mb-5 line-clamp-3 text-sm">Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Officia perspiciatis, fuga temporibus nesciunt
+                                            totam
+                                            soluta tempore a quaerat vitae exercitationem aliquam repudiandae qui sint est
+                                            nostrum fugiat saepe quos. Inventore?.</p>
+                                        <a href="#" class="inline-block pb-1 mt-2 text-base font-black text-[#00ccff] uppercase border-b
+                                    border-transparent duration-300 transform  hover:text-[#0089fc]">Read
+                                            More</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full max-w-full mb-8 sm:w-1/2 px-4 lg:w-1/3 flex flex-col group blg">
+                        <img src="https://source.unsplash.com/Lki74Jj7H-U/400x300" alt="Card img"
+                            class="object-cover object-center w-full h-48 rounded-tl-xl rounded-tr-xl
+                        shadow-[0px_0px_0px_1px_#00ccff] duration-300 transform group-hover:shadow-[0px_0px_0px_1px_#333]" />
+                        <div class="flex flex-grow">
+                            <div class="triangle"></div>
+                            <div class="flex flex-col justify-between px-4 py-6 bg-white border border-[#00ccff]
+                            duration-300 transform group-hover:border-[#333] rounded-bl-xl rounded-br-xl text">
+                                <div class="h-full flex items-start">
+                                    <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none">
+                                        <span class="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">Jul</span>
+                                        <span class="font-medium text-lg text-gray-800 title-font leading-none">18</span>
+                                    </div>
+                                    <div class="flex-grow pl-6">
+                                        <h2 class="tracking-widest text-xs title-font font-bold text-[#00ccff] mb-1 uppercase">
+                                            CATEGORY</h2>
+                                        <h1 class="title-font text-lg font-medium text-gray-900 mb-3 line-clamp-1">The 400
+                                            Blows Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident eum
+                                            tempora error reprehenderit consequuntur eveniet, asperiores et aliquid veniam.
+                                            Illum vitae tempore ipsam distinctio commodi. Numquam id quidem suscipit
+                                            consequuntur.</h1>
+                                        <p class="leading-relaxed mb-5 line-clamp-3 text-sm">Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Officia perspiciatis, fuga temporibus nesciunt
+                                            totam
+                                            soluta tempore a quaerat vitae exercitationem aliquam repudiandae qui sint est
+                                            nostrum fugiat saepe quos. Inventore?.</p>
+                                        <a href="#" class="inline-block pb-1 mt-2 text-base font-black text-[#00ccff] uppercase border-b
+                                    border-transparent duration-300 transform  hover:text-[#0089fc]">Read
+                                            More</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- end galeri -->
+        <!-- Footer  -->
+
+        <footer class="relative bg-gradient-to-tl from-blue-900 overflow-hidden  to-cyan-600      ">
+            <div class=" ">
+
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[150px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff4c]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[100px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff84]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[40px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#ffffff4c]"></path>
+                    </svg>
+                </div>
+                <div class="custom-shape-divider-top-1691310739">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="h-[20px]" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="fill-[#fffffff1]"></path>
+                    </svg>
+                </div>
+
+
+
+            </div>
+
+            <div class=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 pt-36 pb-16   flex md:items-center lg:items-start
+                md:flex-row md:flex-nowrap flex-wrap flex-col">
+                <div class="lg:w-2/4 md:w-1/2 w-full flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
+                    <a href="/view/home.html" class="flex items-center text-black      ">
+                        <img src="{{ asset('assets/img/logo.png') }}" class="md:w-14 md:h-14 w-12 h-12">
+
+                        <div class="ml-3 text-white   ">
+                            <strong class=" text-2xl md:text-3xl font-extrabold  tracking-wider uppercase">KOPERASI</strong>
+                            <p class="text-[13px] md:text-[18px] text-gray-300 tracking-widest font-semibold  uppercase -mt-2
+                                    relative">
+                                Amanah Sejati</p>
+                        </div>
+                    </a>
+                    <p class="  mt-4 text-sm text-gray-200 leading-6">Menjadi Koperasi Produksi yang mampu memproduksi,
+                        menampung dan mempromosikan produk anggota ke wilayah Provinsi Bengkulu maupun ke Tingkat Nasional
+                        untuk meningkatkan kesejahteraan anggota secara demokratis
+                    </p>
+                    <a class="flex  my-3 group">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="fill-gray-200 group-hover:fill-yellow-300 w-5 h-5 mr-3" viewBox="0 0 16 16" id="map">
+                            <path
+                                d="M8 0C5.2 0 3 2.2 3 5s4 11 5 11 5-8.2 5-11-2.2-5-5-5zm0 8C6.3 8 5 6.7 5 5s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z">
+                            </path>
+                        </svg>
+
+
+                        <span class=" text-sm text-gray-200 group-hover:text-yellow-300  duration-300 transform
+                            break-normal">Surabaya, Bengkulu</span>
+                    </a>
+
+                    <a class="flex  my-3 group">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="fill-gray-200 group-hover:fill-yellow-300 w-5 h-5 mr-3 " fill="currentColor"
+                            class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                        </svg>
+
+                        <span
+                            class="  text-sm text-gray-200 group-hover:text-yellow-300  duration-300 transform break-normal">08080808080808</span>
+                    </a>
+
+                    <a class="flex  my-3 group">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="fill-gray-200 group-hover:fill-yellow-300 w-5 h-5 mr-3  " fill="currentColor"
+                            class="bi bi-envelope" viewBox="0 0 16 16">
+                            <path
+                                d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                        </svg>
+                        <span class=" text-sm text-gray-200 group-hover:text-yellow-300  duration-300 transform
+                                break-normal">koperasiproduksiamanahsejati@gmail.com</span>
+                    </a>
+                </div>
+
+                <div class="lg:w-2/4 md:w-1/2 w-full px-4 md:ml-6">
+                    <h2 class="title-font text-2xl  mt-6   text-white font-bold    mb-3">
+                        Informasi
+                    </h2>
+                    <p class="  mt-4 text-sm text-white leading-6">Pendirian/pembentukan koperasi dilaksanakan pada
+                        tanggal
+                        28 Maret 2015
+
+                    </p>
+                    <iframe class="shadow-[0px_0px_10px_0px_#444] mt-3 rounded-md w-full h-[250px]"
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1990.5449321891977!2d102.314648!3d-3.790609!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e36b106aa288fb3%3A0x351027949545a86a!2sKota%20Bengkulu%2C%20Bengkulu%2038119!5e0!3m2!1sid!2sid!4v1691316506181!5m2!1sid!2sid"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <div class="px-12 mx-auto py-4   flex flex-wrap flex-col sm:flex-row bg-gray-100  ">
+                <p class="text-gray-700  text-sm text-center sm:text-left">Copyright&copy; 2023 |
+                    <a href="#" class="text-yellow-500 font-bold">Koperasi Amanah Sejati</a>. All rights reserved.
+                </p>
+            </div>
+        </footer>
+        <!-- end Footer -->
+        <!-- back to top  -->
+        <div class="" x-data="{scrollBackTop: false}" x-cloak>
+            <svg x-show="scrollBackTop" @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+                x-on:scroll.window="scrollBackTop = (window.pageYOffset > window.outerHeight * 0.5) ? true : false"
+                aria-label="Back to top" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-arrow-up-circle-fill fixed bottom-0 right-0 mx-3 my-10   w-8 dark:fill-blue-700 fill-blue-500 shadow-lg    cursor-pointer hover:fill-blue-400 bg-white       rounded-full "
+                viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
+            </svg>
         </div>
+
     </body>
+
+    <!-- script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ asset('assets/frontend/scripts.js') }}"></script>
+    {{-- Font Awesome --}}
+    <script src="https://kit.fontawesome.com/055120b175.js" crossorigin="anonymous"></script>
 </html>

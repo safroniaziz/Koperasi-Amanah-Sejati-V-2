@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('tanggal_transaksi');
             $table->string('bulan_transaksi');
             $table->string('tahun_transaksi');
-            $table->string('angsuran_ke');
             $table->timestamps();
             $table->softDeletes();
 
