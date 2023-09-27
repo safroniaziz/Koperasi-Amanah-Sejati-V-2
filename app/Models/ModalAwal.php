@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ModalAwal extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = ['modal_awals'];
+    protected $table = 'modal_awals';
 
     protected $fillable = [
         'tahun',
