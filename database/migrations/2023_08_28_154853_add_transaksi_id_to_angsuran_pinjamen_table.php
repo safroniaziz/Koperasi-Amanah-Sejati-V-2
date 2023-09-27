@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::table('angsuran_pinjamen', function (Blueprint $table) {
             $table->unsignedBigInteger('transaksi_id')->nullable()->after('id');
-            $table->foreign('transaksi_id')->references('id')->on('transaksi_koperasis');
-
             $table->date('tanggal_transaksi')->change();
             $table->string('bulan_transaksi')->change();
 
