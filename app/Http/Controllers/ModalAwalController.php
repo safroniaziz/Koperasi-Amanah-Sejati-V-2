@@ -11,6 +11,7 @@ class ModalAwalController extends Controller
     public function index()
     {
         $modalAwals = ModalAwal::orderBy('created_at','desc')->get();
+        return $modalAwals;
         return view('backend/modalAwal.index', [
             'modalAwals'  =>  $modalAwals,
         ]);
