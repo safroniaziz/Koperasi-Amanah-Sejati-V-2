@@ -31,7 +31,7 @@
                                     <div class="inner">
                                     <h3>10</h3>
 
-                                    <p>Berita & Pengumuman</p>
+                                    <p>Jabatan</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-bullhorn"></i>
@@ -44,7 +44,7 @@
                                     <div class="inner">
                                     <h3>10</h3>
 
-                                    <p>Daerah Pemilihan</p>
+                                    <p>Jenis Transaksi</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-map-marker-alt"></i>
@@ -57,7 +57,7 @@
                                     <div class="inner">
                                     <h3>10</h3>
 
-                                    <p>Organisasi Perangkat Daerah</p>
+                                    <p>Pinjaman</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-building"></i>
@@ -70,7 +70,7 @@
                                     <div class="inner">
                                     <h3>19</h3>
 
-                                    <p>Satuan Volume</p>
+                                    <p>Anggota</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-balance-scale"></i>
@@ -85,7 +85,7 @@
                                     <div class="inner">
                                     <h3>10</h3>
 
-                                    <p>Dokumen Reses</p>
+                                    <p>Simpanan Wajib</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-file-pdf"></i>
@@ -98,7 +98,7 @@
                                     <div class="inner">
                                     <h3>10</h3>
 
-                                    <p>Kategori Pengaduan</p>
+                                    <p>Tahun Aktif</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-tasks"></i>
@@ -111,7 +111,7 @@
                                     <div class="inner">
                                     <h3>10</h3>
 
-                                    <p>Pengaduan Masyarat</p>
+                                    <p>Transaksi Masuk</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-envelope"></i>
@@ -124,7 +124,7 @@
                                     <div class="inner">
                                     <h3>10</h3>
 
-                                    <p>Aspirasi Masyarakat</p>
+                                    <p>Transaksi Keluar</p>
                                     </div>
                                     <div class="icon">
                                     <i class="fa fa-pen"></i>
