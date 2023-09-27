@@ -35,7 +35,7 @@ use App\Http\Controllers\TransaksiLainnyaController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Auth::routes();
 
@@ -168,16 +168,18 @@ Route::middleware('auth')->group(function(){
         Route::get('/{anggota}/edit', 'edit')->name('anggota.edit');
         Route::patch('/update', 'update')->name('anggota.update');
         Route::delete('/{anggota}/delete', 'delete')->name('anggota.delete');
+        Route::patch('/update_password', 'updatePassword')->name('anggota.update_password');
+
     });
 
-    Route::controller(AnggotaController::class)->prefix('anggota')->group(function () {
-        Route::get('/', 'index')->name('anggota');
-        Route::get('/create', 'create')->name('anggota.create');
-        Route::post('/', 'store')->name('anggota.store');
-        Route::get('/{anggota}/edit', 'edit')->name('anggota.edit');
-        Route::patch('/update', 'update')->name('anggota.update');
-        Route::delete('/{anggota}/delete', 'delete')->name('anggota.delete');
-    });
+    // Route::controller(AnggotaController::class)->prefix('anggota')->group(function () {
+    //     Route::get('/', 'index')->name('anggota');
+    //     Route::get('/create', 'create')->name('anggota.create');
+    //     Route::post('/', 'store')->name('anggota.store');
+    //     Route::get('/{anggota}/edit', 'edit')->name('anggota.edit');
+    //     Route::patch('/update', 'update')->name('anggota.update');
+    //     Route::delete('/{anggota}/delete', 'delete')->name('anggota.delete');
+    // });
 
     Route::controller(OperatorController::class)->prefix('operator')->group(function () {
         Route::get('/', 'index')->name('operator');
@@ -186,5 +188,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/{operator}/edit', 'edit')->name('operator.edit');
         Route::patch('/update', 'update')->name('operator.update');
         Route::delete('/{operator}/delete', 'delete')->name('operator.delete');
+        Route::patch('/update_password', 'updatePassword')->name('operator.update_password');
     });
 });

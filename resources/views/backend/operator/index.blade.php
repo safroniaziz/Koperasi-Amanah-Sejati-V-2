@@ -34,6 +34,7 @@
                                     <th>Nama Anggota</th>
                                     <th>Email</th>
                                     <th>Jabatan</th>
+                                    <th class="text-center">Ubah Password</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -47,6 +48,9 @@
                                         <td>{{ $operator->nama_lengkap }}</td>
                                         <td>{{ $operator->email }}</td>
                                         <td>{{ $operator->jabatan->nama_jabatan }}</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-info btn-sm" onclick="ubahPassword({{ $operator->id }})"><i class="fa fa-key"></i></a>
+                                        </td>
                                         <td>
                                             <table>
                                                 <tr>
@@ -74,6 +78,7 @@
                         </table>
                         {{$operators->links("pagination::bootstrap-4") }}
                     </div>
+                    @include('backend/operator._ubah_password')
                 </div>
             </div>
         </div>
@@ -122,5 +127,10 @@
                 }
             })
         });
+
+        function ubahPassword(id) {
+            $('#ubahpassword').modal('show');
+            $('#id_password').val(id);
+        }
     </script>
 @endpush

@@ -11,8 +11,8 @@
   <ul class="nav navbar-nav">
 
     <li class="dropdown user user-menu">
-      <a href="#" style="text-transform: uppercase" class="dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-user"></i>
+      <a href="{{ route('welcome') }}" style="text-transform: uppercase">
+          <i class="fa fa-globe"></i>
           <span class="hidden-xs">
             Kunjungi Website
           </span>

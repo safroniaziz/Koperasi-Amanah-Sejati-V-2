@@ -78,6 +78,8 @@
                             <a href="#berita"
                                 class="px-3 py-2 mx-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-md lg:mt-0 hover:text-[#00a2ff]       ">Berita</a>
                             @if (auth()->check())
+                            <a href="{{ route('home') }}"
+                                class="px-3 py-2 mx-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-md lg:mt-0 hover:text-[#00a2ff]       ">Dashboard</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">

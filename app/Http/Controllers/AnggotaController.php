@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Jabatan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -15,10 +16,12 @@ class AnggotaController extends Controller
     public function index(Request $request){
         $nama = $request->query('nama');
         if (!empty($nama)) {
-            $anggotas = User::anggota()
-                            ->where('nama_lengkap','LIKE','%'.$nama.'%')
-                            ->orWhere('email','LIKE','%'.$nama.'%')
-                            ->orderBy('created_at','asc')->paginate(10);
+            $anggotas = User::anggota()->where(function ($query) use ($nama) {
+                                $query->where('nama_lengkap', 'LIKE', '%' . $nama . '%')
+                                    ->orWhere('email', 'LIKE', '%' . $nama . '%');
+                            })
+                            ->orderBy('created_at', 'asc')
+                            ->paginate(10);
         }else {
             $anggotas = User::anggota()
                             ->orderBy('created_at','asc')->paginate(10);
@@ -202,6 +205,42 @@ class AnggotaController extends Controller
             ]);
         }else {
             return response()->json(['text' =>  'Oopps, data anggota gagal dihapus']);
+        }
+    }
+
+    public function updatePassword (Request $request){
+        $validator = Validator::make($request->all(), [
+            'password' => [
+                'required',
+                'min:8',            // Panjang minimal 8 karakter
+                'max:20',           // Panjang maksimal 20 karakter
+                'confirmed',        // Password harus dikonfirmasi
+                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                // Aturan untuk kombinasi karakter (minimal 1 huruf besar, 1 huruf kecil, 1 angka, 1 karakter khusus)
+            ],
+        ], [
+            'password.required' => 'Kolom password harus diisi.',
+            'password.min' => 'Password harus memiliki panjang minimal :min karakter.',
+            'password.max' => 'Password tidak boleh melebihi :max karakter.',
+            'password.confirmed' => 'Password dan konfirmasi password tidak cocok.',
+            'password.regex' => 'Password harus mengandung setidaknya 1 huruf besar, 1 huruf kecil, 1 angka, dan 1 karakter khusus.',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['error' => 0, 'text' => $validator->errors()->first()], 422);
+        }
+
+        $updatePassword = User::where('id',$request->id)->update([
+            'password'  =>  Hash::make($request->password),
+        ]);
+
+        if ($updatePassword) {
+            return response()->json([
+                'text'  =>  'Yeay, password anggota berhasil diubah',
+                'url'   =>  url('/anggota/'),
+            ]);
+        }else {
+            return response()->json(['text' =>  'Oopps, password anggota gagal diubah']);
         }
     }
 }

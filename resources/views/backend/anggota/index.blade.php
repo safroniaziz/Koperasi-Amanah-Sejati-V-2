@@ -36,6 +36,7 @@
                                     <th>Jabatan</th>
                                     <th>NIK</th>
                                     <th>Tahun Keanggotaan</th>
+                                    <th class="text-center">Ubah Password</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -51,6 +52,9 @@
                                         <td>{{ $anggota->jabatan->nama_jabatan }}</td>
                                         <td>{{ $anggota->nik }}</td>
                                         <td>{{ $anggota->tahun_keanggotaan }}</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-info btn-sm" onclick="ubahPassword({{ $anggota->id }})"><i class="fa fa-key"></i></a>
+                                        </td>
                                         <td>
                                             <table>
                                                 <tr>
@@ -78,6 +82,7 @@
                         </table>
                         {{$anggotas->links("pagination::bootstrap-4") }}
                     </div>
+                    @include('backend/anggota._ubah_password')
                 </div>
             </div>
         </div>
@@ -126,5 +131,10 @@
                 }
             })
         });
+
+        function ubahPassword(id) {
+            $('#ubahpassword').modal('show');
+            $('#id_password').val(id);
+        }
     </script>
 @endpush
