@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('angsuran_pinjamen', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('transaksi_id');
+            $table->unsignedBigInteger('transaksi_id')->nullable();
             $table->unsignedBigInteger('pinjaman_id');
             $table->unsignedBigInteger('anggota_id');
             $table->integer('angsuran_pokok');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('jenis_transaksi_id')->references('id')->on('jenis_transaksis');
+            $table->foreign('transaksi_id')->references('id')->on('transaksi_koperasis');
             $table->foreign('pinjaman_id')->references('id')->on('pinjamen');
             $table->foreign('anggota_id')->references('id')->on('users');
         });
