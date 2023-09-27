@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('angsuran_pinjamen', function (Blueprint $table) {
-            $table->unsignedBigInteger('transaksi_id')->nullable()->after('id');
             $table->date('tanggal_transaksi')->change();
             $table->string('bulan_transaksi')->change();
 
