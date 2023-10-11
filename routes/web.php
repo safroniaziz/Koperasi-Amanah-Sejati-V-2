@@ -123,6 +123,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/cari', 'cari')->name('tabelarisMasuk.cari');
         Route::get('/export', 'pdf')->name('tabelarisMasuk.pdf');
         Route::get('/export/excel', 'excel')->name('tabelarisMasuk.excel');
+        Route::post('/', 'modalAwalPost')->name('tabelarisMasuk.modalAwalPost');
     });
 
     Route::controller(TabelarisKeluarController::class)->prefix('tabelaris_kas_keluar')->group(function () {

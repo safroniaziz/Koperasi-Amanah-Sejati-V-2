@@ -17,6 +17,7 @@ class AngsuranPinjamanController extends Controller
 {
     public function angsuran(User $anggota, Pinjaman $pinjaman){
         $angsurans = AngsuranPinjaman::where('pinjaman_id',$pinjaman->id)
+                                    ->where('anggota_id',$anggota->id)
                                     ->orderBy('angsuran_ke','desc')
                                     ->get();
         return view('backend/angsuran.index',[
@@ -79,7 +80,7 @@ class AngsuranPinjamanController extends Controller
 
             $angsuranTerakhir = AngsuranPinjaman::where('anggota_id', $anggota->id)->where('pinjaman_id',$pinjaman->id)
                                                 ->max('angsuran_ke');
-
+            
             AngsuranPinjaman::create([
                 'transaksi_id' => $transaksi_pokok->id,
                 'pinjaman_id' => $pinjaman->id,
