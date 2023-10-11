@@ -32,12 +32,12 @@
 
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Angsuran Pokok / Bulan</label>
-                <input type="text" name="angsuran_pokok" id="angsuran_pokok_edit" value="{{ $pinjaman->angsuran_pokok }}" readonly id="angsuran_pokok" class="form-control">
+                <input type="text" name="angsuran_pokok" id="angsuran_pokok_edit" value="{{ $pinjaman->angsuran_pokok }}" id="angsuran_pokok" class="form-control">
             </div>
 
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Angsuran Jasa / Bulan</label>
-                <input type="text" name="angsuran_jasa" id="angsuran_jasa_edit" value="{{ $pinjaman->angsuran_jasa }}" readonly id="angsuran_bunga" class="form-control">
+                <input type="text" name="angsuran_jasa" id="angsuran_jasa_edit" value="{{ $pinjaman->angsuran_jasa }}" id="angsuran_bunga" class="form-control">
             </div>
         </div>
     </div>
