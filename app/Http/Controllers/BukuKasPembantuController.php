@@ -37,38 +37,8 @@ class BukuKasPembantuController extends Controller
 
             $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
 
-            $bulanAngka = $request->bulan; // Ganti dengan angka bulan yang ingin Anda ubah
-
-            if ($bulanAngka == "01") {
-                $bulanNama = "Januari";
-            } elseif ($bulanAngka == "02") {
-                $bulanNama = "Februari";
-            } elseif ($bulanAngka == "03") {
-                $bulanNama = "Maret";
-            } elseif ($bulanAngka == "04") {
-                $bulanNama = "April";
-            } elseif ($bulanAngka == "05") {
-                $bulanNama = "Mei";
-            } elseif ($bulanAngka == "06") {
-                $bulanNama = "Juni";
-            } elseif ($bulanAngka == "07") {
-                $bulanNama = "Juli";
-            } elseif ($bulanAngka == "08") {
-                $bulanNama = "Agustus";
-            } elseif ($bulanAngka == "09") {
-                $bulanNama = "September";
-            } elseif ($bulanAngka == "10") {
-                $bulanNama = "Oktober";
-            } elseif ($bulanAngka == "11") {
-                $bulanNama = "November";
-            } elseif ($bulanAngka == "12") {
-                $bulanNama = "Desember";
-            } else {
-                $bulanNama = "Bulan tidak valid";
-            }
-            $transaksis = TransaksiKoperasi::with(['jenisTransaksi'])
-                                            ->where('tahun_transaksi',$request->tahun)
-                                            ->where('bulan_transaksi',$bulanNama)
+            $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
+                                            ->whereMonth('tanggal_transaksi',$request->bulan)
                                             ->orderBy('tanggal_transaksi','asc')
                                             ->get();
             return view('backend.bukuKasPembantu.index',[
