@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\User;
 use App\Models\ModalAwal;
 use App\Models\SaldoKasAwal;
 use Illuminate\Http\Request;
+use App\Models\TransaksiKoperasi;
 use Illuminate\Support\Facades\Validator;
-use PDF;
 
 class TabelarisMasukController extends Controller
 {
@@ -16,114 +17,179 @@ class TabelarisMasukController extends Controller
     }
 
     public function cari(Request $request){
-        $rules = [
-            'bulan'       => 'required',
-            'tahun'       => 'required|numeric|digits:4|min:1000|max:9999',
-        ];
-        $text = [
-            'bulan.required'      => 'Kolom Bulan harus diisi.',
-            'tahun.required'      => 'Kolom Tahun harus diisi.',
-            'tahun.numeric'       => 'Kolom Tahun harus berupa angka.',
-            'tahun.digits'        => 'Kolom Tahun harus terdiri dari 4 digit.',
-            'tahun.min'           => 'Kolom Tahun harus memiliki nilai minimal 1000.',
-            'tahun.max'           => 'Kolom Tahun harus memiliki nilai maksimal 9999.',
-        ];
+        try {
+            $rules = [
+                'bulan'       => 'required',
+                'tahun'       => 'required|numeric|digits:4|min:1000|max:9999',
+            ];
+            $text = [
+                'bulan.required'      => 'Kolom Bulan harus diisi.',
+                'tahun.required'      => 'Kolom Tahun harus diisi.',
+                'tahun.numeric'       => 'Kolom Tahun harus berupa angka.',
+                'tahun.digits'        => 'Kolom Tahun harus terdiri dari 4 digit.',
+                'tahun.min'           => 'Kolom Tahun harus memiliki nilai minimal 1000.',
+                'tahun.max'           => 'Kolom Tahun harus memiliki nilai maksimal 9999.',
+            ];
 
-        $validasi = Validator::make($request->all(), $rules, $text);
-        if ($validasi->fails()) {
-            return response()->json(['error'  =>  0, 'text'   =>  $validasi->errors()->first()],422);
-        }
-        
-        $bulans = [
-            '01' => 'Januari',
-            '02' => 'Februari',
-            '03' => 'Maret',
-            '04' => 'April',
-            '05' => 'Mei',
-            '06' => 'Juni',
-            '07' => 'Juli',
-            '08' => 'Agustus',
-            '09' => 'September',
-            '10' => 'Oktober',
-            '11' => 'November',
-            '12' => 'Desember'
-        ];
-
-        if ($request->bulan == "01") {
-            $tahun = $request->tahun-1;
-            $angkaBulanSebelumnya = 12;
-            $namaBulanSebelumnya = "Desember";
-        }else{
-            $tahun = $request->tahun;
-            $namaBulan = $bulans[$request->bulan];
-            $angkaBulanSebelumnya = $request->bulan - 1;
-            if ($angkaBulanSebelumnya < '01') {
-                $angkaBulanSebelumnya = '12'; // Bulan sebelumnya dari '01' adalah '12'
+            $validasi = Validator::make($request->all(), $rules, $text);
+            if ($validasi->fails()) {
+                return response()->json(['error'  =>  0, 'text'   =>  $validasi->errors()->first()],422);
             }
-            $angkaBulanSebelumnya = str_pad($angkaBulanSebelumnya, 2, '0', STR_PAD_LEFT);
-            $namaBulanSebelumnya = $bulans[$angkaBulanSebelumnya];
-        }
-        
-        $saldoKasAwal = ModalAwal::where('tahun', $request->tahun)->where('bulan',$request->bulan)->first();
-        if ($saldoKasAwal != null) {
-            try {
-                $kasMasuks = User::active()
-                                ->with(['simpananWajibs' => function($query) use ($request) {
-                                    $query->whereYear('tanggal_transaksi', $request->tahun)
-                                        ->whereMonth('tanggal_transaksi', $request->bulan);
-                                }])
-                                ->withSum(['simpananWajibs' => function($query) use ($request) {
-                                    $query->whereYear('tanggal_transaksi', $request->tahun)
-                                        ->whereMonth('tanggal_transaksi', $request->bulan);
-                                }], 'jumlah_transaksi')
-                                ->with(['simpananPokok' => function($query) use ($request) {
-                                    $query->whereYear('tanggal_transaksi', $request->tahun)
-                                        ->whereMonth('tanggal_transaksi', $request->bulan);
-                                }])
-                                ->withSum(['simpananPokok' => function($query) use ($request) {
-                                    $query->whereYear('tanggal_transaksi', $request->tahun)
-                                        ->whereMonth('tanggal_transaksi', $request->bulan);
-                                }], 'jumlah_transaksi')
-                                ->withSum(['angsurans' => function($query) use ($request) {
-                                    $query->whereYear('tanggal_transaksi', $request->tahun)
-                                        ->whereMonth('tanggal_transaksi', $request->bulan);
-                                }], 'angsuran_pokok')
-                                ->withSum(['angsurans' => function($query) use ($request) {
-                                    $query->whereYear('tanggal_transaksi', $request->tahun)
-                                        ->whereMonth('tanggal_transaksi', $request->bulan);
-                                }], 'angsuran_jasa')
-                                ->where('nama_lengkap', '!=', 'Operator')
-                                ->orderBy('id', 'asc')
-                                ->get();
-    
-                $namaBulan = date('F', mktime(0, 0, 0, $request->bulan, 1));
-                $tanggal = $namaBulan . ' ' . $tahun;
-                request()->session()->put('tahun_tabelaris_masuk', $tahun);
-                request()->session()->put('bulan_tabelaris_masuk', $angkaBulanSebelumnya);
-                return view('backend.tabelarisMasuk.index',[
-                    'bulan' =>  $angkaBulanSebelumnya,
-                    'bulanSekarang' =>  $request->bulan,
-                    'tahun' =>  $tahun,
-                    'tanggal' =>  $tanggal,
-                    'kasMasuks' =>  $kasMasuks,
-                    'saldoKasAwal' =>  $saldoKasAwal,
-                    'namaBulanSebelumnya' =>  $namaBulanSebelumnya,
-                ]);
-            } catch (\Exception $e) {
+            $namaBulan = [
+                1 => 'Januari',
+                2 => 'Februari',
+                3 => 'Maret',
+                4 => 'April',
+                5 => 'Mei',
+                6 => 'Juni',
+                7 => 'Juli',
+                8 => 'Agustus',
+                9 => 'September',
+                10 => 'Oktober',
+                11 => 'November',
+                12 => 'Desember',
+            ];
+
+            $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
+            if (!$modalAwal) {
                 $notification = array(
-                    'message' => 'Oooopps, Harap untuk memilih bulan dan tahun dari form',
+                    'message' => 'Oooopps, modal awal '.$namaBulan[$request->bulan_transaksi].' tahun '.$request->tahun.' belum ditambahkan',
                     'alert-type' => 'error'
                 );
                 return redirect()->back()->with($notification);
             }
-        }else {
+
+            $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
+                                $query->where('kategori_transaksi', 'masuk');
+                            }, 'anggota'])
+                            ->whereYear('tanggal_transaksi', $request->tahun)
+                            ->whereMonth('tanggal_transaksi', $request->bulan)
+                            ->orderBy('tanggal_transaksi', 'asc')
+                            ->get();
+            return view('backend.tabelarisMasuk.index2',[
+                'bulan' =>  $request->bulan,
+                'tahun' =>  $request->tahun,
+                'transaksis' =>  $transaksis,
+                'modalAwal' =>  $modalAwal,
+            ]);
+        } catch (\Exception $e) {
             $notification = array(
-                'message' => 'Oooopps, Harap simpan saldo kas pada bulan '.$namaBulanSebelumnya.' Tahun '.$tahun. ' terlebih dahulu',
+                'message' => 'Oooopps, mohon maaf ada kesalahan, mungkin anda belum menginputkan modal awal pada bulan dan tahun yang dipilih',
                 'alert-type' => 'error'
             );
-            return redirect()->route('tabelarisMasuk')->with($notification);
+            return redirect()->back()->with($notification);
         }
     }
+
+    // public function cari(Request $request){
+    //     $rules = [
+    //         'bulan'       => 'required',
+    //         'tahun'       => 'required|numeric|digits:4|min:1000|max:9999',
+    //     ];
+    //     $text = [
+    //         'bulan.required'      => 'Kolom Bulan harus diisi.',
+    //         'tahun.required'      => 'Kolom Tahun harus diisi.',
+    //         'tahun.numeric'       => 'Kolom Tahun harus berupa angka.',
+    //         'tahun.digits'        => 'Kolom Tahun harus terdiri dari 4 digit.',
+    //         'tahun.min'           => 'Kolom Tahun harus memiliki nilai minimal 1000.',
+    //         'tahun.max'           => 'Kolom Tahun harus memiliki nilai maksimal 9999.',
+    //     ];
+
+    //     $validasi = Validator::make($request->all(), $rules, $text);
+    //     if ($validasi->fails()) {
+    //         return response()->json(['error'  =>  0, 'text'   =>  $validasi->errors()->first()],422);
+    //     }
+        
+    //     $bulans = [
+    //         '01' => 'Januari',
+    //         '02' => 'Februari',
+    //         '03' => 'Maret',
+    //         '04' => 'April',
+    //         '05' => 'Mei',
+    //         '06' => 'Juni',
+    //         '07' => 'Juli',
+    //         '08' => 'Agustus',
+    //         '09' => 'September',
+    //         '10' => 'Oktober',
+    //         '11' => 'November',
+    //         '12' => 'Desember'
+    //     ];
+
+    //     if ($request->bulan == "01") {
+    //         $tahun = $request->tahun-1;
+    //         $angkaBulanSebelumnya = 12;
+    //         $namaBulanSebelumnya = "Desember";
+    //     }else{
+    //         $tahun = $request->tahun;
+    //         $namaBulan = $bulans[$request->bulan];
+    //         $angkaBulanSebelumnya = $request->bulan - 1;
+    //         if ($angkaBulanSebelumnya < '01') {
+    //             $angkaBulanSebelumnya = '12'; // Bulan sebelumnya dari '01' adalah '12'
+    //         }
+    //         $angkaBulanSebelumnya = str_pad($angkaBulanSebelumnya, 2, '0', STR_PAD_LEFT);
+    //         $namaBulanSebelumnya = $bulans[$angkaBulanSebelumnya];
+    //     }
+        
+    //     $saldoKasAwal = ModalAwal::where('tahun', $request->tahun)->where('bulan',$request->bulan)->first();
+    //     if ($saldoKasAwal != null) {
+    //         try {
+    //             $kasMasuks = User::active()
+    //                             ->with(['simpananWajibs' => function($query) use ($request) {
+    //                                 $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                     ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                             }])
+    //                             ->withSum(['simpananWajibs' => function($query) use ($request) {
+    //                                 $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                     ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                             }], 'jumlah_transaksi')
+    //                             ->with(['simpananPokok' => function($query) use ($request) {
+    //                                 $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                     ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                             }])
+    //                             ->withSum(['simpananPokok' => function($query) use ($request) {
+    //                                 $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                     ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                             }], 'jumlah_transaksi')
+    //                             ->withSum(['angsurans' => function($query) use ($request) {
+    //                                 $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                     ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                             }], 'angsuran_pokok')
+    //                             ->withSum(['angsurans' => function($query) use ($request) {
+    //                                 $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                     ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                             }], 'angsuran_jasa')
+    //                             ->where('nama_lengkap', '!=', 'Operator')
+    //                             ->orderBy('id', 'asc')
+    //                             ->get();
+    
+    //             $namaBulan = date('F', mktime(0, 0, 0, $request->bulan, 1));
+    //             $tanggal = $namaBulan . ' ' . $tahun;
+    //             request()->session()->put('tahun_tabelaris_masuk', $tahun);
+    //             request()->session()->put('bulan_tabelaris_masuk', $angkaBulanSebelumnya);
+    //             return view('backend.tabelarisMasuk.index',[
+    //                 'bulan' =>  $angkaBulanSebelumnya,
+    //                 'bulanSekarang' =>  $request->bulan,
+    //                 'tahun' =>  $tahun,
+    //                 'tanggal' =>  $tanggal,
+    //                 'kasMasuks' =>  $kasMasuks,
+    //                 'saldoKasAwal' =>  $saldoKasAwal,
+    //                 'namaBulanSebelumnya' =>  $namaBulanSebelumnya,
+    //             ]);
+    //         } catch (\Exception $e) {
+    //             $notification = array(
+    //                 'message' => 'Oooopps, Harap untuk memilih bulan dan tahun dari form',
+    //                 'alert-type' => 'error'
+    //             );
+    //             return redirect()->back()->with($notification);
+    //         }
+    //     }else {
+    //         $notification = array(
+    //             'message' => 'Oooopps, Harap simpan saldo kas pada bulan '.$namaBulanSebelumnya.' Tahun '.$tahun. ' terlebih dahulu',
+    //             'alert-type' => 'error'
+    //         );
+    //         return redirect()->route('tabelarisMasuk')->with($notification);
+    //     }
+    // }
 
     public function pdf(Request $request){
         $kasMasuks = User::active()
