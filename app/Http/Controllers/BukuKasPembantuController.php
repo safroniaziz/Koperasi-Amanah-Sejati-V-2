@@ -70,7 +70,7 @@ class BukuKasPembantuController extends Controller
             ]);
         } catch (\Exception $e) {
             $notification = array(
-                'message' => 'Oooopps, Harap untuk memilih bulan dan tahun dari form',
+                'message' => 'Oooopps, mohon maaf ada kesalahan, mungkin anda belum menginputkan modal awal pada bulan dan tahun yang dipilih',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with($notification);
