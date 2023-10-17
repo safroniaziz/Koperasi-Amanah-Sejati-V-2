@@ -68,7 +68,7 @@ class BukuKasPembantuController extends Controller
             }
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi'])
                                             ->where('tahun_transaksi',$request->tahun)
-                                            ->whereMonth('bulan_transaksi',$bulanNama)
+                                            ->where('bulan_transaksi',$bulanNama)
                                             ->orderBy('tanggal_transaksi','asc')
                                             ->get();
             return view('backend.bukuKasPembantu.index',[
