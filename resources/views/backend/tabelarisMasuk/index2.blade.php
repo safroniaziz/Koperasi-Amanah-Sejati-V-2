@@ -87,18 +87,9 @@
                                                 @endif
                                             </td>
                                             <td>
-
-                                                @if ($transaksi->kategori_transaksi == "masuk")
-                                                    Rp.{{ number_format($transaksi->jumlah_transaksi + $modalAwal->modal_awal,2) }}
                                                     @php
                                                         $modalAwal->modal_awal = $transaksi->jumlah_transaksi + $modalAwal->modal_awal;
                                                     @endphp
-                                                    @else
-                                                        Rp.{{ number_format($modalAwal->modal_awal - $transaksi->jumlah_transaksi,2) }}
-                                                    @php
-                                                        $modalAwal->modal_awal = $modalAwal->modal_awal - $transaksi->jumlah_transaksi;
-                                                    @endphp
-                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
