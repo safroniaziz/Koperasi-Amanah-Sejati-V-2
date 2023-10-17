@@ -34,8 +34,29 @@ class BukuKasPembantuController extends Controller
             if ($validasi->fails()) {
                 return response()->json(['error'  =>  0, 'text'   =>  $validasi->errors()->first()],422);
             }
+            $namaBulan = [
+                1 => 'Januari',
+                2 => 'Februari',
+                3 => 'Maret',
+                4 => 'April',
+                5 => 'Mei',
+                6 => 'Juni',
+                7 => 'Juli',
+                8 => 'Agustus',
+                9 => 'September',
+                10 => 'Oktober',
+                11 => 'November',
+                12 => 'Desember',
+            ];
 
             $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
+            if (!$modalAwal) {
+                $notification = array(
+                    'message' => 'Oooopps, modal awal '.$namaBulan[$request->bulan_transaksi].' tahun '.$request->tahun.' belum ditambahkan',
+                    'alert-type' => 'error'
+                );
+                return redirect()->back()->with($notification);
+            }
 
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
                                             ->whereMonth('tanggal_transaksi',$request->bulan)
