@@ -42,6 +42,7 @@ class BukuKasPembantuController extends Controller
                                             ->whereMonth('bulan_transaksi',$request->bulan)
                                             ->orderBy('tanggal_transaksi','asc')
                                             ->get();
+                                            return $request->all();
             return view('backend.bukuKasPembantu.index',[
                 'bulan' =>  $request->bulan,
                 'tahun' =>  $request->tahun,
