@@ -37,7 +37,7 @@ class BukuKasPembantuController extends Controller
 
             $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
 
-            $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
+            $transaksis = TransaksiKoperasi::whereYear('tanggal_transaksi',$request->tahun)
                                             ->whereMonth('tanggal_transaksi',$request->bulan)
                                             ->orderBy('tanggal_transaksi','asc')
                                             ->get();
