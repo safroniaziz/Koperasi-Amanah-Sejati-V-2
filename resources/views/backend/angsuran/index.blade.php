@@ -1,6 +1,6 @@
 @extends('layouts.backend')
-@section('subTitle', 'Data Simpanan Wajib')
-@section('page', 'Data Simpanan Wajib')
+@section('subTitle', 'Data Pinjaman')
+@section('page', 'Data Pinjaman')
 @section('subPage', 'Semua Data')
 @section('sidebar-collapse')
     sidebar-collapse
@@ -13,7 +13,7 @@
         <div class="col-md-5">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><i class="fa fa-search"></i>&nbsp;Detail Simpanan Wajib Anggota</h3>
+                    <h3 class="box-title"><i class="fa fa-search"></i>&nbsp;Detail Pinjaman Anggota</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
