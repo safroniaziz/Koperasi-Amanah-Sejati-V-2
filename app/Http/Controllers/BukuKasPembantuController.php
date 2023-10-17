@@ -37,7 +37,7 @@ class BukuKasPembantuController extends Controller
 
             $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
 
-            $bulanAngka = "01"; // Ganti dengan angka bulan yang ingin Anda ubah
+            $bulanAngka = $request->bulan; // Ganti dengan angka bulan yang ingin Anda ubah
 
             if ($bulanAngka == "01") {
                 $bulanNama = "Januari";
