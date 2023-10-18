@@ -74,13 +74,12 @@
                                     </td>
                                 </tr>
                                 @php
-                                    $modalAwalSebelum = $modalAwal->modal_awal;
-                                    $modalAwalSesudah = $modalAwal->modal_awal;
+                                $modalAwalSesudah = $modalAwal->modal_awal;
                                 @endphp
                                 @foreach ($transaksis as $index => $transaksi)
                                     <tr>
-                                        <td>{{ $index+2 }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY')}}</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY') }}</td>
                                         <td>{{ $transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '' }} - {{ $transaksi->anggota->nama_lengkap }}</td>
                                         <td>
                                             Rp.{{ number_format($transaksi->jumlah_transaksi, 2) }}
@@ -89,8 +88,7 @@
                                             Rp.{{ number_format($modalAwalSesudah, 2) }}
                                         </td>
                                         @php
-                                            $modalAwalSebelum = $modalAwalSesudah;
-                                            $modalAwalSesudah += $transaksi->jumlah_transaksi;
+                                        $modalAwalSesudah += $transaksi->jumlah_transaksi;
                                         @endphp
                                     </tr>
                                 @endforeach
