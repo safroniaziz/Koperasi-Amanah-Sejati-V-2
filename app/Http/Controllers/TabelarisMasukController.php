@@ -60,12 +60,16 @@ class TabelarisMasukController extends Controller
             }
 
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
-                                $query->where('kategori_transaksi', 'masuk');
-                            }, 'anggota'])
-                            ->whereYear('tanggal_transaksi', $request->tahun)
-                            ->whereMonth('tanggal_transaksi', $request->bulan)
-                            ->orderBy('tanggal_transaksi', 'asc')
-                            ->get();
+                $query->where('kategori_transaksi', 'masuk');
+            }, 'anggota'])
+            ->whereYear('tanggal_transaksi', $request->tahun)
+            ->whereMonth('tanggal_transaksi', $request->bulan)
+            ->whereHas('jenisTransaksi', function ($query) {
+                $query->where('kategori_transaksi', 'masuk');
+            })
+            ->orderBy('tanggal_transaksi', 'asc')
+            ->get();
+        
             return view('backend.tabelarisMasuk.index2',[
                 'bulan' =>  $request->bulan,
                 'tahun' =>  $request->tahun,
