@@ -154,7 +154,9 @@ class SimpananWajibController extends Controller
         }
 
         $simpananWajib = SimpananWajib::findOrFail($request->simpanan_wajib_id);
-
+        TransaksiKoperasi::where('id',$simpananWajib->transaksi_id)->update([
+            'jumlah_transaksi'  =>  $request->jumlah_transaksi,
+        ]);
         $update = $simpananWajib->update([
             'jumlah_transaksi' =>  $request->jumlah_transaksi,
             'tanggal_transaksi' =>  $request->tanggal_transaksi,
