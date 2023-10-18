@@ -18,7 +18,7 @@
                         $tahun = request()->input('tahun');
                         $bulan = request()->input('bulan');
                     @endphp
-                    <form action="{{ route('kasPembantu.cariBukuKas') }}" method="GET" id="form">
+                    <form action="{{ route('tabelarisMasuk.cari') }}" method="GET" id="form">
                         {{ csrf_field() }} {{ method_field('GET') }}
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -96,7 +96,6 @@
                             @endif
                         </tbody>
                     </table>
-                    
                 </div>
             </div>
         </div>
