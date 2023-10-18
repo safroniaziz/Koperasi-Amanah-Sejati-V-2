@@ -62,19 +62,8 @@
                         </thead>
                         <tbody>
                             @if ($tahun)
-                                <tr>
-                                    <td>1</td>
-                                    <td>1 {{ \Carbon\Carbon::createFromDate(null, $bulan)->locale('id')->monthName }} {{ $tahun }}</td>
-                                    <td>Modal Awal</td>
-                                    <td>
-                                        Rp.{{ number_format($modalAwal->modal_awal) }},-
-                                    </td>
-                                    <td>
-                                        Rp.{{ number_format($modalAwal->modal_awal) }},-
-                                    </td>
-                                </tr>
                                 @php
-                                $modalAwalSesudah = $modalAwal->modal_awal;
+                                $saldo = 0;
                                 @endphp
                                 @foreach ($transaksis as $index => $transaksi)
                                     <tr>
@@ -84,18 +73,18 @@
                                         <td>
                                             Rp.{{ number_format($transaksi->jumlah_transaksi, 2) }}
                                         </td>
-                                        
-                                        @php
-                                        $modalAwalSesudah += $transaksi->jumlah_transaksi;
-                                        @endphp
                                         <td>
-                                            Rp.{{ number_format($modalAwalSesudah, 2) }}
+                                            Rp.{{ number_format($saldo, 2) }}
                                         </td>
+                                        @php
+                                        $saldo += $transaksi->jumlah_transaksi;
+                                        @endphp
                                     </tr>
                                 @endforeach
                             @endif
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>

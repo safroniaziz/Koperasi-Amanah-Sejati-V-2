@@ -49,15 +49,6 @@ class TabelarisKeluarController extends Controller
                 12 => 'Desember',
             ];
 
-            $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
-            if (!$modalAwal) {
-                $notification = array(
-                    'message' => 'Oooopps, modal awal '.$namaBulan[$request->bulan_transaksi].' tahun '.$request->tahun.' belum ditambahkan',
-                    'alert-type' => 'error'
-                );
-                return redirect()->back()->with($notification);
-            }
-
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
                                                 $query->where('kategori_transaksi', 'keluar');
                                             }, 'anggota'])
@@ -73,7 +64,6 @@ class TabelarisKeluarController extends Controller
                 'bulan' =>  $request->bulan,
                 'tahun' =>  $request->tahun,
                 'transaksis' =>  $transaksis,
-                'modalAwal' =>  $modalAwal,
             ]);
         } catch (\Exception $e) {
             $notification = array(
