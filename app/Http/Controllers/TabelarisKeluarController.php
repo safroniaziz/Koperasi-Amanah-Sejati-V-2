@@ -6,6 +6,7 @@ use PDF;
 use App\Models\User;
 use App\Models\ModalAwal;
 use Illuminate\Http\Request;
+use App\Models\TransaksiKoperasi;
 use Illuminate\Support\Facades\Validator;
 
 class TabelarisKeluarController extends Controller
@@ -33,40 +34,109 @@ class TabelarisKeluarController extends Controller
             if ($validasi->fails()) {
                 return response()->json(['error'  =>  0, 'text'   =>  $validasi->errors()->first()],422);
             }
-
-            $kasKeluars = User::active()
-                            ->with(['simpananWajibs' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi', $request->tahun)
-                                    ->whereMonth('tanggal_transaksi', $request->bulan);
-                            }])
-                            ->withSum(['simpananWajibs' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi', $request->tahun)
-                                    ->whereMonth('tanggal_transaksi', $request->bulan);
-                            }], 'jumlah_transaksi')
-                            ->where('nama_lengkap', '!=', 'Operator')
-                            ->orderBy('id', 'asc')
-                            ->get();
+            $namaBulan = [
+                1 => 'Januari',
+                2 => 'Februari',
+                3 => 'Maret',
+                4 => 'April',
+                5 => 'Mei',
+                6 => 'Juni',
+                7 => 'Juli',
+                8 => 'Agustus',
+                9 => 'September',
+                10 => 'Oktober',
+                11 => 'November',
+                12 => 'Desember',
+            ];
 
             $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
-            $namaBulan = date('F', mktime(0, 0, 0, $request->bulan, 1));
-            $tanggal = $namaBulan . ' ' . $request->tahun;
-            request()->session()->put('tahun_tabelaris_keluar', $request->tahun);
-            request()->session()->put('bulan_tabelaris_keluar', $request->bulan);
-            return view('backend.tabelarisKeluar.index',[
+            if (!$modalAwal) {
+                $notification = array(
+                    'message' => 'Oooopps, modal awal '.$namaBulan[$request->bulan_transaksi].' tahun '.$request->tahun.' belum ditambahkan',
+                    'alert-type' => 'error'
+                );
+                return redirect()->back()->with($notification);
+            }
+
+            $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
+                                                $query->where('kategori_transaksi', 'keluar');
+                                            }, 'anggota'])
+                                            ->whereYear('tanggal_transaksi', $request->tahun)
+                                            ->whereMonth('tanggal_transaksi', $request->bulan)
+                                            ->whereHas('jenisTransaksi', function ($query) {
+                                                $query->where('kategori_transaksi', 'keluar');
+                                            })
+                                            ->orderBy('tanggal_transaksi', 'asc')
+                                            ->get();
+        
+            return view('backend.tabelarisKeluar.index2',[
                 'bulan' =>  $request->bulan,
                 'tahun' =>  $request->tahun,
-                'tanggal' =>  $tanggal,
-                'kasKeluars' =>  $kasKeluars,
+                'transaksis' =>  $transaksis,
                 'modalAwal' =>  $modalAwal,
             ]);
         } catch (\Exception $e) {
             $notification = array(
-                'message' => 'Oooopps, Harap untuk memilih bulan dan tahun dari form',
+                'message' => 'Oooopps, mohon maaf ada kesalahan, mungkin anda belum menginputkan modal awal pada bulan dan tahun yang dipilih',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with($notification);
         }
     }
+
+    // public function cari(Request $request){
+    //     try {
+    //         $rules = [
+    //             'bulan'       => 'required',
+    //             'tahun'       => 'required|numeric|digits:4|min:1000|max:9999',
+    //         ];
+    //         $text = [
+    //             'bulan.required'      => 'Kolom Bulan harus diisi.',
+    //             'tahun.required'      => 'Kolom Tahun harus diisi.',
+    //             'tahun.numeric'       => 'Kolom Tahun harus berupa angka.',
+    //             'tahun.digits'        => 'Kolom Tahun harus terdiri dari 4 digit.',
+    //             'tahun.min'           => 'Kolom Tahun harus memiliki nilai minimal 1000.',
+    //             'tahun.max'           => 'Kolom Tahun harus memiliki nilai maksimal 9999.',
+    //         ];
+
+    //         $validasi = Validator::make($request->all(), $rules, $text);
+    //         if ($validasi->fails()) {
+    //             return response()->json(['error'  =>  0, 'text'   =>  $validasi->errors()->first()],422);
+    //         }
+
+    //         $kasKeluars = User::active()
+    //                         ->with(['simpananWajibs' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                 ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                         }])
+    //                         ->withSum(['simpananWajibs' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi', $request->tahun)
+    //                                 ->whereMonth('tanggal_transaksi', $request->bulan);
+    //                         }], 'jumlah_transaksi')
+    //                         ->where('nama_lengkap', '!=', 'Operator')
+    //                         ->orderBy('id', 'asc')
+    //                         ->get();
+
+    //         $modalAwal = ModalAwal::where('tahun',$request->tahun)->where('bulan',$request->bulan)->first();
+    //         $namaBulan = date('F', mktime(0, 0, 0, $request->bulan, 1));
+    //         $tanggal = $namaBulan . ' ' . $request->tahun;
+    //         request()->session()->put('tahun_tabelaris_keluar', $request->tahun);
+    //         request()->session()->put('bulan_tabelaris_keluar', $request->bulan);
+    //         return view('backend.tabelarisKeluar.index',[
+    //             'bulan' =>  $request->bulan,
+    //             'tahun' =>  $request->tahun,
+    //             'tanggal' =>  $tanggal,
+    //             'kasKeluars' =>  $kasKeluars,
+    //             'modalAwal' =>  $modalAwal,
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         $notification = array(
+    //             'message' => 'Oooopps, Harap untuk memilih bulan dan tahun dari form',
+    //             'alert-type' => 'error'
+    //         );
+    //         return redirect()->back()->with($notification);
+    //     }
+    // }
 
     public function pdf(Request $request){
         $kasKeluars = User::active()
