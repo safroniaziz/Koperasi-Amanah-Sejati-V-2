@@ -44,7 +44,7 @@
                     }
                 @endphp
                 <input type="text" name="angsuran_jasa" 
-                        value="{{ $jasa }}"
+                        value="{{ round($jasa) }}"
                 id="angsuran_bunga" class="form-control">
             </div>
         </div>
