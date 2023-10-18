@@ -165,16 +165,25 @@ class AngsuranPinjamanController extends Controller
     }
 
     public function delete(AngsuranPinjaman $angsuran){
+        DB::beginTransaction();
+        try {
+        TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->update([
+            'transaksi_pokok_id'    =>  null,
+        ]);
+        TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->update([
+            'transaksi_jasa_id'    =>  null,
+        ]);
         TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->delete();
         TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->delete();
         $delete =  $angsuran->delete();
-
-        if ($delete) {
-            return response()->json([
-                'text'  =>  'Yeay, transaksi angsuran berhasil dihapus',
-                'url'   =>  route('angsuran',[$angsuran->anggota_id,$angsuran->pinjaman_id]),
-            ]);
-        } else {
+        DB::commit();
+        return response()->json([
+            'text'  =>  'Yeay, transaksi angsuran berhasil dihapus',
+            'url'   =>  route('angsuran',[$angsuran->anggota_id,$angsuran->pinjaman_id]),
+        ]);
+      
+        } catch (Exception $e) {
+            DB::rollback();
             return response()->json(['text' =>  'Oopps, transaksi angsuran gagal dihapus']);
         }
     }
