@@ -84,12 +84,13 @@
                                         <td>
                                             Rp.{{ number_format($transaksi->jumlah_transaksi, 2) }}
                                         </td>
-                                        <td>
-                                            Rp.{{ number_format($modalAwalSesudah, 2) }}
-                                        </td>
+                                        
                                         @php
                                         $modalAwalSesudah += $transaksi->jumlah_transaksi;
                                         @endphp
+                                        <td>
+                                            Rp.{{ number_format($modalAwalSesudah, 2) }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
