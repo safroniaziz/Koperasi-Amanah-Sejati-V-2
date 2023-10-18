@@ -62,42 +62,42 @@
                         </thead>
                         <tbody>
                             @if ($tahun)
-    <tr>
-        <td>1</td>
-        <td>1 {{ \Carbon\Carbon::createFromDate(null, $bulan)->locale('id')->monthName }} {{ $tahun }}</td>
-        <td>Modal Awal</td>
-        <td>
-            Rp.{{ number_format($modalAwal->modal_awal) }},-
-        </td>
-        <td>
-            Rp.{{ number_format($modalAwal->modal_awal) }},-
-        </td>
-    </tr>
-    @php
-        $modalAwalSebelum = $modalAwal->modal_awal;
-        $modalAwalSesudah = $modalAwal->modal_awal;
-    @endphp
-    @foreach ($transaksis as $index => $transaksi)
-        <tr>
-            <td>{{ $index+1 }}</td>
-            <td>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY')}}</td>
-            <td>{{ $transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '' }} - {{ $transaksi->anggota->nama_lengkap }}</td>
-            <td>
-                Rp.{{ number_format($transaksi->jumlah_transaksi,2) }}
-            </td>
-            <td>
-                Rp.{{ number_format($modalAwalSebelum,2) }}
-            </td>
-            @php
-                $modalAwalSebelum = $modalAwalSesudah;
-                $modalAwalSesudah += $transaksi->jumlah_transaksi;
-            @endphp
-        </tr>
-    @endforeach
-@endif
-
+                                <tr>
+                                    <td>1</td>
+                                    <td>1 {{ \Carbon\Carbon::createFromDate(null, $bulan)->locale('id')->monthName }} {{ $tahun }}</td>
+                                    <td>Modal Awal</td>
+                                    <td>
+                                        Rp.{{ number_format($modalAwal->modal_awal) }},-
+                                    </td>
+                                    <td>
+                                        Rp.{{ number_format($modalAwal->modal_awal) }},-
+                                    </td>
+                                </tr>
+                                @php
+                                    $modalAwalSebelum = $modalAwal->modal_awal;
+                                    $modalAwalSesudah = $modalAwal->modal_awal;
+                                @endphp
+                                @foreach ($transaksis as $index => $transaksi)
+                                    <tr>
+                                        <td>{{ $index+2 }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY')}}</td>
+                                        <td>{{ $transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '' }} - {{ $transaksi->anggota->nama_lengkap }}</td>
+                                        <td>
+                                            Rp.{{ number_format($transaksi->jumlah_transaksi, 2) }}
+                                        </td>
+                                        <td>
+                                            Rp.{{ number_format($modalAwalSesudah, 2) }}
+                                        </td>
+                                        @php
+                                            $modalAwalSebelum = $modalAwalSesudah;
+                                            $modalAwalSesudah += $transaksi->jumlah_transaksi;
+                                        @endphp
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>
@@ -106,28 +106,6 @@
 
 @push('scripts')
     <script>
-        // $(document).on('submit','#form',function (event){
-        //     event.preventDefault();
-        //     $.ajax({
-        //         url: $(this).attr('action'),
-        //         type: $(this).attr('method'),
-        //         typeData: "JSON",
-        //         data: new FormData(this),
-        //         processData:false,
-        //         contentType:false,
-        //         success : function(res) {
-        //             $("#btnSubmit"). attr("disabled", true);
-        //             toastr.success(res.text, 'Yeay, Berhasil');
-        //             setTimeout(function () {
-        //                 window.location.href=res.url;
-        //             } , 100);
-        //         },
-        //         error:function(xhr){
-        //             toastr.error(xhr.responseJSON.text, 'Ooopps, Ada Kesalahan');
-        //         }
-        //     })
-        // });
-
         $('#tahun').each(function() {
             var year = (new Date()).getFullYear();
             var current = year;
