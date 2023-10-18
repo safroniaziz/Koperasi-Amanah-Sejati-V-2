@@ -165,22 +165,22 @@ class AngsuranPinjamanController extends Controller
     }
 
     public function delete(AngsuranPinjaman $angsuran){
-        // DB::beginTransaction();
-        // try {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->delete();
-        TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->delete();
-        $delete =  $angsuran->delete();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
-        DB::commit();
-        return response()->json([
-            'text'  =>  'Yeay, transaksi angsuran berhasil dihapus',
-            'url'   =>  route('angsuran',[$angsuran->anggota_id,$angsuran->pinjaman_id]),
-        ]);
+        DB::beginTransaction();
+        try {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+            TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->delete();
+            TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->delete();
+            $delete =  $angsuran->delete();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
+            DB::commit();
+            return response()->json([
+                'text'  =>  'Yeay, transaksi angsuran berhasil dihapus',
+                'url'   =>  route('angsuran',[$angsuran->anggota_id,$angsuran->pinjaman_id]),
+            ]);
       
-        // } catch (Exception $e) {
-        //     DB::rollback();
-        //     return response()->json(['text' =>  'Oopps, transaksi angsuran gagal dihapus']);
-        // }
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['text' =>  'Oopps, transaksi angsuran gagal dihapus']);
+        }
     }
 }
