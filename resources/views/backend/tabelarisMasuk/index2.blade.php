@@ -62,34 +62,38 @@
                         </thead>
                         <tbody>
                             @if ($tahun)
-                                <tr>
-                                    <td>1</td>
-                                    <td>1 {{ \Carbon\Carbon::createFromDate(null, $bulan)->locale('id')->monthName }} {{ $tahun }}</td>
-                                    <td>Modal Awal</td>
-                                    <td>
-                                        Rp.{{ number_format($modalAwal->modal_awal) }},-
-                                    </td>
-                                    <td> - </td>
-                                    <td>
-                                        Rp.{{ number_format($modalAwal->modal_awal) }},-
-                                    </td>
-                                </tr>
-                                    @foreach ($transaksis as $index => $transaksi)
-                                        <tr>
-                                            <td>{{ $index+1 }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY')}}</td>
-                                            <td>{{ $transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '' }} - {{ $transaksi->anggota->nama_lengkap }}</td>
-                                            <td>
-                                                Rp.{{ number_format($transaksi->jumlah_transaksi,2) }}
-                                            </td>
-                                            <td>
-                                                    @php
-                                                        $modalAwal->modal_awal = $transaksi->jumlah_transaksi + $modalAwal->modal_awal;
-                                                    @endphp
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                            @endif
+    <tr>
+        <td>1</td>
+        <td>1 {{ \Carbon\Carbon::createFromDate(null, $bulan)->locale('id')->monthName }} {{ $tahun }}</td>
+        <td>Modal Awal</td>
+        <td>
+            Rp.{{ number_format($modalAwal->modal_awal) }},-
+        </td>
+        <td> - </td>
+        <td>
+            Rp.{{ number_format($modalAwal->modal_awal) }},-
+        </td>
+    </tr>
+    @php
+        $totalModalAwal = $modalAwal->modal_awal;
+    @endphp
+    @foreach ($transaksis as $index => $transaksi)
+        <tr>
+            <td>{{ $index+1 }}</td>
+            <td>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY')}}</td>
+            <td>{{ $transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '' }} - {{ $transaksi->anggota->nama_lengkap }}</td>
+            <td>
+                Rp.{{ number_format($transaksi->jumlah_transaksi, 2) }}
+            </td>
+            <td>
+                @php
+                    $totalModalAwal += $transaksi->jumlah_transaksi;
+                @endphp
+            </td>
+        </tr>
+    @endforeach
+@endif
+
                         </tbody>
                     </table>
                 </div>
