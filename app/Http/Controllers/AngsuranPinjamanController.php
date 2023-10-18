@@ -82,7 +82,8 @@ class AngsuranPinjamanController extends Controller
                                                 ->count();
             
             AngsuranPinjaman::create([
-                'transaksi_id' => $transaksi_pokok->id,
+                'transaksi_pokok_id' => $transaksi_pokok->id,
+                'transaksi_jasa_id' => $transaksi_jasa->id,
                 'pinjaman_id' => $pinjaman->id,
                 'anggota_id' => $anggota->id,
                 'angsuran_pokok' => $request->angsuran_pokok,
@@ -135,7 +136,9 @@ class AngsuranPinjamanController extends Controller
 
         DB::beginTransaction();
         try {
-
+            $angsuran = AngsuranPinjaman::where('id',$request->angsuran_id)->first();
+            TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->delete();
+            TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->delete();
             AngsuranPinjaman::where('id',$request->angsuran_id)->update([
                 'pinjaman_id' => $pinjaman->id,
                 'anggota_id' => $anggota->id,

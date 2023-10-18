@@ -11,7 +11,8 @@ class AngsuranPinjaman extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'transaksi_id',
+        'transaksi_pokok_id',
+        'transaksi_jasa_id',
         'pinjaman_id',
         'anggota_id',
         'angsuran_pokok',
