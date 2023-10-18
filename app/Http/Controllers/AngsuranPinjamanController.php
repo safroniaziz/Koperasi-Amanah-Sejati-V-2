@@ -137,8 +137,12 @@ class AngsuranPinjamanController extends Controller
         DB::beginTransaction();
         try {
             $angsuran = AngsuranPinjaman::where('id',$request->angsuran_id)->first();
-            TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->delete();
-            TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->delete();
+            TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->update([
+                'jumlah_transaksi'  =>  $request->angsuran_pokok,
+            ]);
+            TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->update([
+                'jumlah_transaksi'  =>  $request->angsuran_jasa,
+            ]);
             AngsuranPinjaman::where('id',$request->angsuran_id)->update([
                 'pinjaman_id' => $pinjaman->id,
                 'anggota_id' => $anggota->id,
