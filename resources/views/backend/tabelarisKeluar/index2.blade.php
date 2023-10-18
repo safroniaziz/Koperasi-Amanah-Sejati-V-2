@@ -73,12 +73,12 @@
                                         <td>
                                             Rp.{{ number_format($transaksi->jumlah_transaksi, 2) }}
                                         </td>
+                                        @php
+                                            $saldo += $transaksi->jumlah_transaksi;
+                                        @endphp
                                         <td>
                                             Rp.{{ number_format($saldo, 2) }}
                                         </td>
-                                        @php
-                                        $saldo += $transaksi->jumlah_transaksi;
-                                        @endphp
                                     </tr>
                                 @endforeach
                             @endif
