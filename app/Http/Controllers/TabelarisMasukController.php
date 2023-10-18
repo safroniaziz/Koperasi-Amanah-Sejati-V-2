@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class TabelarisMasukController extends Controller
 {
     public function index(){
-        return view('backend/tabelarisMasuk.index');
+        return view('backend/tabelarisMasuk.index2');
     }
 
     public function cari(Request $request){

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class TabelarisKeluarController extends Controller
 {
     public function index(){
-        return view('backend/tabelarisKeluar.index');
+        return view('backend/tabelarisKeluar.index2');
     }
 
     public function cari(Request $request){
