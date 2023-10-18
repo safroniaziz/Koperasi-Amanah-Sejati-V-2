@@ -178,8 +178,10 @@ class SimpananWajibController extends Controller
     }
 
     public function delete(Request $request, SimpananWajib $simpananWajib){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        TransaksiKoperasi::where('id',$simpananWajib->transaksi_id)->delete();
         $delete =  $simpananWajib->delete();
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         if ($delete) {
             return response()->json([
                 'text'  =>  'Yeay, simpanan wajib berhasil dihapus',
