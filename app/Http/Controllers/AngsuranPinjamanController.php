@@ -79,7 +79,7 @@ class AngsuranPinjamanController extends Controller
             ], $commonData));
 
             $angsuranTerakhir = AngsuranPinjaman::where('anggota_id', $anggota->id)->where('pinjaman_id',$pinjaman->id)
-                                                ->max('angsuran_ke');
+                                                ->count();
             
             AngsuranPinjaman::create([
                 'transaksi_id' => $transaksi_pokok->id,
