@@ -66,7 +66,6 @@ class TabelarisMasukController extends Controller
                             ->whereMonth('tanggal_transaksi', $request->bulan)
                             ->orderBy('tanggal_transaksi', 'asc')
                             ->get();
-                            return $transaksis;
             return view('backend.tabelarisMasuk.index2',[
                 'bulan' =>  $request->bulan,
                 'tahun' =>  $request->tahun,
