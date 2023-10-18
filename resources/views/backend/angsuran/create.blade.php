@@ -38,9 +38,9 @@
                 <label for="exampleInputEmail1">Jumlah Angsuran Jasa / Bulan</label>
                 @php
 if ($pinjaman->jumlah_bulan == 24) {
-    $jasa = round($pinjaman->angsuran_pokok * (16/100));
+    $jasa = round($pinjaman->angsuran_pokok * 16/100);
 } else {
-    $jasa = round($pinjaman->angsuran_pokok * (8/100));
+    $jasa = round($pinjaman->angsuran_pokok * 8/100);
 }
 @endphp
 
