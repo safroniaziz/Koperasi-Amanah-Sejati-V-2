@@ -134,8 +134,8 @@ class AngsuranPinjamanController extends Controller
             return response()->json(['error' => 0, 'text' => $validator->errors()->first()], 422);
         }
 
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
+        try {
             $angsuran = AngsuranPinjaman::where('id',$request->angsuran_id)->first();
             TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->update([
                 'jumlah_transaksi'  =>  $request->angsuran_pokok,
@@ -158,10 +158,10 @@ class AngsuranPinjamanController extends Controller
                 'text'  =>  'Yeay, transaksi angsuran berhasil diubah',
                 'url'   =>  route('angsuran',[$anggota->id,$pinjaman->id]),
             ]);
-        // } catch (Exception $e) {
-        //     DB::rollback();
-        //     return response()->json(['text' =>  'Oopps, transaksi angsuran gagal diubah']);
-        // }
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['text' =>  'Oopps, transaksi angsuran gagal diubah']);
+        }
     }
 
     public function delete(AngsuranPinjaman $angsuran){
