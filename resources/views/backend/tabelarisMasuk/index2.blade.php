@@ -80,11 +80,7 @@
                                             <td>{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY')}}</td>
                                             <td>{{ $transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '' }} - {{ $transaksi->anggota->nama_lengkap }}</td>
                                             <td>
-                                                @if ($transaksi->kategori_transaksi == "masuk")
-                                                    Rp.{{ number_format($transaksi->jumlah_transaksi,2) }}
-                                                    @else
-                                                    -
-                                                @endif
+                                                Rp.{{ number_format($transaksi->jumlah_transaksi,2) }}
                                             </td>
                                             <td>
                                                     @php
