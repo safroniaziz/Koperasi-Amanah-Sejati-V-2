@@ -165,6 +165,8 @@ class AngsuranPinjamanController extends Controller
     }
 
     public function delete(AngsuranPinjaman $angsuran){
+        TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->delete();
+        TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->delete();
         $delete =  $angsuran->delete();
 
         if ($delete) {
