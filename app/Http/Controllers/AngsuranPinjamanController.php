@@ -167,10 +167,8 @@ class AngsuranPinjamanController extends Controller
     public function delete(AngsuranPinjaman $angsuran){
         // DB::beginTransaction();
         // try {
-        TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->update([
+        AngsuranPinjaman::where('id',$angsuran->transaksi_pokok_id)->update([
             'transaksi_pokok_id'    =>  null,
-        ]);
-        TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->update([
             'transaksi_jasa_id'    =>  null,
         ]);
         TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->delete();
