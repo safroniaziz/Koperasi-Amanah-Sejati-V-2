@@ -165,8 +165,8 @@ class AngsuranPinjamanController extends Controller
     }
 
     public function delete(AngsuranPinjaman $angsuran){
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
         TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->update([
             'transaksi_pokok_id'    =>  null,
         ]);
@@ -182,9 +182,9 @@ class AngsuranPinjamanController extends Controller
             'url'   =>  route('angsuran',[$angsuran->anggota_id,$angsuran->pinjaman_id]),
         ]);
       
-        } catch (Exception $e) {
-            DB::rollback();
-            return response()->json(['text' =>  'Oopps, transaksi angsuran gagal dihapus']);
-        }
+        // } catch (Exception $e) {
+        //     DB::rollback();
+        //     return response()->json(['text' =>  'Oopps, transaksi angsuran gagal dihapus']);
+        // }
     }
 }
