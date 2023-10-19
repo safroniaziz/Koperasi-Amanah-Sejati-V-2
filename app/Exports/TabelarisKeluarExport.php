@@ -27,7 +27,7 @@ class TabelarisKeluarExport implements FromCollection
                 'No' => $index + 1,
                 'Tanggal Transaksi' => \Carbon\Carbon::parse($transaksi['tanggal_transaksi'])->isoFormat('D MMMM YYYY'),
                 'Uraian' => ($transaksi['jenisTransaksi']['nama_jenis_transaksi'] ?? '') . ' - ' . $transaksi['anggota']['nama_lengkap'],
-                'Masuk' => $transaksi['kategori_transaksi'] == "masuk" ? 'Rp.' . number_format($transaksi['jumlah_transaksi'], 2) : '-',
+                'Keluar' => $transaksi['kategori_transaksi'] == "keluar" ? 'Rp.' . number_format($transaksi['jumlah_transaksi'], 2) : '-',
                 'Saldo' => 'Rp.' . number_format($saldo, 2),
             ]);
         }
