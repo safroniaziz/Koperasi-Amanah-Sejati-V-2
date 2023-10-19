@@ -2,10 +2,9 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class BukuKasPembantuExport implements FromCollection
+class TabelarisMasukExport implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -33,27 +32,38 @@ class BukuKasPembantuExport implements FromCollection
             'Tanggal Transaksi' => '1 ' . \Carbon\Carbon::createFromDate(null, $this->bulan)->locale('id')->monthName . ' ' . $this->tahun,
             'Uraian' => 'Modal Awal',
             'Masuk' => 'Rp.' . number_format($this->modalAwal->modal_awal) . ',',
-            'Keluar' => '-',
             'Saldo' => 'Rp.' . number_format($this->modalAwal->modal_awal) . ',',
         ]);
+
+        $saldo = $this->modalAwal->modal_awal;
 
         foreach ($this->data as $index => $transaksi) {
             $formattedData->push([
                 'No' => $index + 2, // No dimulai dari 2
-                'Tanggal Transaksi' => \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY'),
-                'Uraian' => ($transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '') . ' - ' . $transaksi->anggota->nama_lengkap,
-                'Masuk' => $transaksi->kategori_transaksi == "masuk" ? 'Rp.' . number_format($transaksi->jumlah_transaksi, 2) : '-',
-                'Keluar' => $transaksi->kategori_transaksi == "keluar" ? 'Rp.' . number_format($transaksi->jumlah_transaksi, 2) : '-',
-                'Saldo' => $transaksi->kategori_transaksi == "masuk" ? 'Rp.' . number_format($transaksi->jumlah_transaksi + $this->modalAwal->modal_awal, 2) : 'Rp.' . number_format($this->modalAwal->modal_awal - $transaksi->jumlah_transaksi, 2),
+                'Tanggal Transaksi' => \Carbon\Carbon::parse($transaksi['tanggal_transaksi'])->isoFormat('D MMMM YYYY'),
+                'Uraian' => ($transaksi['jenisTransaksi']['nama_jenis_transaksi'] ?? '') . ' - ' . $transaksi['anggota']['nama_lengkap'],
+                'Masuk' => $transaksi['kategori_transaksi'] == "masuk" ? 'Rp.' . number_format($transaksi['jumlah_transaksi'], 2) : '-',
+                'Saldo' => 'Rp.' . number_format($saldo, 2),
             ]);
 
-            if ($transaksi->kategori_transaksi == "masuk") {
-                $this->modalAwal->modal_awal = $transaksi->jumlah_transaksi + $this->modalAwal->modal_awal;
+            if ($transaksi['kategori_transaksi'] == "masuk") {
+                $saldo += $transaksi['jumlah_transaksi'];
             } else {
-                $this->modalAwal->modal_awal = $this->modalAwal->modal_awal - $transaksi->jumlah_transaksi;
+                $saldo -= $transaksi['jumlah_transaksi'];
             }
         }
 
         return $formattedData;
+    }
+
+    public function headings(): array
+    {
+        return [
+            'No',
+            'Tanggal Transaksi',
+            'Uraian',
+            'Masuk',
+            'Saldo',
+        ];
     }
 }

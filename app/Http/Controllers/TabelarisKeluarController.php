@@ -48,7 +48,9 @@ class TabelarisKeluarController extends Controller
                 11 => 'November',
                 12 => 'Desember',
             ];
-
+            $request->session()->flush();
+            $request->session()->put('tahunKasMasuk', $request->input('tahun'));
+            $request->session()->put('bulanKasMasuk', $request->input('tahun'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
                                                 $query->where('kategori_transaksi', 'keluar');
                                             }, 'anggota'])
@@ -128,54 +130,54 @@ class TabelarisKeluarController extends Controller
     //     }
     // }
 
-    public function pdf(Request $request){
-        $kasKeluars = User::active()
-                            ->with(['simpananWajibs' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
-                                    ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
-                            }])
-                            ->withSum(['simpananWajibs' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
-                                    ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
-                            }], 'jumlah_transaksi')
-                            ->with(['simpananPokok' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
-                                    ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
-                            }])
-                            ->withSum(['simpananPokok' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
-                                    ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
-                            }], 'jumlah_transaksi')
-                            ->withSum(['angsurans' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
-                                    ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
-                            }], 'angsuran_pokok')
-                            ->withSum(['angsurans' => function($query) use ($request) {
-                                $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
-                                    ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
-                            }], 'angsuran_jasa')
-                            ->where('nama_lengkap', '!=', 'Operator')
-                            ->orderBy('id', 'asc')
-                            ->get();
+    // public function pdf(Request $request){
+    //     $kasKeluars = User::active()
+    //                         ->with(['simpananWajibs' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
+    //                                 ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
+    //                         }])
+    //                         ->withSum(['simpananWajibs' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
+    //                                 ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
+    //                         }], 'jumlah_transaksi')
+    //                         ->with(['simpananPokok' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
+    //                                 ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
+    //                         }])
+    //                         ->withSum(['simpananPokok' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
+    //                                 ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
+    //                         }], 'jumlah_transaksi')
+    //                         ->withSum(['angsurans' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
+    //                                 ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
+    //                         }], 'angsuran_pokok')
+    //                         ->withSum(['angsurans' => function($query) use ($request) {
+    //                             $query->whereYear('tanggal_transaksi',  request()->session()->get('tahun_tabelaris_keluar'))
+    //                                 ->whereMonth('tanggal_transaksi', request()->session()->get('bulan_tabelaris_keluar'));
+    //                         }], 'angsuran_jasa')
+    //                         ->where('nama_lengkap', '!=', 'Operator')
+    //                         ->orderBy('id', 'asc')
+    //                         ->get();
 
-        $modalAwal = ModalAwal::where('tahun', request()->session()->get('tahun_tabelaris_keluar'))->where('bulan',request()->session()->get('bulan_tabelaris_keluar'))->first();
+    //     $modalAwal = ModalAwal::where('tahun', request()->session()->get('tahun_tabelaris_keluar'))->where('bulan',request()->session()->get('bulan_tabelaris_keluar'))->first();
 
-        $namaBulan = date('F', mktime(0, 0, 0, $request->bulan, 1));
-        $tanggal = $namaBulan . ' ' .  request()->session()->get('tahun_tabelaris_keluar');
+    //     $namaBulan = date('F', mktime(0, 0, 0, $request->bulan, 1));
+    //     $tanggal = $namaBulan . ' ' .  request()->session()->get('tahun_tabelaris_keluar');
 
-        $pdf = PDF::loadView('backend.tabelarisKeluar.cetak',[
-            'kasKeluars'    =>  $kasKeluars,
-            'modalAwal'    =>  $modalAwal,
-            'tanggal'    =>  $tanggal,
-        ]);
-        $margin = [
-            'top' => 2,    // Margin atas
-            'right' => 2,  // Margin kanan
-            'bottom' => 2, // Margin bawah
-            'left' => 2    // Margin kiri
-        ];
-        $pdf->setPaper('a4','landscape');
-        $pdf->setOptions(['margin' => $margin]);
-        return $pdf->stream('tabelaris_kas_keluar-'.$tanggal.'.pdf');
-    }
+    //     $pdf = PDF::loadView('backend.tabelarisKeluar.cetak',[
+    //         'kasKeluars'    =>  $kasKeluars,
+    //         'modalAwal'    =>  $modalAwal,
+    //         'tanggal'    =>  $tanggal,
+    //     ]);
+    //     $margin = [
+    //         'top' => 2,    // Margin atas
+    //         'right' => 2,  // Margin kanan
+    //         'bottom' => 2, // Margin bawah
+    //         'left' => 2    // Margin kiri
+    //     ];
+    //     $pdf->setPaper('a4','landscape');
+    //     $pdf->setOptions(['margin' => $margin]);
+    //     return $pdf->stream('tabelaris_kas_keluar-'.$tanggal.'.pdf');
+    // }
 }

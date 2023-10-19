@@ -123,15 +123,16 @@ Route::middleware('auth')->group(function(){
         Route::get('/', 'index')->name('tabelarisMasuk');
         Route::get('/cari', 'cari')->name('tabelarisMasuk.cari');
         Route::get('/export', 'pdf')->name('tabelarisMasuk.pdf');
-        Route::get('/export/excel', 'excel')->name('tabelarisMasuk.excel');
         Route::post('/', 'modalAwalPost')->name('tabelarisMasuk.modalAwalPost');
+        Route::get('/export_data', 'exportData')->name('tabelarisMasuk.exportData');
+
     });
 
     Route::controller(TabelarisKeluarController::class)->prefix('tabelaris_kas_keluar')->group(function () {
         Route::get('/', 'index')->name('tabelarisKeluar');
         Route::get('/cari', 'cari')->name('tabelarisKeluar.cari');
         Route::get('/export', 'pdf')->name('tabelarisKeluar.pdf');
-        Route::get('/export/excel', 'excel')->name('tabelarisKeluar.excel');
+        Route::get('/export_data', 'exportData')->name('tabelarisKeluar.exportData');
     });
 
     Route::controller(ShuAnggotaController::class)->prefix('sisa_hasil_usaha')->group(function () {

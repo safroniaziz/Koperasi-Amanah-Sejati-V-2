@@ -46,7 +46,10 @@
                             </div>
 
                             <div class="col-md-12 text-center" style="margin-bottom: 10px;">
-                                <button type="submit" name="submit" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Cari Buku Kas</button>
+                                <button type="submit" name="submit" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Cari</button>
+                                @if(session()->has('tahunKasMasuk') && session()->has('bulanKasMasuk'))
+                                    <a href="{{ route('tabelarisMasuk.exportData') }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-file-excel-o"></i>&nbsp;Export Data</a>
+                                @endif
                             </div>
                         </div>
                     </form>
