@@ -97,6 +97,7 @@ class BukuKasPembantuController extends Controller
     }
 
     $data = $query->get()->toArray();
+    return $data;
     
     return Excel::download(new BukuKasPembantuExport($data), 'data.xlsx');
 }
