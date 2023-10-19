@@ -61,7 +61,7 @@ class TabelarisMasukController extends Controller
                 return redirect()->back()->with($notification);
             }
             $request->session()->put('tahunKasMasuk', $request->input('tahun'));
-            $request->session()->put('bulanKasMasuk', $request->input('tahun'));
+            $request->session()->put('bulanKasMasuk', $request->input('bulan'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
                                                 $query->where('kategori_transaksi', 'masuk');
                                             }, 'anggota'])
