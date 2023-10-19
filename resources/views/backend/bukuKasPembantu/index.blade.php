@@ -47,7 +47,9 @@
 
                             <div class="col-md-12 text-center" style="margin-bottom: 10px;">
                                 <button type="submit" name="submit" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Cari Buku Kas</button>
-                                <a href="{{ route('kasPembantu.exportData') }}">Export Data</a>
+                                @if(session()->has('tahunBukuKas') && session()->has('bulanBukuKas'))
+                                    <a href="{{ route('kasPembantu.exportData') }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-file-excel-o"></i>&nbsp;Export Data</a>
+                                @endif
                             </div>
                         </div>
                     </form>
