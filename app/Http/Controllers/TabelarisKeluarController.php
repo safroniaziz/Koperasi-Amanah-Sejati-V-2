@@ -48,7 +48,6 @@ class TabelarisKeluarController extends Controller
                 11 => 'November',
                 12 => 'Desember',
             ];
-            $request->session()->flush();
             $request->session()->put('tahunKasMasuk', $request->input('tahun'));
             $request->session()->put('bulanKasMasuk', $request->input('tahun'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {

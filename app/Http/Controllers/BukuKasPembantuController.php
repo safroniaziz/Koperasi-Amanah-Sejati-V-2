@@ -59,7 +59,6 @@ class BukuKasPembantuController extends Controller
                 );
                 return redirect()->back()->with($notification);
             }
-            $request->session()->flush();
             $request->session()->put('tahunBukuKas', $request->input('tahun'));
             $request->session()->put('bulanBukuKas', $request->input('bulan'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
