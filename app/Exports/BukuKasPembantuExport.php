@@ -10,8 +10,6 @@ class BukuKasPembantuExport implements FromCollection
     /**
     * @return \Illuminate\Support\Collection
     */
-    use Exportable;
-
     protected $data;
 
     public function __construct($data)
@@ -21,6 +19,6 @@ class BukuKasPembantuExport implements FromCollection
 
     public function collection()
     {
-        return $this->data;
+        return collect($this->data);
     }
 }
