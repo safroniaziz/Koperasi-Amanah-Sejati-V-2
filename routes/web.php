@@ -125,7 +125,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/export', 'pdf')->name('tabelarisMasuk.pdf');
         Route::post('/', 'modalAwalPost')->name('tabelarisMasuk.modalAwalPost');
         Route::get('/export_data', 'exportData')->name('tabelarisMasuk.exportData');
-
     });
 
     Route::controller(TabelarisKeluarController::class)->prefix('tabelaris_kas_keluar')->group(function () {
