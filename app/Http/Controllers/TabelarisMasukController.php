@@ -113,10 +113,6 @@ class TabelarisMasukController extends Controller
         $data = $query->get();
         $bulan = $bulanKasMasuk;
         $tahun = $tahunKasMasuk;
-        return [
-            'bulan' =>  $bulan,
-            'tahun' =>  $tahun,
-        ];
         
         return Excel::download(new TabelarisMasukExport($data,$modalAwal, $bulan, $tahun), 'data.xlsx');
     }
