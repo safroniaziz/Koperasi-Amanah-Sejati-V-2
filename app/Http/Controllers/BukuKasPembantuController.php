@@ -90,14 +90,12 @@ class BukuKasPembantuController extends Controller
     $query = TransaksiKoperasi::query();
 
     if ($tahunBukuKas && $bulanBukuKas) {
-        $query->with(['jenisTransaksi', 'anggota'])
-              ->whereYear('tanggal_transaksi', $tahunBukuKas)
+        $query->whereYear('tanggal_transaksi', $tahunBukuKas)
               ->whereMonth('tanggal_transaksi', $bulanBukuKas)
               ->orderBy('tanggal_transaksi', 'asc');
     }
 
     $data = $query->get()->toArray();
-    return $data;
     
     return Excel::download(new BukuKasPembantuExport($data), 'data.xlsx');
 }
