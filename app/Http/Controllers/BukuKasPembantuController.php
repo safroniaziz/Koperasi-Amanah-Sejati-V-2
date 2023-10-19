@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BukuKasPembantu;
+use App\Exports\BukuKasPembantuExport;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\ModalAwal;
@@ -98,7 +98,7 @@ class BukuKasPembantuController extends Controller
 
     $data = $query->get()->toArray();
     
-    return Excel::download(new BukuKasPembantu($data), 'data.xlsx');
+    return Excel::download(new BukuKasPembantuExport($data), 'data.xlsx');
 }
 
 }
