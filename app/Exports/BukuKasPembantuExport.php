@@ -49,7 +49,7 @@ class BukuKasPembantuExport implements FromCollection
                 'Uraian' => ($transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '') . ' - ' . $transaksi->anggota->nama_lengkap,
                 'Masuk' => $transaksi->kategori_transaksi == "masuk" ? 'Rp.' . number_format($transaksi->jumlah_transaksi, 2) : '-',
                 'Keluar' => $transaksi->kategori_transaksi == "keluar" ? 'Rp.' . number_format($transaksi->jumlah_transaksi, 2) : '-',
-                'Saldo' => $this->modalAwal->modal_awal,
+                'Saldo' => number_format($this->modalAwal->modal_awal,2),
             ]);
 
             
