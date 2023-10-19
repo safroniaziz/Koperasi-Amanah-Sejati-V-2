@@ -56,4 +56,16 @@ class BukuKasPembantuExport implements FromCollection
 
         return $formattedData;
     }
+
+    public function headings(): array
+    {
+        return [
+            'No',
+            'Tanggal Transaksi',
+            'Uraian',
+            'Masuk',
+            'Keluar',
+            'Saldo',
+        ];
+    }
 }
