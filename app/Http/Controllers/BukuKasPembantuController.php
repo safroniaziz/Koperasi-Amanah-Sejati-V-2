@@ -95,7 +95,7 @@ class BukuKasPembantuController extends Controller
                 ->orderBy('tanggal_transaksi', 'asc');
         }
 
-        $data = $query->get()->toArray();
+        $data = $query->get();
         $bulan = $bulanBukuKas;
         $tahun = $tahunBukuKas;
         
