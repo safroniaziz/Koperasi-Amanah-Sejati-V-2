@@ -90,7 +90,7 @@ class BukuKasPembantuController extends Controller
     $query = TransaksiKoperasi::query();
 
     if ($tahunBukuKas && $bulanBukuKas) {
-        $query->whereYear('tanggal_transaksi', $tahunBukuKas)
+        $query->with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi', $tahunBukuKas)
               ->whereMonth('tanggal_transaksi', $bulanBukuKas)
               ->orderBy('tanggal_transaksi', 'asc');
     }
