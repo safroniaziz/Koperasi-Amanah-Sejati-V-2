@@ -81,23 +81,25 @@ class BukuKasPembantuController extends Controller
     }
 
     public function exportData(Request $request)
-{
-    // Ambil inputan dari variabel sementara (session)
-    $tahunBukuKas = $request->session()->get('tahunBukuKas');
-    $bulanBukuKas = $request->session()->get('bulanBukuKas');
-    
-    // Buat query berdasarkan inputan
-    $query = TransaksiKoperasi::query();
+    {
+        // Ambil inputan dari variabel sementara (session)
+        $tahunBukuKas = $request->session()->get('tahunBukuKas');
+        $bulanBukuKas = $request->session()->get('bulanBukuKas');
+        
+        // Buat query berdasarkan inputan
+        $query = TransaksiKoperasi::query();
+        $modalAwal = ModalAwal::where('tahun',$tahunBukuKas)->where('bulan',$bulanBukuKas)->first();
+        if ($tahunBukuKas && $bulanBukuKas) {
+            $query->with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi', $tahunBukuKas)
+                ->whereMonth('tanggal_transaksi', $bulanBukuKas)
+                ->orderBy('tanggal_transaksi', 'asc');
+        }
 
-    if ($tahunBukuKas && $bulanBukuKas) {
-        $query->with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi', $tahunBukuKas)
-              ->whereMonth('tanggal_transaksi', $bulanBukuKas)
-              ->orderBy('tanggal_transaksi', 'asc');
+        $data = $query->get()->toArray();
+        $bulan = $bulanBukuKas;
+        $tahun = $tahunBukuKas;
+        
+        return Excel::download(new BukuKasPembantuExport($data,$modalAwal, $bulan, $tahun), 'data.xlsx');
     }
-
-    $data = $query->get()->toArray();
-    
-    return Excel::download(new BukuKasPembantuExport($data), 'data.xlsx');
-}
 
 }
