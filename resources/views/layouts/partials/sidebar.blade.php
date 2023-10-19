@@ -8,7 +8,6 @@
 @endcan
 
 @can('jabatan')
-<li class="header" style="font-weight:bold;">DATA MASTER</li>
 <li class="{{ set_active('jabatan') }}">
     <a href="{{ route('jabatan') }}">
         <i class="fa fa-briefcase"></i>

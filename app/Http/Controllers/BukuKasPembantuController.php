@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ModalAwal;
-use App\Models\TransaksiKoperasi;
+use App\Models\BukuKasPembantu;
 use DateTime;
 use Carbon\Carbon;
+use App\Models\ModalAwal;
 use Illuminate\Http\Request;
+use App\Models\TransaksiKoperasi;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class BukuKasPembantuController extends Controller
@@ -57,7 +59,8 @@ class BukuKasPembantuController extends Controller
                 );
                 return redirect()->back()->with($notification);
             }
-
+            $request->session()->put('tahunBukuKas', $request->input('tahun'));
+            $request->session()->put('bulanBukuKas', $request->input('bulan'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
                                             ->whereMonth('tanggal_transaksi',$request->bulan)
                                             ->orderBy('tanggal_transaksi','asc')
@@ -75,5 +78,26 @@ class BukuKasPembantuController extends Controller
             );
             return redirect()->back()->with($notification);
         }
+    }
+
+    public function exportData(Request $request)
+    {
+        // Ambil inputan dari variabel sementara (session)
+        $tahunBukuKas = $request->session()->get('tahunBukuKas');
+        $bulanBukuKas = $request->session()->get('tahunBukuKas');
+        
+        // Buat query berdasarkan inputan
+        $query = TransaksiKoperasi::query();
+        
+        if ($tahunBukuKas) {
+            $query->with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
+                    ->whereMonth('tanggal_transaksi',$request->bulan)
+                    ->orderBy('tanggal_transaksi','asc')
+                    ->get();
+        }
+
+        $data = $query->get()->toArray();
+        
+        return Excel::download(new BukuKasPembantu($data), 'data.xlsx');
     }
 }

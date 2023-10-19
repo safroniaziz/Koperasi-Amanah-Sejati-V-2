@@ -109,6 +109,7 @@ Route::middleware('auth')->group(function(){
     Route::controller(BukuKasPembantuController::class)->prefix('buku_kas_pembantu')->group(function () {
         Route::get('/', 'index')->name('kasPembantu');
         Route::get('/cari', 'cariBukuKas')->name('kasPembantu.cariBukuKas');
+        Route::get('/export_data', 'exportData')->name('kasPembantu.exportData');
     });
 
     Route::controller(KartuPinjamanAnggotaController::class)->prefix('kartu_pinjaman')->group(function () {
