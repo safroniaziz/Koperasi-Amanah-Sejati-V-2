@@ -43,15 +43,16 @@ class BukuKasPembantuExport implements FromCollection
             } else {
                 $this->modalAwal->modal_awal = $this->modalAwal->modal_awal - $transaksi->jumlah_transaksi;
             }
-
             $formattedData->push([
                 'No' => $index + 2, // No dimulai dari 2
                 'Tanggal Transaksi' => \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY'),
                 'Uraian' => ($transaksi->jenisTransaksi ? $transaksi->jenisTransaksi->nama_jenis_transaksi : '') . ' - ' . $transaksi->anggota->nama_lengkap,
                 'Masuk' => $transaksi->kategori_transaksi == "masuk" ? 'Rp.' . number_format($transaksi->jumlah_transaksi, 2) : '-',
                 'Keluar' => $transaksi->kategori_transaksi == "keluar" ? 'Rp.' . number_format($transaksi->jumlah_transaksi, 2) : '-',
-                'Saldo' => $transaksi->kategori_transaksi == "masuk" ? 'Rp.' . number_format($transaksi->jumlah_transaksi + $this->modalAwal->modal_awal, 2) : 'Rp.' . number_format($this->modalAwal->modal_awal - $transaksi->jumlah_transaksi, 2),
+                'Saldo' => $this->modalAwal->modal_awal,
             ]);
+
+            
         }
 
         return $formattedData;
