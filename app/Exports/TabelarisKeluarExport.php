@@ -22,7 +22,7 @@ class TabelarisKeluarExport implements FromCollection
         $formattedData = collect([]);
 
         foreach ($this->data as $index => $transaksi) {
-            $saldo -= $transaksi['jumlah_transaksi'];
+            $saldo += $transaksi['jumlah_transaksi'];
             $formattedData->push([
                 'No' => $index + 1,
                 'Tanggal Transaksi' => \Carbon\Carbon::parse($transaksi['tanggal_transaksi'])->isoFormat('D MMMM YYYY'),
