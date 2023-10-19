@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\ModalAwal;
 use Illuminate\Http\Request;
 use App\Models\TransaksiKoperasi;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TabelarisKeluarExport;
 use Illuminate\Support\Facades\Validator;
 
 class TabelarisKeluarController extends Controller
@@ -48,8 +50,8 @@ class TabelarisKeluarController extends Controller
                 11 => 'November',
                 12 => 'Desember',
             ];
-            $request->session()->put('tahunKasMasuk', $request->input('tahun'));
-            $request->session()->put('bulanKasMasuk', $request->input('tahun'));
+            $request->session()->put('tahunKasKeluar', $request->input('tahun'));
+            $request->session()->put('bulanKasKeluar', $request->input('bulan'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
                                                 $query->where('kategori_transaksi', 'keluar');
                                             }, 'anggota'])
@@ -73,6 +75,34 @@ class TabelarisKeluarController extends Controller
             );
             return redirect()->back()->with($notification);
         }
+    }
+
+    public function exportData(Request $request)
+    {
+        // Ambil inputan dari variabel sementara (session)
+        $tahunKasKeluar = $request->session()->get('tahunKasKeluar');
+        $bulanKasKeluar = $request->session()->get('bulanKasKeluar');
+        
+        // Buat query berdasarkan inputan
+        $query = TransaksiKoperasi::query();
+        if ($tahunKasKeluar && $bulanKasKeluar) {
+            $query->with(['jenisTransaksi' => function ($query) {
+                        $query->where('kategori_transaksi', 'keluar');
+                    }, 'anggota'])
+                    ->whereYear('tanggal_transaksi', $tahunKasKeluar)
+                    ->whereMonth('tanggal_transaksi', $bulanKasKeluar)
+                    ->whereHas('jenisTransaksi', function ($query) {
+                        $query->where('kategori_transaksi', 'keluar');
+                    })
+                    ->orderBy('tanggal_transaksi', 'asc')
+                    ->get();
+        }
+
+        $data = $query->get();
+        $bulan = $bulanKasKeluar;
+        $tahun = $tahunKasKeluar;
+        
+        return Excel::download(new TabelarisKeluarExport($data, $bulan, $tahun), 'data.xlsx');
     }
 
     // public function cari(Request $request){
