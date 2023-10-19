@@ -22,6 +22,12 @@ class TabelarisKeluarExport implements FromCollection
         $formattedData = collect([]);
 
         foreach ($this->data as $index => $transaksi) {
+            if ($transaksi['kategori_transaksi'] == "masuk") {
+                $saldo += $transaksi['jumlah_transaksi'];
+            } else {
+                $saldo -= $transaksi['jumlah_transaksi'];
+            }
+            
             $formattedData->push([
                 'No' => $index + 1,
                 'Tanggal Transaksi' => \Carbon\Carbon::parse($transaksi['tanggal_transaksi'])->isoFormat('D MMMM YYYY'),
@@ -29,12 +35,6 @@ class TabelarisKeluarExport implements FromCollection
                 'Masuk' => $transaksi['kategori_transaksi'] == "masuk" ? 'Rp.' . number_format($transaksi['jumlah_transaksi'], 2) : '-',
                 'Saldo' => 'Rp.' . number_format($saldo, 2),
             ]);
-
-            if ($transaksi['kategori_transaksi'] == "masuk") {
-                $saldo += $transaksi['jumlah_transaksi'];
-            } else {
-                $saldo -= $transaksi['jumlah_transaksi'];
-            }
         }
 
         return $formattedData;
