@@ -10,14 +10,14 @@ class BukuKasPembantuExport implements FromCollection
     /**
     * @return \Illuminate\Support\Collection
     */
-    protected $transaksis;
+    protected $data;
     protected $modalAwal;
     protected $bulan;
     protected $tahun;
 
-    public function __construct($transaksis, $modalAwal, $bulan, $tahun)
+    public function __construct($data, $modalAwal, $bulan, $tahun)
     {
-        $this->transaksis = $transaksis;
+        $this->data = $data;
         $this->modalAwal = $modalAwal;
         $this->bulan = $bulan;
         $this->tahun = $tahun;
@@ -37,7 +37,7 @@ class BukuKasPembantuExport implements FromCollection
             'Saldo' => 'Rp.' . number_format($this->modalAwal->modal_awal) . ',',
         ]);
 
-        foreach ($this->transaksis as $index => $transaksi) {
+        foreach ($this->data as $index => $transaksi) {
             $formattedData->push([
                 'No' => $index + 2, // No dimulai dari 2
                 'Tanggal Transaksi' => \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->isoFormat('D MMMM YYYY'),
