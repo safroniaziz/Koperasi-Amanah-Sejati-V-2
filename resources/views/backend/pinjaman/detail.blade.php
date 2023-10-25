@@ -32,7 +32,6 @@
                                 <th>Bulan Angsuran</th>
                                 <th>Sudah Mengangsur</th>
                                 <th>Pinjaman Ke</th>
-                                <th>Status Peminjaman</th>
                                 <th>Angsuran</th>
                                 <th>Aksi</th>
                             </tr>
@@ -51,13 +50,6 @@
                                     <td>{{ $pinjaman->jumlah_bulan }} Bulan</td>
                                     <td>{{ $pinjaman->jumlahAngsuran() }} Kali</td>
                                     <td>{{ $pinjaman->pinjaman_ke }}</td>
-                                    <td>
-                                        @if ($pinjaman->is_paid == 0)
-                                            <small class="label label-danger">Belum Lunas</small>
-                                        @else
-                                            <small class="label label-success">Lunas</small>
-                                        @endif
-                                    </td>
                                     <td>
                                         <a href="{{ route('angsuran',[$anggota->id,$pinjaman->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp;Angsuran</a>
                                     </td>
