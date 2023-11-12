@@ -17,6 +17,48 @@ class BukuKasPembantuController extends Controller
         return view('backend.bukuKasPembantu.index');
     }
 
+    public function exportDataPdf(Request $request){
+        $namaBulan = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        $tahunBukuKas = $request->session()->get('tahunBukuKas');
+        $bulanBukuKas = $request->session()->get('bulanBukuKas');
+
+        $modalAwal = ModalAwal::where('tahun',$tahunBukuKas)->where('bulan',$bulanBukuKas)->first();
+        if (!$modalAwal) {
+            $notification = array(
+                'message' => 'Oooopps, modal awal '.$bulanBukuKas.' tahun '.$tahunBukuKas.' belum ditambahkan',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+
+        $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$tahunBukuKas)
+                                        ->whereMonth('tanggal_transaksi',$bulanBukuKas)
+                                        ->orderBy('tanggal_transaksi','asc')
+                                        ->get();
+        $pdf = PDF::loadView('backend.bukuKasPembantu.cetak',[
+            'bulan' =>  $tahunBukuKas,
+            'tahun' =>  $tahunBukuKas,
+            'transaksis' =>  $transaksis,
+            'modalAwal' =>  $modalAwal,
+        ]);
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('buku-kas-pembantu-'.$tahunBukuKas.'-'.$bulanBukuKas.'.pdf');
+    }
+
     public function cariBukuKas(Request $request){
         try {
             $rules = [
