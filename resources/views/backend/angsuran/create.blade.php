@@ -48,7 +48,7 @@
                 @endphp
 
                 <input type="text" name="angsuran_jasa" 
-                    value="{{ number_format($angkaBulat, 0, '', '') }}"
+                    value="{{ number_format($jasa, 0, '', '') }}"
                     id="angsuran_bunga" class="form-control">
 
             </div>
