@@ -37,7 +37,7 @@
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Angsuran Jasa / Bulan</label>
                 @php
-                    $faktorPembulatan = 1000;
+                    $faktorPembulatan = 100;
                     if ($pinjaman->jumlah_bulan == 24) {
                         $jasa = $pinjaman->angsuran_pokok * 16/100;
                         $angkaBulat = ceil($jasa / $faktorPembulatan) * $faktorPembulatan;
