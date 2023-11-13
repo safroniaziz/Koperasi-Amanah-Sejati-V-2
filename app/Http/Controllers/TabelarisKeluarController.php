@@ -135,7 +135,7 @@ class TabelarisKeluarController extends Controller
         $bulan = $bulanKasKeluar;
         $tahun = $tahunKasKeluar;
         
-        return Excel::download(new TabelarisKeluarExport($data, $bulan, $tahun), 'data.xlsx');
+        return Excel::download(new TabelarisKeluarExport($data, $bulan, $tahun), 'tabelaris-kas-keluar'.$bulan.'-'.$tahun.'.xlsx');
     }
 
     // public function cari(Request $request){

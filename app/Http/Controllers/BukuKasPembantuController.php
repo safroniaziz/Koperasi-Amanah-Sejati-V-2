@@ -127,7 +127,7 @@ class BukuKasPembantuController extends Controller
         $bulan = $bulanBukuKas;
         $tahun = $tahunBukuKas;
         
-        return Excel::download(new BukuKasPembantuExport($data,$modalAwal, $bulan, $tahun), 'data.xlsx');
+        return Excel::download(new BukuKasPembantuExport($data,$modalAwal, $bulan, $tahun), 'buku-kas-pembantu'.$bulan.'-'.$tahun.'.xlsx');
     }
 
 }

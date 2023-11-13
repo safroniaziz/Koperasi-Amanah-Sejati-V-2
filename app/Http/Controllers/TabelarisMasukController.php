@@ -147,7 +147,7 @@ class TabelarisMasukController extends Controller
         $bulan = $bulanKasMasuk;
         $tahun = $tahunKasMasuk;
         
-        return Excel::download(new TabelarisMasukExport($data,$modalAwal, $bulan, $tahun), 'data.xlsx');
+        return Excel::download(new TabelarisMasukExport($data,$modalAwal, $bulan, $tahun), 'tabelaris-kas-masuk'.$bulan.'-'.$tahun.'.xlsx');
     }
 
     // public function cari(Request $request){
