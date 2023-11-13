@@ -69,7 +69,7 @@
                             @if ($tahun)
                                 <tr>
                                     <td>1</td>
-                                    <td>1 {{ $bulan }} {{ $tahun }}</td>
+                                    <td>1 {{ \Carbon\Carbon::createFromDate(null, $bulan)->locale('id')->monthName }} {{ $tahun }}</td>
                                     <td>Modal Awal</td>
                                     <td>
                                         Rp.{{ number_format($modalAwal->modal_awal) }},-
