@@ -60,12 +60,12 @@
             <tr>
                 <th>Tahun</th>
                 <th> : </th>
-                <td>{{ $tahunBukuKas }}</td>
+                <td>{{ $tahun}}</td>
             </tr>
             <tr>
                 <th>Bulan</th>
                 <th> : </th>
-                <td>{{ $bulanBukuKas }}</td>
+                <td>{{ $bulan }}</td>
             </tr>
             <hr>
         </table>
