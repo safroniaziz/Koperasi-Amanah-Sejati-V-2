@@ -37,15 +37,18 @@
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Angsuran Jasa / Bulan</label>
                 @php
+                    $faktorPembulatan = 100;
                     if ($pinjaman->jumlah_bulan == 24) {
                         $jasa = round($pinjaman->angsuran_pokok * 16/100);
+                        $angkaBulat = round($jasa / $faktorPembulatan) * $faktorPembulatan;
                     } else {
                         $jasa = round($pinjaman->angsuran_pokok * 8/100);
+                        $angkaBulat = round($jasa / $faktorPembulatan) * $faktorPembulatan;
                     }
                 @endphp
 
                 <input type="text" name="angsuran_jasa" 
-                    value="{{ number_format($jasa, 0, '', '') }}"
+                    value="{{ number_format($angkaBulat, 0, '', '') }}"
                     id="angsuran_bunga" class="form-control">
 
             </div>
