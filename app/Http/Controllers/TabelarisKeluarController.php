@@ -17,6 +17,39 @@ class TabelarisKeluarController extends Controller
         return view('backend/tabelarisKeluar.index2');
     }
 
+    public function exportDataPdf(Request $request){
+        $tahunKasKeluar = $request->session()->get('tahunKasKeluar');
+        $bulanKasKeluar = $request->session()->get('bulanKasKeluar');
+
+        $modalAwal = ModalAwal::where('tahun',$tahunKasKeluar)->where('bulan',$bulanKasKeluar)->first();
+        if (!$modalAwal) {
+            $notification = array(
+                'message' => 'Oooopps, modal awal '.$bulanKasKeluar.' tahun '.$tahunKasKeluar.' belum ditambahkan',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+            
+        $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
+                                            $query->where('kategori_transaksi', 'keluar');
+                                        }, 'anggota'])
+                                        ->whereYear('tanggal_transaksi', $tahunKasKeluar)
+                                        ->whereMonth('tanggal_transaksi', $bulanKasKeluar)
+                                        ->whereHas('jenisTransaksi', function ($query) {
+                                            $query->where('kategori_transaksi', 'keluar');
+                                        })
+                                        ->orderBy('tanggal_transaksi', 'asc')
+                                        ->get();
+        $pdf = PDF::loadView('backend.tabelarisMasuk.cetakPdf',[
+            'bulan' =>  $bulanKasKeluar,
+            'tahun' =>  $tahunKasKeluar,
+            'transaksis' =>  $transaksis,
+            'modalAwal' =>  $modalAwal,
+        ]);
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('tabelaris-kas-masuk-'.$tahunKasKeluar.'-'.$bulanKasKeluar.'.pdf');
+    }
+
     public function cari(Request $request){
         try {
             $rules = [

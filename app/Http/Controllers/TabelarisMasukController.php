@@ -19,13 +19,13 @@ class TabelarisMasukController extends Controller
     }
 
     public function exportDataPdf(Request $request){
-        $tahunBukuKas = $request->session()->get('tahunBukuKas');
-        $bulanBukuKas = $request->session()->get('bulanBukuKas');
+        $tahunKasMasuk = $request->session()->get('tahunKasMasuk');
+        $bulanKasMasuk = $request->session()->get('bulanKasMasuk');
 
-        $modalAwal = ModalAwal::where('tahun',$tahunBukuKas)->where('bulan',$bulanBukuKas)->first();
+        $modalAwal = ModalAwal::where('tahun',$tahunKasMasuk)->where('bulan',$bulanKasMasuk)->first();
         if (!$modalAwal) {
             $notification = array(
-                'message' => 'Oooopps, modal awal '.$bulanBukuKas.' tahun '.$tahunBukuKas.' belum ditambahkan',
+                'message' => 'Oooopps, modal awal '.$bulanKasMasuk.' tahun '.$tahunKasMasuk.' belum ditambahkan',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with($notification);
@@ -34,21 +34,21 @@ class TabelarisMasukController extends Controller
         $transaksis = TransaksiKoperasi::with(['jenisTransaksi' => function ($query) {
                                             $query->where('kategori_transaksi', 'masuk');
                                         }, 'anggota'])
-                                        ->whereYear('tanggal_transaksi', $tahunBukuKas)
-                                        ->whereMonth('tanggal_transaksi', $bulanBukuKas)
+                                        ->whereYear('tanggal_transaksi', $tahunKasMasuk)
+                                        ->whereMonth('tanggal_transaksi', $bulanKasMasuk)
                                         ->whereHas('jenisTransaksi', function ($query) {
                                             $query->where('kategori_transaksi', 'masuk');
                                         })
                                         ->orderBy('tanggal_transaksi', 'asc')
                                         ->get();
         $pdf = PDF::loadView('backend.tabelarisMasuk.cetakPdf',[
-            'bulan' =>  $bulanBukuKas,
-            'tahun' =>  $tahunBukuKas,
+            'bulan' =>  $bulanKasMasuk,
+            'tahun' =>  $tahunKasMasuk,
             'transaksis' =>  $transaksis,
             'modalAwal' =>  $modalAwal,
         ]);
         $pdf->setPaper('a4','portrait');
-        return $pdf->stream('tabelaris-kas-masuk-'.$tahunBukuKas.'-'.$bulanBukuKas.'.pdf');
+        return $pdf->stream('tabelaris-kas-masuk-'.$tahunKasMasuk.'-'.$bulanKasMasuk.'.pdf');
     }
 
     public function cari(Request $request){

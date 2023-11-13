@@ -134,6 +134,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/cari', 'cari')->name('tabelarisKeluar.cari');
         Route::get('/export', 'pdf')->name('tabelarisKeluar.pdf');
         Route::get('/export_data', 'exportData')->name('tabelarisKeluar.exportData');
+        Route::get('/export_data_pdf', 'exportDataPdf')->name('tabelarisKeluar.exportDataPdf');
     });
 
     Route::controller(ShuAnggotaController::class)->prefix('sisa_hasil_usaha')->group(function () {
