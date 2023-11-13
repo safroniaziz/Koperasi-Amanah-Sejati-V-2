@@ -39,10 +39,10 @@
                 @php
                     $faktorPembulatan = 1000;
                     if ($pinjaman->jumlah_bulan == 24) {
-                        $jasa = round($pinjaman->angsuran_pokok * 16/100);
+                        $jasa = $pinjaman->angsuran_pokok * 16/100;
                         $angkaBulat = round($jasa / $faktorPembulatan) * $faktorPembulatan;
                     } else {
-                        $jasa = round($pinjaman->angsuran_pokok * 8/100);
+                        $jasa = $pinjaman->angsuran_pokok * 8/100;
                         $angkaBulat = round($jasa / $faktorPembulatan) * $faktorPembulatan;
                     }
                 @endphp
