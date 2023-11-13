@@ -40,15 +40,15 @@
                     $faktorPembulatan = 1000;
                     if ($pinjaman->jumlah_bulan == 24) {
                         $jasa = $pinjaman->angsuran_pokok * 16/100;
-                        $angkaBulat = round($jasa / $faktorPembulatan) * $faktorPembulatan;
+                        $angkaBulat = ceil($jasa / $faktorPembulatan) * $faktorPembulatan;
                     } else {
                         $jasa = $pinjaman->angsuran_pokok * 8/100;
-                        $angkaBulat = round($jasa / $faktorPembulatan) * $faktorPembulatan;
+                        $angkaBulat = ceil($jasa / $faktorPembulatan) * $faktorPembulatan;
                     }
                 @endphp
 
                 <input type="text" name="angsuran_jasa" 
-                    value="{{ number_format($jasa, 0, '', '') }}"
+                    value="{{ number_format($angkaBulat, 0, '', '') }}"
                     id="angsuran_bunga" class="form-control">
 
             </div>
