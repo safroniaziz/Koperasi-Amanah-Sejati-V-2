@@ -40,7 +40,7 @@ class TabelarisKeluarController extends Controller
                                         })
                                         ->orderBy('tanggal_transaksi', 'asc')
                                         ->get();
-        $pdf = PDF::loadView('backend.tabelarisMasuk.cetakPdf',[
+        $pdf = PDF::loadView('backend.tabelarisKeluar.cetakPdf',[
             'bulan' =>  $bulanKasKeluar,
             'tahun' =>  $tahunKasKeluar,
             'transaksis' =>  $transaksis,
