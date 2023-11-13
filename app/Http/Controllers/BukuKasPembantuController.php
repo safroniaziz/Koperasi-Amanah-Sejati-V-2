@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\TransaksiKoperasi;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class BukuKasPembantuController extends Controller
 {
