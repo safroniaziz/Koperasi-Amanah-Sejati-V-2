@@ -36,7 +36,7 @@ class BukuKasPembantuController extends Controller
                                         ->orderBy('tanggal_transaksi','asc')
                                         ->get();
         $pdf = PDF::loadView('backend.bukuKasPembantu.cetak',[
-            'bulan' =>  $tahunBukuKas,
+            'bulan' =>  $bulanBukuKas,
             'tahun' =>  $tahunBukuKas,
             'transaksis' =>  $transaksis,
             'modalAwal' =>  $modalAwal,
