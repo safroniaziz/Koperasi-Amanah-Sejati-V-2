@@ -21,6 +21,7 @@ use App\Http\Controllers\TabelarisKeluarController;
 use App\Http\Controllers\TabelarisMasukController;
 use App\Http\Controllers\TransaksiKoperasiController;
 use App\Http\Controllers\TransaksiLainnyaController;
+use App\Http\Controllers\TransaksiTelurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,20 @@ Route::middleware('auth')->group(function(){
         Route::get('/{transaksiKoperasi}/edit', 'edit')->name('transaksiKoperasi.edit');
         Route::patch('{transaksiKoperasi}/update', 'update')->name('transaksiKoperasi.update');
         Route::delete('/{transaksiKoperasi}/delete', 'delete')->name('transaksiKoperasi.delete');
+    });
+
+    Route::controller(TransaksiTelurController::class)->prefix('transaksi_usaha_telur')->group(function () {
+        Route::get('/', 'index')->name('transaksiTelur');
+        Route::get('/create', 'create')->name('transaksiTelur.create');
+        Route::post('/', 'store')->name('transaksiTelur.store');
+        Route::get('/{transaksiTelur}/edit', 'edit')->name('transaksiTelur.edit');
+        Route::patch('{transaksiTelur}/update', 'update')->name('transaksiTelur.update');
+        Route::delete('/{transaksiTelur}/delete', 'delete')->name('transaksiTelur.delete');
+        Route::get('/lihat_laporan', 'lihatLaporan')->name('transaksiTelur.lihatLaporan');
+
+        Route::get('/cari', 'cariTransaksi')->name('transaksiTelur.cariTransaksi');
+        Route::get('/export_data', 'exportData')->name('transaksiTelur.exportData');
+        Route::get('/export_data_pdf', 'exportDataPdf')->name('transaksiTelur.exportDataPdf');
     });
 
     Route::controller(ModalAwalController::class)->prefix('modal_awal')->group(function () {

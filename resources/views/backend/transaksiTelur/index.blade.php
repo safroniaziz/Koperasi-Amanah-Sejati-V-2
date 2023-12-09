@@ -12,7 +12,8 @@
                 <div class="box-header with-border">
                     <h3 class="box-title"><i class="fa fa-calendar"></i>&nbsp;Transaksi Koperasi</h3>
                     <div class="box-tools pull-right">
-                        <a href="{{ route('transaksiKoperasi.create') }}" class="btn btn-primary btn-sm btn-flat"><i
+                        <a href="{{ route('transaksiTelur.lihatLaporan') }}" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-pdf-o"></i>&nbsp; Lihat Laporan</a>
+                        <a href="{{ route('transaksiTelur.create') }}" class="btn btn-primary btn-sm btn-flat"><i
                                 class="fa fa-plus"></i>&nbsp; Tambah Data</a>
                     </div>
                 </div>
@@ -28,7 +29,7 @@
                         <form method="GET">
                             <div class="form-group col-md-12" style="margin-bottom: 5px !important;">
                                 <label for="nama" class="col-form-label">Cari Nama Investor</label>
-                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Jenis Transaksi..." value="{{$nama}}">
+                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Keterangan/Uraian Transaksi..." value="{{$nama}}">
                             </div>
                             <div class="col-md-12" style="margin-bottom:10px !important;">
                                 <button type="submit" class="btn btn-success btn-sm btn-flat mb-2"><i class="fa fa-search"></i>&nbsp;Cari Data</button>
@@ -39,36 +40,36 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Jenis Transaksi</th>
+                                <th>Transaksi</th>
                                 <th>Nama Anggota</th>
                                 <th>Jumlah Transaksi</th>
                                 <th>Tanggal Transaksi</th>
-                                <th>Kategori Transaksi</th>
-                                <th>Keterangan</th>
+                                <th>Kredit</th>
+                                <th>Keterangan/Uraian</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php
-                                $startIndex = ($transaksiKoperasis->currentPage() - 1) * $transaksiKoperasis->perPage();
+                                $startIndex = ($transaksiTelurs->currentPage() - 1) * $transaksiTelurs->perPage();
                             @endphp
-                            @forelse ($transaksiKoperasis as $index => $transaksiKoperasi)
+                            @forelse ($transaksiTelurs as $index => $transaksiTelur)
                                 <tr>
                                     <td> {{ $startIndex + $index + 1 }} </td>
-                                    <td>{{ $transaksiKoperasi->jenisTransaksi->nama_jenis_transaksi }}</td>
-                                    <td>{{ $transaksiKoperasi->anggota->nama_lengkap }}</td>
-                                    <td>Rp.{{ number_format($transaksiKoperasi->jumlah_transaksi) }},-</td>
-                                    <td>{{ $transaksiKoperasi->tanggal_transaksi->isoFormat('dddd, DD MMMM YYYY') }}</td>
-                                    <td>{{ $transaksiKoperasi->jenisTransaksi->kategori_transaksi }}</td>
-                                    <td>{{ $transaksiKoperasi->keterangan }}</td>
+                                    <td>{{ $transaksiTelur->jenisTransaksi->nama_jenis_transaksi }}</td>
+                                    <td>{{ $transaksiTelur->user->nama_lengkap }}</td>
+                                    <td>Rp.{{ number_format($transaksiTelur->jumlah_transaksi) }},-</td>
+                                    <td>{{ $transaksiTelur->tanggal }}</td>
+                                    <td>{{ $transaksiTelur->jenisTransaksi->kategori_transaksi }}</td>
+                                    <td>{{ $transaksiTelur->keterangan }}</td>
                                     <td>
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <a href="{{ route('transaksiKoperasi.edit',[$transaksiKoperasi->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-edit"></i>&nbsp; Edit</a>
+                                                    <a href="{{ route('transaksiTelur.edit',[$transaksiTelur->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-edit"></i>&nbsp; Edit</a>
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('transaksiKoperasi.delete',[$transaksiKoperasi->id]) }}" method="POST" class="form">
+                                                    <form action="{{ route('transaksiTelur.delete',[$transaksiTelur->id]) }}" method="POST" class="form">
                                                         {{ csrf_field() }} {{ method_field('DELETE') }}
                                                         <button type="submit" class="btn btn-danger show_confirm btn-sm btn-flat"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
                                                     </form>
@@ -79,14 +80,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center" style="font-style:italic;">
-                                        <a class="text-danger">data jenis transaksi masih kosong</a>
+                                    <td colspan="8" class="text-center" style="font-style:italic;">
+                                        <a class="text-danger">data transaksi masih kosong</a>
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
-                    {{ $transaksiKoperasis->appends(request()->has('nama') ? ['nama' => $nama] : [])->links("pagination::bootstrap-4") }}
                 </div>
             </div>
         </div>

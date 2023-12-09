@@ -35,6 +35,8 @@ class TabelarisKeluarController extends Controller
                                         }, 'anggota'])
                                         ->whereYear('tanggal_transaksi', $tahunKasKeluar)
                                         ->whereMonth('tanggal_transaksi', $bulanKasKeluar)
+                                        ->where('jenis_transaksi_id','!=',24)
+                                        ->where('jenis_transaksi_id','!=',25)
                                         ->whereHas('jenisTransaksi', function ($query) {
                                             $query->where('kategori_transaksi', 'keluar');
                                         })
@@ -90,6 +92,8 @@ class TabelarisKeluarController extends Controller
                                             }, 'anggota'])
                                             ->whereYear('tanggal_transaksi', $request->tahun)
                                             ->whereMonth('tanggal_transaksi', $request->bulan)
+                                            ->where('jenis_transaksi_id','!=',24)
+                                            ->where('jenis_transaksi_id','!=',25)
                                             ->whereHas('jenisTransaksi', function ($query) {
                                                 $query->where('kategori_transaksi', 'keluar');
                                             })
@@ -124,6 +128,8 @@ class TabelarisKeluarController extends Controller
                     }, 'anggota'])
                     ->whereYear('tanggal_transaksi', $tahunKasKeluar)
                     ->whereMonth('tanggal_transaksi', $bulanKasKeluar)
+                    ->where('jenis_transaksi_id','!=',24)
+                    ->where('jenis_transaksi_id','!=',25)
                     ->whereHas('jenisTransaksi', function ($query) {
                         $query->where('kategori_transaksi', 'keluar');
                     })

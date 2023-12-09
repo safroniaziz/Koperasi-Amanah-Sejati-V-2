@@ -18,11 +18,22 @@ class TransaksiLainnyaController extends Controller
     public function __construct() {
         $this->anggota = User::where('nama_lengkap','Koperasi')->first();;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $transaksiKoperasis = TransaksiLainnya::with(['jenisTransaksi','anggota'])->orderBy('created_at','desc')->paginate(10);
+        $nama = $request->query('nama');
+        if (!empty($nama)) {
+            $transaksiKoperasis = TransaksiLainnya::with(['jenisTransaksi','anggota'])
+                                ->whereHas('jenisTransaksi', function($query) use ($nama) {
+                                    $query->where('nama_jenis_transaksi', 'like', '%' . $nama . '%');
+                                })
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(10);
+        }else{
+            $transaksiKoperasis = TransaksiLainnya::with(['jenisTransaksi','anggota'])->orderBy('created_at','desc')->paginate(10);
+        }
         return view('backend/transaksiKoperasi.index', [
             'transaksiKoperasis'  =>  $transaksiKoperasis,
+            'nama'  =>  $nama,
         ]);
     }
 
@@ -179,6 +190,7 @@ class TransaksiLainnyaController extends Controller
         DB::beginTransaction();
 
         try {
+            $transaksi = TransaksiLainnya::where('id',$transaksiKoperasi->id)->first();
             TransaksiLainnya::where('id',$transaksiKoperasi->id)->update([
                 'jenis_transaksi_id'    =>  $request->jenis_transaksi_id,
                 'operator_id'           =>  Auth::user()->id,
@@ -188,6 +200,16 @@ class TransaksiLainnyaController extends Controller
                 'tahun_transaksi'       =>  $request->tahun_transaksi,
                 'kategori_transaksi'           =>  $jenisTransaksi->kategori_transaksi,
                 'keterangan'           =>  $request->keterangan,
+            ]);
+
+            TransaksiKoperasi::where('id',$transaksi->transaksi_id)->update([
+                'jenis_transaksi_id'    =>  $request->jenis_transaksi_id,
+                'operator_id'           =>  Auth::user()->id,
+                'kategori_transaksi'       =>  $jenisTransaksi->kategori_transaksi,
+                'jumlah_transaksi' =>  $request->jumlah_transaksi,
+                'tanggal_transaksi' =>  $request->tanggal_transaksi,
+                'bulan_transaksi'   =>  $bulanTransaksi,
+                'tahun_transaksi'   =>  $request->tahun_transaksi,
             ]);
 
             DB::commit();
@@ -203,8 +225,8 @@ class TransaksiLainnyaController extends Controller
     }
 
     public function delete(Request $request, TransaksiLainnya $transaksiKoperasi){
+        TransaksiKoperasi::where('id',$transaksiKoperasi->transaksi_id)->delete();
         $delete =  $transaksiKoperasi->delete();
-
         if ($delete) {
             return response()->json([
                 'text'  =>  'Yeay, transaksi koperasi berhasil dihapus',

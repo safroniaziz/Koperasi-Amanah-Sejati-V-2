@@ -56,10 +56,17 @@
 @endcan
 
 @can('transaksi-koperasi')
-    <li class="{{ set_active('transaksiKoperasi') }}">
+    <li class="{{ set_active(['transaksiKoperasi','transaksiKoperasi.create','transaksiKoperasi.edit']) }}">
         <a href="{{ route('transaksiKoperasi') }}">
             <i class="fa fa-chart-bar"></i>
             <span>Transaksi Koperasi</span>
+        </a>
+    </li>
+
+    <li class="{{ set_active(['transaksiTelur','transaksiTelur.create','transaksiTelur.edit','transaksiTelur.lihatLaporan','transaksiTelur.cariTransaksi']) }}">
+        <a href="{{ route('transaksiTelur') }}">
+            <i class="fa fa-chart-pie"></i>
+            <span>Transaksi Usaha Telur</span>
         </a>
     </li>
 @endcan

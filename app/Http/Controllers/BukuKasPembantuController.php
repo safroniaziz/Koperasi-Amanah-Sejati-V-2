@@ -33,6 +33,8 @@ class BukuKasPembantuController extends Controller
 
         $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$tahunBukuKas)
                                         ->whereMonth('tanggal_transaksi',$bulanBukuKas)
+                                        ->where('jenis_transaksi_id','!=',24)
+                                        ->where('jenis_transaksi_id','!=',25)
                                         ->orderBy('tanggal_transaksi','asc')
                                         ->get();
         $pdf = PDF::loadView('backend.bukuKasPembantu.cetak',[
@@ -91,6 +93,8 @@ class BukuKasPembantuController extends Controller
             $request->session()->put('bulanBukuKas', $request->input('bulan'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
                                             ->whereMonth('tanggal_transaksi',$request->bulan)
+                                            ->where('jenis_transaksi_id','!=',24)
+                                            ->where('jenis_transaksi_id','!=',25)
                                             ->orderBy('tanggal_transaksi','asc')
                                             ->get();
             return view('backend.bukuKasPembantu.index',[
@@ -120,6 +124,8 @@ class BukuKasPembantuController extends Controller
         if ($tahunBukuKas && $bulanBukuKas) {
             $query->with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi', $tahunBukuKas)
                 ->whereMonth('tanggal_transaksi', $bulanBukuKas)
+                ->where('jenis_transaksi_id','!=',24)
+                ->where('jenis_transaksi_id','!=',25)
                 ->orderBy('tanggal_transaksi', 'asc');
         }
 

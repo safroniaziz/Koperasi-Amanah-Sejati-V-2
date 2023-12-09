@@ -36,6 +36,8 @@ class TabelarisMasukController extends Controller
                                         }, 'anggota'])
                                         ->whereYear('tanggal_transaksi', $tahunKasMasuk)
                                         ->whereMonth('tanggal_transaksi', $bulanKasMasuk)
+                                        ->where('jenis_transaksi_id','!=',24)
+                                        ->where('jenis_transaksi_id','!=',25)
                                         ->whereHas('jenisTransaksi', function ($query) {
                                             $query->where('kategori_transaksi', 'masuk');
                                         })
@@ -100,6 +102,8 @@ class TabelarisMasukController extends Controller
                                             }, 'anggota'])
                                             ->whereYear('tanggal_transaksi', $request->tahun)
                                             ->whereMonth('tanggal_transaksi', $request->bulan)
+                                            ->where('jenis_transaksi_id','!=',24)
+                                            ->where('jenis_transaksi_id','!=',25)
                                             ->whereHas('jenisTransaksi', function ($query) {
                                                 $query->where('kategori_transaksi', 'masuk');
                                             })
@@ -136,6 +140,8 @@ class TabelarisMasukController extends Controller
                     }, 'anggota'])
                     ->whereYear('tanggal_transaksi', $tahunKasMasuk)
                     ->whereMonth('tanggal_transaksi', $bulanKasMasuk)
+                    ->where('jenis_transaksi_id','!=',24)
+                    ->where('jenis_transaksi_id','!=',25)
                     ->whereHas('jenisTransaksi', function ($query) {
                         $query->where('kategori_transaksi', 'masuk');
                     })

@@ -13,22 +13,30 @@
                     <h3 class="box-title"><i class="fa fa-calendar"></i>&nbsp;Tambah Data Transaksi Koperasi</h3>
                 </div>
                 <!-- /.box-header -->
-                <form action="{{ route('transaksiKoperasi.store') }}" method="POST" id="form-create">
+                <form action="{{ route('transaksiTelur.store') }}" method="POST" id="form-create">
                     {{ csrf_field() }} {{ method_field('POST') }}
                     <div class="box-body ">
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="">Pilih Jenis Transaksi</label>
-                                <select name="jenis_transaksi_id" class="form-control" id="jenis_transaksi_id">
-                                    <option disabled selected>-- pilih jenis transaksi --</option>
-                                    @foreach ($jenisTransaksis as $jenisTransaksi)
-                                        <option value="{{ $jenisTransaksi->id }}">{{ $jenisTransaksi->nama_jenis_transaksi }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="">Yang Bertransaksi</label>
-                                <input type="text" name="anggota_id" value="{{ $anggota->nama_lengkap }}" class="form-control" disabled>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="">Pilih Jenis Transaksi</label>
+                                        <select name="jenis_transaksi" class="form-control" id="jenis_transaksi">
+                                            <option disabled selected>-- pilih jenis transaksi --</option>
+                                            <option value="debet">Debet (Pemasukan)</option>
+                                            <option value="kredit">Kredit (Pengeluaran)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="">Yang Bertransaksi</label>
+                                        <select name="user_id" class="form-control" id="user_id">
+                                            <option disabled selected>-- pilih --</option>
+                                            @foreach ($anggotas as $anggota)
+                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="">Jumlah Transaksi</label>
@@ -37,28 +45,6 @@
                             <div class="form-group col-md-6">
                                 <label for="">Tanggal Transaksi</label>
                                 <input type="date" name="tanggal_transaksi" class="form-control">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="">Bulan Transaksi</label>
-                                <select name="bulan_transaksi" class="form-control" id="">
-                                    <option disabled selected>-- pilih bulan bulan transaksi --</option>
-                                    <option value="1">Januari</option>
-                                    <option value="2">Februari</option>
-                                    <option value="3">Maret</option>
-                                    <option value="4">April</option>
-                                    <option value="5">Mei</option>
-                                    <option value="6">Juni</option>
-                                    <option value="7">Juli</option>
-                                    <option value="8">Agustus</option>
-                                    <option value="9">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="">Tahun Transaksi</label>
-                                <select name="tahun_transaksi" id="tahun_transaksi" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="">Keterangan</label>
@@ -69,7 +55,7 @@
                     {{-- box-footer --}}
                     <div class="box-footer">
                         <div class="col-md-12 text-center">
-                            <a href="{{ route('transaksiKoperasi') }}" class="btn btn-warning btn-sm btn-flat"><i
+                            <a href="{{ route('transaksiTelur') }}" class="btn btn-warning btn-sm btn-flat"><i
                                     class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
                             <button type="reset" class="btn btn-danger btn-sm btn-flat"><i
                                     class="fa fa-refresh"></i>&nbsp;
@@ -109,7 +95,7 @@
         });
 
         $(document).ready(function() {
-            $('#jenis_transaksi_id').select2();
+            $('#user_id').select2();
         });
 
         $('#tahun_transaksi').each(function() {
