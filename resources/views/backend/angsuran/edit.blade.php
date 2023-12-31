@@ -7,7 +7,7 @@
                 <input type="hidden" name="angsuran_id" id="angsuran_id">
                 <input type="date" name="tanggal_transaksi" id="tanggal_transaksi_edit" class="form-control">
             </div>
-            <div class="form-group col-md-6">
+            {{-- <div class="form-group col-md-6">
                 <label for="">Bulan Transaksi</label>
                 <select name="bulan_transaksi" id="bulan_transaksi_edit" class="form-control" id="">
                     <option disabled selected>-- pilih bulan transaksi --</option>
@@ -28,7 +28,7 @@
             <div class="form-group col-md-6">
                 <label for="">Tahun Transaksi</label>
                 <input type="text" name="tahun_transaksi" id="tahun_transaksi_edit" class="form-control">
-            </div>
+            </div> --}}
 
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Angsuran Pokok / Bulan</label>

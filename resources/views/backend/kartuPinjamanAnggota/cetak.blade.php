@@ -105,8 +105,8 @@
                 <td>{{ \Carbon\Carbon::parse($angsuran->tanggal_transaksi)->isoFormat('D MMMM YYYY') }}</td>
                     <td style="text-align: center">Angsuran</td>
                     <td style="text-align: center">{{ $no++ }}</td>
-                    <td style="text-align: center">Rp.{{ number_format($pinjaman->angsuran_pokok) }},-</td>
-                    <td style="text-align: center">Rp.{{ number_format($pinjaman->angsuran_jasa) }},-</td>
+                    <td style="text-align: center">Rp.{{ number_format($angsuran->angsuran_pokok) }},-</td>
+                    <td style="text-align: center">Rp.{{ number_format($angsuran->angsuran_jasa) }},-</td>
                     <td style="text-align: center">-</td>
                     <td style="text-align: center">Rp. {{ number_format($modal_awal - $pinjaman->angsuran_pokok) }},-</td>
                     @php

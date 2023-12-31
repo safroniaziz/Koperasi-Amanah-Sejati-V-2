@@ -130,8 +130,8 @@
                                 <th>Pokok</th>
                                 <th>Jasa</th>
                                 <th>Tanggal Transaksi</th>
-                                <th>Bulan Transaksi</th>
-                                <th>Tahun Transaksi</th>
+                                {{-- <th>Bulan Transaksi</th>
+                                <th>Tahun Transaksi</th> --}}
                                 <th>Angsuran Ke</th>
                                 <th>Aksi</th>
                             </tr>
@@ -142,9 +142,9 @@
                                     <td>{{ $index+1 }}</td>
                                     <td>Rp.{{ number_format($angsuran->angsuran_pokok) }},-</td>
                                     <td>Rp.{{ number_format($angsuran->angsuran_jasa) }},-</td>
-                                    <td>{{ $angsuran->tanggal_transaksi }}</td>
-                                    <td>{{ $angsuran->bulan_transaksi }}</td>
-                                    <td>{{ $angsuran->tahun_transaksi }}</td>
+                                    <td>{{ $angsuran->tanggal_transaksi->isoFormat('dddd, DD MMMM YYYY') }}</td>
+                                    {{-- <td>{{ $angsuran->bulan_transaksi }}</td>
+                                    <td>{{ $angsuran->tahun_transaksi }}</td> --}}
                                     <td>{{ $angsuran->angsuran_ke }}</td>
                                     <td>
                                         <table>
@@ -204,8 +204,8 @@
                     $('#angsuran_id').val(data.id);
                     $('#jumlah_transaksi_edit').val(data.jumlah_transaksi);
                     $('#tanggal_transaksi_edit').val(data.tanggal_transaksi);
-                    $('#bulan_transaksi_edit').val(data.bulan_transaksi);
-                    $('#tahun_transaksi_edit').val(data.tahun_transaksi);
+                    // $('#bulan_transaksi_edit').val(data.bulan_transaksi);
+                    // $('#tahun_transaksi_edit').val(data.tahun_transaksi);
                 },
                 error:function(){
                     $('#gagal').show(100);

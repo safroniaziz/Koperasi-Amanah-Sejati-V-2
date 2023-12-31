@@ -37,4 +37,8 @@ class AngsuranPinjaman extends Model
     {
         return $this->belongsTo(User::class, 'anggota_id');
     }
+
+    protected $casts = [
+        'tanggal_transaksi' => 'datetime',
+    ];
 }

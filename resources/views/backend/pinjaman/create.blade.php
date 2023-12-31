@@ -39,7 +39,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Tahun Transaksi</label>
-                                <input type="text" name="tahun_transaksi" id="tahun_transaksi" value="{{ $tahun }}" class="form-control" readonly>
+                                <input type="text" name="tahun_transaksi" id="tahun_transaksi" class="form-control" readonly>
                             </div>
 
                             <div class="form-group col-md-6">
@@ -199,32 +199,32 @@
         });
 
         $(document).ready(function() {
-            $("#jumlah_bulan, #bulan_mulai_angsuran, #tahun_mulai_angsuran").on("change input", function() {
-                
-                var bulanMulaiAngsuran = parseInt($("#bulan_mulai_angsuran").val());
-                var jumlahBulan = parseInt($("#jumlah_bulan").val());
-                var tahunMulaiAngsuran = parseInt($("#tahun_mulai_angsuran").val());
+    $("#jumlah_bulan, #bulan_mulai_angsuran, #tahun_mulai_angsuran").on("change input", function() {
+        
+        var bulanMulaiAngsuran = parseInt($("#bulan_mulai_angsuran").val());
+        var jumlahBulan = parseInt($("#jumlah_bulan").val());
+        var tahunMulaiAngsuran = parseInt($("#tahun_mulai_angsuran").val());
 
-                if (isNaN(bulanMulaiAngsuran) || isNaN(jumlahBulan) || isNaN(tahunMulaiAngsuran)) {
-                    // Salah satu atau lebih input belum diisi, hentikan eksekusi lebih lanjut
-                    return;
-                }
+        if (isNaN(bulanMulaiAngsuran) || isNaN(jumlahBulan) || isNaN(tahunMulaiAngsuran)) {
+            // Salah satu atau lebih input belum diisi, hentikan eksekusi lebih lanjut
+            return;
+        }
 
-                var bulans = [
-                    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
-                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-                ];
+        // Hitung bulan selesai dan tahun akhir
+        var bulanSelesai = (bulanMulaiAngsuran + jumlahBulan - 1) % 12;
+        var tahunAkhir = tahunMulaiAngsuran + Math.floor((bulanMulaiAngsuran + jumlahBulan - 1) / 12);
 
-                var bulanSelesai = (bulanMulaiAngsuran + jumlahBulan - 1) % 12;
-                if (bulanSelesai < 0) {
-                    bulanSelesai += 12;
-                }
-                var tahunAkhir = tahunMulaiAngsuran + Math.floor((bulanMulaiAngsuran + jumlahBulan - 1) / 12);
+        // Penanganan khusus untuk bulan Desember
+        if (bulanSelesai === 0) {
+            bulanSelesai = 12;
+            tahunAkhir -= 1;
+        }
 
-                $('#bulan_selesai_angsuran').val(bulanSelesai);
-                $('#tahun_selesai_angsuran').val(tahunAkhir);
-            });
-        });
+        // Set nilai pada elemen-elemen output
+        $('#bulan_selesai_angsuran').val(bulanSelesai);
+        $('#tahun_selesai_angsuran').val(tahunAkhir);
+    });
+});
 
     </script>
 @endpush
