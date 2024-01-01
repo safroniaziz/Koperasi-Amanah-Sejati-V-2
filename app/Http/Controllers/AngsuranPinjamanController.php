@@ -75,8 +75,8 @@ class AngsuranPinjamanController extends Controller
 
             for ($i = 0; $i < $request->jumlah_bulan; $i++) {
                 $tanggal_transaksi = $carbonDate->format('Y-m-d');
-                // $bulan_transaksi = $carbonDate->format('m');
-                // $tahun_transaksi = $carbonDate->format('Y');
+                $bulan_transaksi = $carbonDate->format('m');
+                $tahun_transaksi = $carbonDate->format('Y');
 
                 $selisih_bulan = Carbon::parse($tanggal_transaksi_awal)->diffInMonths(Carbon::parse($tanggal_transaksi));
                 $bulan_transaksi = $selisih_bulan + 1;
@@ -84,16 +84,16 @@ class AngsuranPinjamanController extends Controller
                 $transaksi_pokok = TransaksiKoperasi::create(array_merge([
                     'jenis_transaksi_id' => 3,
                     'tanggal_transaksi' => $tanggal_transaksi,
-                    // 'bulan_transaksi' => $bulan_transaksi,
-                    // 'tahun_transaksi' => $tahun_transaksi,
+                    'bulan_transaksi' => $carbonDate->isoFormat('MMMM'),
+                    'tahun_transaksi' => $tahun_transaksi,
                     'jumlah_transaksi' => $request->angsuran_pokok,
                 ], $commonData));
             
                 $transaksi_jasa = TransaksiKoperasi::create(array_merge([
                     'jenis_transaksi_id' => 4,
                     'tanggal_transaksi' => $tanggal_transaksi,
-                    // 'bulan_transaksi' => $bulan_transaksi,
-                    // 'tahun_transaksi' => $tahun_transaksi,
+                    'bulan_transaksi' => $carbonDate->isoFormat('MMMM'),
+                    'tahun_transaksi' => $tahun_transaksi,
                     'jumlah_transaksi' => $request->angsuran_jasa,
                 ], $commonData));
             
@@ -105,8 +105,8 @@ class AngsuranPinjamanController extends Controller
                     'angsuran_pokok' => $request->angsuran_pokok,
                     'angsuran_jasa' => $request->angsuran_jasa,
                     'tanggal_transaksi' => $tanggal_transaksi,
-                    // 'bulan_transaksi' => $bulan_transaksi,
-                    // 'tahun_transaksi' => $tahun_transaksi,
+                    'bulan_transaksi' => $carbonDate->isoFormat('MMMM'),
+                    'tahun_transaksi' => $tahun_transaksi,
                     'angsuran_ke' => $angsuranTerakhir + $i + 1,
                 ]);
             
@@ -160,21 +160,21 @@ class AngsuranPinjamanController extends Controller
             $carbonDate = \Carbon\Carbon::parse($tanggal_transaksi_awal);
 
             $tanggal_transaksi = $carbonDate->format('Y-m-d');
-            // $bulan_transaksi = $carbonDate->format('m');
-            // $tahun_transaksi = $carbonDate->format('Y');
+            $bulan_transaksi = $carbonDate->format('m');
+            $tahun_transaksi = $carbonDate->format('Y');
 
             $angsuran = AngsuranPinjaman::where('id',$request->angsuran_id)->first();
             TransaksiKoperasi::where('id',$angsuran->transaksi_pokok_id)->update([
                 'jumlah_transaksi'  =>  $request->angsuran_pokok,
                 'tanggal_transaksi' => $tanggal_transaksi,
-                // 'bulan_transaksi' => $bulan_transaksi,
-                // 'tahun_transaksi' => $tahun_transaksi,
+                'bulan_transaksi' => $carbonDate->isoFormat('MMMM'),
+                'tahun_transaksi' => $tahun_transaksi,
             ]);
             TransaksiKoperasi::where('id',$angsuran->transaksi_jasa_id)->update([
                 'jumlah_transaksi'  =>  $request->angsuran_jasa,
                 'tanggal_transaksi' => $tanggal_transaksi,
-                // 'bulan_transaksi' => $bulan_transaksi,
-                // 'tahun_transaksi' => $tahun_transaksi,
+                'bulan_transaksi' => $carbonDate->isoFormat('MMMM'),
+                'tahun_transaksi' => $tahun_transaksi,
             ]);
             AngsuranPinjaman::where('id',$request->angsuran_id)->update([
                 'pinjaman_id' => $pinjaman->id,
@@ -182,8 +182,8 @@ class AngsuranPinjamanController extends Controller
                 'angsuran_pokok' => $request->angsuran_pokok,
                 'angsuran_jasa' => $request->angsuran_jasa,
                 'tanggal_transaksi' => $tanggal_transaksi,
-                // 'bulan_transaksi' => $bulan_transaksi,
-                // 'tahun_transaksi' => $tahun_transaksi,
+                'bulan_transaksi' => $carbonDate->isoFormat('MMMM'),
+                'tahun_transaksi' => $tahun_transaksi,
             ]);
 
             DB::commit();

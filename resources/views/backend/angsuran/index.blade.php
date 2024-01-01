@@ -130,8 +130,8 @@
                                 <th>Pokok</th>
                                 <th>Jasa</th>
                                 <th>Tanggal Transaksi</th>
-                                {{-- <th>Bulan Transaksi</th>
-                                <th>Tahun Transaksi</th> --}}
+                                <th>Bulan Transaksi</th>
+                                <th>Tahun Transaksi</th>
                                 <th>Angsuran Ke</th>
                                 <th>Aksi</th>
                             </tr>
@@ -143,8 +143,8 @@
                                     <td>Rp.{{ number_format($angsuran->angsuran_pokok) }},-</td>
                                     <td>Rp.{{ number_format($angsuran->angsuran_jasa) }},-</td>
                                     <td>{{ $angsuran->tanggal_transaksi->isoFormat('dddd, DD MMMM YYYY') }}</td>
-                                    {{-- <td>{{ $angsuran->bulan_transaksi }}</td>
-                                    <td>{{ $angsuran->tahun_transaksi }}</td> --}}
+                                    <td>{{ $angsuran->bulan_transaksi }}</td>
+                                    <td>{{ $angsuran->tahun_transaksi }}</td>
                                     <td>{{ $angsuran->angsuran_ke }}</td>
                                     <td>
                                         <table>

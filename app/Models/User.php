@@ -86,7 +86,7 @@ class User extends Authenticatable
             ->orderBy('created_at', 'asc') // Urutkan berdasarkan tahun (created_at) secara menaik
             ->get()
             ->groupBy(function ($simpanan) {
-                return $simpanan->created_at->format('Y');
+                return $simpanan->tahun_transaksi;
             })
             ->map(function ($grouped) {
                 return $grouped->sum('jumlah_transaksi');
