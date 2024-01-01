@@ -94,7 +94,7 @@
                                     {{ $pinjaman->pinjaman_ke }}
                                 </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <th>Status Pinjaman</th>
                                 <th>:</th>
                                 <td>
@@ -104,7 +104,7 @@
                                         <small class="label label-success">Lunas</small>
                                     @endif
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
