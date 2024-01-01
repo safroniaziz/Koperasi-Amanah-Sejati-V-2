@@ -92,8 +92,7 @@ class BukuKasPembantuController extends Controller
             $request->session()->put('tahunBukuKas', $request->input('tahun'));
             $request->session()->put('bulanBukuKas', $request->input('bulan'));
             $transaksis = TransaksiKoperasi::with(['jenisTransaksi','anggota'])->whereYear('tanggal_transaksi',$request->tahun)
-                                            // ->whereMonth('tanggal_transaksi',$request->bulan)
-                                            ->where('bulan_transaksi',$namaBulan[$request->bulan_transaksi])
+                                            ->whereMonth('tanggal_transaksi',$request->bulan)
                                             ->where('jenis_transaksi_id','!=',24)
                                             ->where('jenis_transaksi_id','!=',25)
                                             ->orderBy('tanggal_transaksi','asc')
