@@ -41,7 +41,7 @@
                                                     <tr>
 
                                                         <td>
-                                                            <a href="{{ route('shu.detail',[$shu->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Detail</a>
+                                                            {{-- <a href="{{ route('shu.detail',[$shu->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Detail</a> --}}
                                                         </td>
                                                     </tr>
                                                 </table>
