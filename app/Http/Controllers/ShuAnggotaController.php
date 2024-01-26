@@ -14,7 +14,10 @@ class ShuAnggotaController extends Controller
         $shus = ShuAnggota::with(['anggota' => function ($query) {
             $query->with('jabatan');
         }])
+        ->groupBy('anggota_id')
+        ->distinct()
         ->get();
+
 
         return view('backend.shu.index',[
             'shus'  =>  $shus,
