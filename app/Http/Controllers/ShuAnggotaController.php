@@ -14,6 +14,7 @@ class ShuAnggotaController extends Controller
         $shus = ShuAnggota::with('anggota.jabatan')
                             ->groupBy('anggota_id')
                             ->get();
+                            return $shus;
         return view('backend.shu.index',[
             'shus'  =>  $shus,
         ]);
@@ -34,7 +35,7 @@ class ShuAnggotaController extends Controller
         return view('backend.shu.detail',[
             'anggota'  =>  $anggota,
             'shus'  =>  $shus,
-        ]); 
+        ]);
     }
 
     public function shuAnggota(){
@@ -50,7 +51,7 @@ class ShuAnggotaController extends Controller
         ->get();
         return view('backend.shu.anggota',[
             'shus'  =>  $shus,
-        ]); 
+        ]);
     }
 
     public function edit(ShuAnggota $shu){
