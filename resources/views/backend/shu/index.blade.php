@@ -21,9 +21,6 @@
                                         <th style=" vertical-align:middle">No</th>
                                         <th style=" vertical-align:middle">Nama Anggota</th>
                                         <th style=" vertical-align:middle">Jabatan</th>
-                                        <th style=" vertical-align:middle">SHU Pinjaman</th>
-                                        <th style=" vertical-align:middle">SHU Jasa</th>
-                                        <th style=" vertical-align:middle">Jumlah</th>
                                         <th style="text-align:center; vertical-align:middle">Aksi</th>
                                     </tr>
                                 </thead>
@@ -33,9 +30,6 @@
                                             <td>{{ $index+1 }}</td>
                                             <td>{{ $shu->nama_lengkap }}</td>
                                             <td>{{ $shu->jabatan->nama_jabatan }}</td>
-                                            <td>Rp.{{ number_format($shu->shuAnggota->total_shu_simpanan) }}</td>
-                                            <td>Rp.{{ number_format($shu->shuAnggota->total_shu_jasa) }}</td>
-                                            <td>Rp.{{ number_format($shu->shuAnggota->total_shu) }}</td>
                                             <td>
                                                 <table>
                                                     <tr>
