@@ -15,6 +15,7 @@ class ShuAnggotaController extends Controller
                     ->with('jabatan')
                     ->groupBy('users.id')
                     ->get();
+                    return $shus;
         return view('backend.shu.index',[
             'shus'  =>  $shus,
         ]);
