@@ -31,15 +31,15 @@
                                     @foreach ($shus as $index => $shu)
                                         <tr>
                                             <td>{{ $index+1 }}</td>
-                                            <td>{{ $shu->anggota->nama_lengkap }}</td>
-                                            <td>{{ $shu->anggota->jabatan->nama_jabatan }}</td>
+                                            <td>{{ $shu->nama_lengkap }}</td>
+                                            <td>{{ $shu->jabatan->nama_jabatan }}</td>
                                             <td>Rp.{{ number_format($shu->total_shu_simpanan) }}</td>
                                             <td>Rp.{{ number_format($shu->total_shu_jasa) }}</td>
                                             <td>Rp.{{ number_format($shu->total_shu) }}</td>
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        
+
                                                         <td>
                                                             <a href="{{ route('shu.detail',[$shu->anggota_id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Detail</a>
                                                         </td>
