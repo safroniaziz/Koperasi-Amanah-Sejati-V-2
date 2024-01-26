@@ -33,9 +33,9 @@
                                             <td>{{ $index+1 }}</td>
                                             <td>{{ $shu->nama_lengkap }}</td>
                                             <td>{{ $shu->jabatan->nama_jabatan }}</td>
-                                            <td>Rp.{{ number_format($shu->total_shu_simpanan) }}</td>
-                                            <td>Rp.{{ number_format($shu->total_shu_jasa) }}</td>
-                                            <td>Rp.{{ number_format($shu->total_shu) }}</td>
+                                            <td>Rp.{{ number_format($shu->shuAnggota->total_shu_simpanan) }}</td>
+                                            <td>Rp.{{ number_format($shu->shuAnggota->total_shu_jasa) }}</td>
+                                            <td>Rp.{{ number_format($shu->shuAnggota->total_shu) }}</td>
                                             <td>
                                                 <table>
                                                     <tr>
