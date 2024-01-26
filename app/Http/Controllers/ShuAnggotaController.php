@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class ShuAnggotaController extends Controller
 {
     public function index(){
-        $shus = ShuAnggota::with('anggota.jabatan')
-                            ->groupBy('anggota_id')
-                            ->get();
-                            return $shus;
+        $shus = User::leftJoin('shu_anggotas', 'users.id', '=', 'shu_anggotas.anggota_id')
+    ->with('jabatan')
+    ->groupBy('anggotas.id')
+    ->get();
+
         return view('backend.shu.index',[
             'shus'  =>  $shus,
         ]);
