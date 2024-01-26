@@ -15,8 +15,9 @@ class ShuAnggotaController extends Controller
     ->with(['anggota' => function ($query) {
         $query->with('jabatan');
     }])
-    ->groupBy('users.id')
+    ->groupBy('shu_anggotas.anggota_id') // atau 'users.id' tergantung pada struktur tabel
     ->get();
+
 
 
 
