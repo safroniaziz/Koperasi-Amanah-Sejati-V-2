@@ -13,7 +13,7 @@ class ShuAnggotaController extends Controller
     public function index(){
         $shus = User::leftJoin('shu_anggotas', 'users.id', '=', 'shu_anggotas.anggota_id')
     ->with('jabatan')
-    ->groupBy('anggotas.id')
+    ->groupBy('users.id')
     ->get();
 
         return view('backend.shu.index',[
