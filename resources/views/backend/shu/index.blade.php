@@ -31,7 +31,7 @@
                                     @foreach ($shus as $index => $shu)
                                         <tr>
                                             <td>{{ $index+1 }}</td>
-                                            <td>{{ $shu->id }}</td>
+                                            <td>{{ $shu->nama_lengkap }}</td>
                                             <td>{{ $shu->jabatan->nama_jabatan }}</td>
                                             <td>Rp.{{ number_format($shu->total_shu_simpanan) }}</td>
                                             <td>Rp.{{ number_format($shu->total_shu_jasa) }}</td>
@@ -39,9 +39,8 @@
                                             <td>
                                                 <table>
                                                     <tr>
-
                                                         <td>
-                                                            {{-- <a href="{{ route('shu.detail',[$shu->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Detail</a> --}}
+                                                            <a href="{{ route('shu.detail',[$shu->id]) }}" class="btn btn-success btn-sm btn-flat"><i class="fa fa-search"></i>&nbsp; Detail</a>
                                                         </td>
                                                     </tr>
                                                 </table>
