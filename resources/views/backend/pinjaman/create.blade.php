@@ -39,7 +39,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Tahun Transaksi</label>
-                                <input type="text" name="tahun_transaksi" id="tahun_transaksi" class="form-control" readonly>
+                                <input type="text" name="tahun_transaksi" id="tahun_transaksi" class="form-control">
                             </div>
 
                             <div class="form-group col-md-6">
@@ -176,10 +176,10 @@
             function calculateValues() {
                 var jumlah_transaksi = parseFloat($("#jumlah_transaksi").val());
                 var jumlah_bulan = parseInt($('#jumlah_bulan').val());
-                
+
                 if (!isNaN(jumlah_transaksi) && !isNaN(jumlah_bulan) && jumlah_bulan !== 0) {
                     var jumlah = jumlah_transaksi / jumlah_bulan;
-                    
+
                     if (jumlah_bulan === 12) {
                         var bunga = ((jumlah_transaksi * 8) / 100) / jumlah_bulan;
                         $('#presentase_jasa').val("8");
@@ -200,7 +200,7 @@
 
         $(document).ready(function() {
     $("#jumlah_bulan, #bulan_mulai_angsuran, #tahun_mulai_angsuran").on("change input", function() {
-        
+
         var bulanMulaiAngsuran = parseInt($("#bulan_mulai_angsuran").val());
         var jumlahBulan = parseInt($("#jumlah_bulan").val());
         var tahunMulaiAngsuran = parseInt($("#tahun_mulai_angsuran").val());
