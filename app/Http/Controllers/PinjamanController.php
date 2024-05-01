@@ -26,7 +26,7 @@ class PinjamanController extends Controller
                             ->where('nama_lengkap','!=','Koperasi')
                             ->orderBy('created_at','asc')->paginate(10);
         }
-        
+
         return view('backend/pinjaman.index', [
             'anggotas'  =>  $anggotas,
             'nama'  =>  $nama,
@@ -37,7 +37,7 @@ class PinjamanController extends Controller
         $anggota = User::where('id',$anggota->id)
                         ->with(['jabatan','pinjamans' => function ($query) {
                             $query->orderBy('pinjaman_ke', 'asc');
-                        }])                
+                        }])
                         ->first();
         return view('backend/pinjaman.detail',[
             'anggota' =>  $anggota,
@@ -95,7 +95,7 @@ class PinjamanController extends Controller
             return response()->json(['error'  =>  0, 'text'   =>  $validasi->errors()->first()],422);
         }
 
-       
+
         $lastPinjaman = Pinjaman::where('anggota_id',$anggota->id)->orderBy('pinjaman_ke', 'desc')->first();
         $nextPinjamanKe = 1; // Default jika ini adalah pinjaman pertama
 
@@ -134,7 +134,7 @@ class PinjamanController extends Controller
                 11 => 'November',
                 12 => 'Desember',
             ];
-            
+
             $bulanMulaiAngsuran = $namaBulan[$request->bulan_mulai_angsuran];
             $bulanSelesaiAngsuran = $namaBulan[$request->bulan_selesai_angsuran];
 
@@ -165,7 +165,7 @@ class PinjamanController extends Controller
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, rollback transaksi
             DB::rollBack();
-        
+
             return response()->json(['text' => 'Oopps, pinjaman gagal disimpan']);
         }
     }
@@ -241,7 +241,7 @@ class PinjamanController extends Controller
                 11 => 'November',
                 12 => 'Desember',
             ];
-            
+
             $bulanMulaiAngsuran = $namaBulan[$request->bulan_mulai_angsuran];
             $bulanSelesaiAngsuran = $namaBulan[$request->bulan_selesai_angsuran];
 
@@ -258,6 +258,15 @@ class PinjamanController extends Controller
                 'tahun_selesai_angsuran'    =>  $request->tahun_selesai_angsuran,
             ]);
 
+            TransaksiKoperasi::where('id', $pinjaman->transaksi_id)->update([
+                'jumlah_transaksi'  =>  $request->jumlah_transaksi,
+                'tanggal_transaksi' => $request->tanggal_transaksi,
+                'bulan_transaksi' => $request->bulan_transaksi,
+                'tahun_transaksi' => $request->tahun_transaksi,
+                'kategori_transaksi' => 'keluar',
+                'updated_at' => now(),
+            ]);
+
             DB::commit();
 
             return response()->json([
@@ -267,21 +276,32 @@ class PinjamanController extends Controller
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, rollback transaksi
             DB::rollBack();
-        
+
             return response()->json(['text' => 'Oopps, pinjaman gagal disimpan']);
         }
     }
 
     public function delete(User $anggota, Pinjaman $pinjaman){
-        $delete =  $pinjaman->delete();
+        DB::beginTransaction();
 
-        if ($delete) {
-            return response()->json([
-                'text'  =>  'Yeay, transaksi pinjaman berhasil dihapus',
-                'url'   =>  route('pinjaman.detail',[$anggota->id]),
-            ]);
-        } else {
-            return response()->json(['text' =>  'Oopps, transaksi pinjaman gagal dihapus']);
+        try {
+            $delete =  $pinjaman->delete();
+            TransaksiKoperasi::where('id', $pinjaman->transaksi_id)->delete();
+
+            DB::commit();
+            if ($delete) {
+                return response()->json([
+                    'text'  =>  'Yeay, transaksi pinjaman berhasil dihapus',
+                    'url'   =>  route('pinjaman.detail',[$anggota->id]),
+                ]);
+            } else {
+                return response()->json(['text' =>  'Oopps, transaksi pinjaman gagal dihapus']);
+            }
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, rollback transaksi
+            DB::rollBack();
+
+            return response()->json(['text' => 'Oopps, pinjaman gagal disimpan']);
         }
     }
 }
